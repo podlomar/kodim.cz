@@ -143,15 +143,46 @@
   
   <pre>{"jmeno": "Petr", "prijmeni": "Roman", "rok": 2017, "dochazka": 0.95, "vyznamenani": true}</pre>
 
+  <h3>Čtení JSON dat</h3>
+
   <p>V Pythonu je velice jednoduché převést JSON na obyčejný Python slovník. Stačí nám k tomu modul jménem <code>json</code>. Vyzkoušíme si to na našem seznamu absolventů. Nejdřív si tato data stáhneme jako soubor <a href="/download/python-data/absolventi.json" download>absolventi.json</a>. Ten pak můžeme v Pythonu otevřít a převést na JSON následujicím programem.</p>
 
 <pre>import json
-file = open('absolventi.json', encoding='utf-8')
+soubor = open('absolventi.json', encoding='utf-8')
 text = file.read()
+soubor.close()
 absolventi = json.loads(text)
 print(absolventi)</pre>
 
-  <p>V tomto programu používáme metodu <code>read()</code>, která umí celý soubor načíst se vším všudy do jednoho velkého řetězce. Tento řetězec pak můžeme předat funkci <code>loads()</code> z modulu <code>json</code>, která tento řetězec přečte a pokud jsou v něm data ve formátu JSON, převede je na Python slovníky.</p>
+  <p>V tomto programu používáme metodu <code>read</code>, která umí celý soubor načíst se vším všudy do jednoho velkého řetězce. Tento řetězec pak můžeme předat funkci <code>loads</code> z modulu <code>json</code>, která tento řetězec přečte a pokud jsou v něm data ve formátu JSON, převede je na Python slovníky.</p>
+
+  <p>Pokud bychom se nechtěli sami obtěžovat se čtením souboru, můžeme použít metodu <code>load</code>, která umí přečíst JSON přímo z otevřeného souboru.</p>
+
+<pre>import json
+soubor = open('absolventi.json', encoding='utf-8')
+absolventi = json.load(soubor)
+soubor.close()
+print(absolventi)</pre>
+  
+  <p>Pokud se ptáte k čemu je nám vůbec funkce <code>loads</code>, když můžeme rovnou použít funkci <code>load</code>, vydržte do další části této lekce, kde budeme stahovat JSON z internetu. Ten nám totiž vždy přijde jako textový řetězec.</p>
+
+  <h3>Zápis JSON dat</h3>
+
+  <p>Zápis JSON dat do souboru je podobně jednoduché jako čtení. Stačí si osvojit funkci <code>dump</code>. Dejme tomu, že máme jednoduchý JSON, který obsahuje například odpracované hodiny pro každý den v týdnu. Ten chceme zapsat do textového souboru.</p>
+
+<pre>import json
+hodiny = {'po': 8, 'ut': 7, 'st': 6, 'ct': 7, 'pa': 8}
+soubor = open('hodiny.json', 'w', encoding='utf-8')
+json.dump(hodiny, soubor)
+soubor.close()
+</pre>
+
+  <p>Pokud bychom z nějakého důvodu chtěli pouze vytvořit řetězec obsahující JSON ale nezapisovat jej do souboru, můžeme použít funkci <code>json.dumps</code>.</p>
+
+<pre>&gt;&gt;&gt; hodiny = {'po': 8, 'ut': 7, 'st': 6, 'ct': 7, 'pa': 8}
+&gt;&gt;&gt; import json
+&gt;&gt;&gt; json.dumps(hodiny)
+'{"po": 8, "ut": 7, "st": 6, "ct": 7, "pa": 8}'</pre>
 
   <h3>Stahování dat z internetu</h3>
   <p>V předchozím příkladu jsem naše data načetli ze soubrou na disku. Pokud však narazíte na vstřícného poskytovatele dat, je možné si data stáhnout z takzvaného API (Applicattion Programming Interface) přímo z internetu. Zkratka API se používá jako označení nějakého přípojného bodu na internetu, odkud si můžete stáhnout data v nějakém strojově čitelném formátu. Nejčastěji je tímto formátem právě JSON. </p>
@@ -178,7 +209,7 @@ print(absolventi)</pre>
   <p>Může se stát, že výše uvedený příkaz nebude fungovat protože nemáte nainstalovaný správce balíčků <code>pip</code>- V takovém případě bude potřeba znova spustit instalaci Pythonu a během ní zaškrtnout, že chcete nainstalovat také <code>pip</code>.</p>
 
   <h2>Stahování dat z API</h2>
-  <p>Jeden ze cvičných zdrojů dat najdeme na adrese <code>http://api.kodim.cz/python-data/people</code>. Naším jediným cílem je data získat jako text. Pak už jej převedeme na Python slovníky jako jsme to dělali kousek výše. </p>
+  <p>Jeden ze cvičných zdrojů dat najdeme na adrese <code>http://api.kodim.cz/python-data/people</code>. Naším jediným cílem je data získat jako text. Pak už jej převedeme na Python slovníky právě s využítím výše zmiňované funkce <code>loads</code>.</p>
 
 <pre>import requests
 import json
@@ -263,4 +294,4 @@ zprava = f'vaše výplata činí {vyplata} kč'
 for utrata in utraty:
   print(f'{utrata[0]} utratila/a {utrata[2]} kč za {utrata[1]}.')
 </pre>
-</%self:lesson>        
+</%self:lesson>
