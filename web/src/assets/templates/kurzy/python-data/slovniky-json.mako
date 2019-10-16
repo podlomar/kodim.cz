@@ -149,7 +149,7 @@
 
 <pre>import json
 soubor = open('absolventi.json', encoding='utf-8')
-text = file.read()
+text = soubor.read()
 soubor.close()
 absolventi = json.loads(text)
 print(absolventi)</pre>
