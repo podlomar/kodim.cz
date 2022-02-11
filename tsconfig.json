@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "noImplicitAny": true,
+    "module": "esnext",
+    "target": "es2017",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+  },
+  "exclude": [
+    "./src/**/*.hbs",
+  ]
+}

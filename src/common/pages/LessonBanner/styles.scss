@@ -1,0 +1,29 @@
+.lesson-banner {
+  &__navlinks {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 3rem;
+
+    a {
+      color: white;
+    }
+  }
+
+  &__head {
+    padding: 3rem 4rem;
+    background-color: $color-palette-2;
+    color: white;
+    
+    a {
+      color: white;
+    }
+  }
+
+  &__title {
+    margin-bottom: 2rem;
+  }
+
+  &__lead {
+    max-width: 40rem;
+  }
+}

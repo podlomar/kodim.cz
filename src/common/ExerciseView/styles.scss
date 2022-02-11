@@ -1,0 +1,70 @@
+.exercise-assign {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  padding-top: 1px;
+  padding-bottom: 2rem;
+  background-color: $color-palette-3;
+  
+  h3 {
+    padding: 0;
+  }
+
+  ol {
+    list-style: lower-alpha;
+  }
+
+  &__title {
+    flex: 1;
+    margin-top: 0;
+    padding-left: 0;
+  }
+  
+  &__num {
+    margin-left: 4rem;
+  }
+  
+  &__head {
+    display: flex;
+    align-items: flex-start;
+    padding: 0 4rem;
+  }
+
+  &__controls {
+    padding: 1rem 4rem;
+    text-align: right;
+  }
+}
+
+.demand {
+  min-width: 70px;
+  height: 14px;
+  background-size: contain;
+  background-position-x: right;
+  background-repeat: no-repeat;
+  background-size: 70px 14px;
+
+  &--1 {
+    background-image: url("./img/demand1.svg");
+  }
+
+  &--2 {
+    background-image: url("./img/demand2.svg");
+  }
+
+  &--3 {
+    background-image: url("./img/demand3.svg");
+  }
+
+  &--4 {
+    background-image: url("./img/demand4.svg");
+  }
+
+  &--5 {
+    background-image: url("./img/demand5.svg");
+  }
+}
+
+.demand-text {
+  font-size: 0.8rem;
+  font-weight: 800;
+}

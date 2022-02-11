@@ -1,0 +1,16 @@
+.navbar {
+  padding: 1rem;
+
+  @include breakpoint-md {
+    padding: 1rem 2rem;
+  }
+}
+
+.navbar-menu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.crumbs {
+  margin: 1rem 0;
+}

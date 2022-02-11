@@ -1,0 +1,21 @@
+.codex-section {
+  background-color: $color-palette-2;
+}
+
+.codex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  color: white;
+
+  @include breakpoint-md {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  };
+}
+
+.divisions-section {
+  margin-top: 2rem;
+}

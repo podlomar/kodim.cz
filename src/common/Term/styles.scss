@@ -1,0 +1,25 @@
+.term {
+  background-color: $color-palette-3;
+  padding: 0.25rem 0.65rem;
+  border-radius: 0.5rem;
+
+  &__flag {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    top: -2px;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-left: 0.5rem;
+    background-size: contain;
+    background-image: url('./img/cz-flag.svg');
+  }
+
+  &__tooltip {
+    position: relative;
+    top: -2rem;
+    background-color: #444;
+    color: white;
+  }
+}
+

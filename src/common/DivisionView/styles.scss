@@ -1,0 +1,32 @@
+.division {
+  max-width: 25rem;
+  margin: 2rem auto 4rem auto;
+
+  @include breakpoint-md {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  };
+
+  &__title {
+    padding: 0 2rem;
+    max-width: 25rem;
+  }
+
+  &__lead {
+    padding: 0 2rem;
+    max-width: 25rem;
+  }
+
+  &__courses {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-top: 2rem;
+
+    justify-content: space-between;
+
+    @include breakpoint-md {
+      flex-flow: row wrap;
+    };
+  }
+}

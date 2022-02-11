@@ -1,0 +1,29 @@
+@mixin breakpoint-xs {
+  @media only screen and (min-width: $display-xs) {
+    @content;
+  }
+}
+
+@mixin breakpoint-sm {
+  @media only screen and (min-width: $display-sm) {
+    @content;
+  }
+}
+
+@mixin breakpoint-md {
+  @media only screen and (min-width: $display-md) {
+    @content;
+  }
+}
+
+@mixin breakpoint-lg {
+  @media only screen and (min-width: $display-lg) {
+    @content;
+  }
+}
+
+@mixin page-content {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+

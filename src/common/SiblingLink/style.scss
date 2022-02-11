@@ -1,0 +1,20 @@
+.sibling-link {  
+  &--backward {
+    text-align: left;
+  }
+  
+  &--forward {
+    text-align: right;
+  }
+
+  &__label {
+    &--forward {
+      margin-left: 0.5rem;
+    }
+
+    &--backward {
+      margin-right: 0.5rem;
+    }
+  }
+}
+

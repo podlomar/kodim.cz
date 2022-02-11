@@ -1,0 +1,63 @@
+.codex-card {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  max-width: 25rem;
+
+  @include breakpoint-md {
+    width: 32%;
+  }
+
+  @include breakpoint-lg {
+    width: 32%;
+  }
+
+  &__image {
+    flex: 0 0 auto;
+    background-size: contain;
+    width: 6rem;
+    height: 6rem;
+
+    @include breakpoint-md {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    @include breakpoint-lg {
+      width: 6rem;
+      height: 6rem;
+    }
+  }
+
+  &__body {
+    padding-top: 0.5rem;
+    margin-left: 2rem;
+
+    @include breakpoint-md {
+      margin-left: 1rem;
+    } 
+
+    @include breakpoint-lg {
+      margin-left: 2rem;
+    } 
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+}
+
+.playfulness {
+  background-image: url('./img/playfulness.svg');
+}
+
+.warmth {
+  background-image: url('./img/warmth.svg');
+}
+
+.knowledge {
+  background-image: url('./img/knowledge.svg');
+}
