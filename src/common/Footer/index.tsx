@@ -1,5 +1,5 @@
 import pkg from '../../../package.json';
-import './styles.scss'
+import './styles.scss';
 
 const Footer = () => {
   return (
@@ -9,11 +9,13 @@ const Footer = () => {
           Kódím.cz
         </div>
         <div className="footer__version">
-          Verze {pkg.version}
+          Verze
+          {' '}
+          {pkg.version}
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
 export default Footer;

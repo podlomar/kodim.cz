@@ -1,9 +1,8 @@
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
-import queryString from 'query-string';
-import './styles.scss';
 import { useAppContext } from '../../AppContext';
 import NotFoundPage from '../NotFoundPage';
+import './styles.scss';
 
 const AccountPage = () => {
   const { user } = useAppContext();

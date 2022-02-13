@@ -3,21 +3,21 @@ import fs from 'fs';
 import json5 from 'json5';
 import { createElement } from 'react';
 import ssrPrepass from 'react-ssr-prepass';
-import App from "../common/App";
-import { renderToString } from "react-dom/server.js";
+import { renderToString } from 'react-dom/server.js';
 import { StaticRouter } from 'react-router-dom/server.js';
-import { ServerContextProvider } from '../common/AppContext';
-import { KodimCms } from "kodim-cms";
+import { KodimCms } from 'kodim-cms';
 import { CmsApp } from 'kodim-cms/esm/server.js';
 import mongoose from 'mongoose';
 import axios from 'axios';
 import queryString from 'query-string';
 import sessions from 'express-session';
+import {
+  AccessCheck, AccessClaimCheck, AccessGrantAll, User,
+} from 'kodim-cms/esm/content/access-check.js';
 import { UserModel } from './db';
 import Html from '../common/Html';
-import { AccessCheck, AccessClaimCheck, AccessGrantAll, User } from 'kodim-cms/esm/content/access-check.js';
-import { MemoryStore } from 'express-session';
-import { groupCollapsed } from 'console';
+import { ServerContextProvider } from '../common/AppContext';
+import App from '../common/App';
 
 const config = json5.parse(fs.readFileSync('./server-config.json5', 'utf-8'));
 const stats = json5.parse(fs.readFileSync('./stats.json5', 'utf-8'));
@@ -26,7 +26,7 @@ await mongoose.connect(config.dbUrl);
 
 const cms = await KodimCms.load(
   config.contentDir,
-  `${config.serverUrl}/cms`
+  `${config.serverUrl}/cms`,
 );
 
 const cmsApp = new CmsApp(cms, () => new AccessGrantAll());
@@ -57,9 +57,9 @@ server.get('/prihlasit/github', async (req, res) => {
         client_id: config.githubApp.clientId,
         client_secret: config.githubApp.clientSecret,
         code: req.query.code,
-      }
-    }
-  )
+      },
+    },
+  );
 
   const parsed = queryString.parse(data);
   const { data: user } = await axios.get(
@@ -68,9 +68,9 @@ server.get('/prihlasit/github', async (req, res) => {
       headers: {
         Accept: 'application/json',
         Authorization: `token ${parsed.access_token}`,
-      }
-    }
-  )
+      },
+    },
+  );
 
   console.log('user', user);
 
@@ -82,7 +82,7 @@ server.get('/prihlasit/github', async (req, res) => {
       name: user.name ?? user.login,
       avatarUrl: user.avatar_url,
       email: user.email ?? undefined,
-      groups: []
+      groups: [],
     });
     await dbUser.save();
   }
@@ -123,8 +123,7 @@ server.get('*', async (req, res) => {
         cms={cms}
         accessCheck={req.session.claims === undefined
           ? defaultAccessCheck
-          : AccessClaimCheck.create(accessUser, ...req.session.claims)
-        }
+          : AccessClaimCheck.create(accessUser, ...req.session.claims)}
         store={store}
         logins={{
           githubClientId: config.githubApp.clientId,

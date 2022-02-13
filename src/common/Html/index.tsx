@@ -37,10 +37,12 @@ const Html = ({ store, bundlePath, children }: Props) => {
           gtag('config', 'UA-134495569-1');
         </script> */}
 
+        { /* eslint-disable-next-line react/no-danger */ }
         <script dangerouslySetInnerHTML={{
-          __html: `window.__STORE__ = ${json5.stringify(store)}`
-        }} />
-        <script defer src={bundlePath}></script>
+          __html: `window.__STORE__ = ${json5.stringify(store)}`,
+        }}
+        />
+        <script defer src={bundlePath} />
 
         <title>Kódím.cz</title>
       </head>
@@ -50,6 +52,6 @@ const Html = ({ store, bundlePath, children }: Props) => {
       </body>
     </html>
   );
-}
+};
 
 export default Html;

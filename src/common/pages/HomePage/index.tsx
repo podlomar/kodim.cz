@@ -3,15 +3,13 @@ import LandingBanner from '../../LandingBanner';
 import DivisionView from '../../DivisionView';
 import Navbar from '../../Navbar';
 import { ServerAppContext, useData } from '../../AppContext';
-import './styles.scss';
 import CodexCard from '../../CodexCard';
+import './styles.scss';
 
 const HomePage = () => {
-  const coursesRoot = useData(
-    ['root'], async ({ cms, accessCheck }: ServerAppContext) => {
-      return cms.getRoot(accessCheck).fetch();
-    }
-  );
+  const coursesRoot = useData(['root'], async ({ cms, accessCheck }: ServerAppContext) => {
+    return cms.getRoot(accessCheck).fetch();
+  });
 
   if (coursesRoot.status === 'forbidden') {
     return <h1>Forbidden</h1>;
@@ -45,9 +43,8 @@ const HomePage = () => {
         {coursesRoot.content.type === 'broken'
           ? null
           : coursesRoot.content.divisions.map(
-            (division) => <DivisionView key={division.title} segment={division} />
-          )
-        }
+            (division) => <DivisionView key={division.title} segment={division} />,
+          )}
       </section>
     </Layout>
   );

@@ -1,6 +1,6 @@
 // Hack: https://github.com/expressjs/session/issues/807
-import { Session } from 'express-session'
-import { Access } from 'kodim-cms/esm/content/access.js';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Session } from 'express-session';
 import { User } from './db.js';
 
 declare module 'express-session' {

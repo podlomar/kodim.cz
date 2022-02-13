@@ -16,7 +16,7 @@ const ArticleContent = ({ navElement, children }: Props) => {
         <ReactTooltip
           place="top"
           effect="solid"
-          border={true}
+          border
         />
         {children}
       </div>

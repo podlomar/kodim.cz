@@ -2,21 +2,21 @@ import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
-import { StatsWriterPlugin } from "webpack-stats-plugin";
+import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import json5 from 'json5';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const serverConfig = {
   entry: './src/server/server.tsx',
   mode: 'development',
   devtool: false,
-  target: "es2017",
+  target: 'es2017',
   output: {
-    path: path.resolve("./dist"),
+    path: path.resolve('./dist'),
     filename: 'server.js',
     publicPath: '/',
     module: true,
-    chunkFormat: "module",
+    chunkFormat: 'module',
   },
   resolve: {
     modules: ['src/server', 'node_modules'],
@@ -24,20 +24,20 @@ const serverConfig = {
   },
   externals: [
     nodeExternals({
-      importType: "module",
+      importType: 'module',
       allowlist: [
         // Until React 17.0.3 is released with proper exports
-        "react/jsx-runtime",
-        "react-router",
-        "history",
-        "react-router-dom",
-        "react-router-dom/server.js",
-      ]
+        'react/jsx-runtime',
+        'react-router',
+        'history',
+        'react-router-dom',
+        'react-router-dom/server.js',
+      ],
     }),
     {
       // Until React 17.0.3 is released with proper exports
-      "react/jsx-runtime": "react/jsx-runtime.js",
-    }
+      'react/jsx-runtime': 'react/jsx-runtime.js',
+    },
   ],
   externalsPresets: { node: true },
   experiments: {
@@ -52,7 +52,7 @@ const serverConfig = {
           loader: 'ts-loader',
           options: {
             onlyCompileBundledFiles: true,
-          }
+          },
         },
       },
       {
@@ -97,14 +97,14 @@ const serverConfig = {
         },
       ],
     }),
-  ]
+  ],
 };
 
 const clientConfig = {
   entry: './src/client/client.tsx',
   mode: 'development',
   output: {
-    path: path.resolve("./dist"),
+    path: path.resolve('./dist'),
     filename: 'js/bundle-[contenthash:6].js',
     publicPath: '/',
   },
@@ -121,7 +121,7 @@ const clientConfig = {
             loader: 'ts-loader',
             options: {
               onlyCompileBundledFiles: true,
-            }
+            },
           },
         ],
       },
@@ -137,14 +137,14 @@ const clientConfig = {
     // }),
     // new BundleAnalyzerPlugin(),
     new StatsWriterPlugin({
-      filename: "stats.json5",
+      filename: 'stats.json5',
       transform(data) {
         return json5.stringify({
           bundle: data.assetsByChunkName.main[0],
         }, null, 2);
-      }
-    })
-  ]
+      },
+    }),
+  ],
 };
 
 export default [clientConfig, serverConfig];

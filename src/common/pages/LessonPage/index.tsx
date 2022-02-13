@@ -1,12 +1,12 @@
-import EntryLink from "../../EntryLink";
-import Navbar from "../../Navbar";
-import ArticleContent from "../../ArticleContent";
-import LessonSectionView from "../../LessonSectionView";
-import Layout from "../../Layout";
-import { ServerAppContext, useData } from "../../AppContext";
-import { useParams } from "react-router";
-import SideNavLink from "../../SideNavLink";
-import LessonBanner from "../LessonBanner";
+import { useParams } from 'react-router';
+import EntryLink from '../../EntryLink';
+import Navbar from '../../Navbar';
+import ArticleContent from '../../ArticleContent';
+import LessonSectionView from '../../LessonSectionView';
+import Layout from '../../Layout';
+import { ServerAppContext, useData } from '../../AppContext';
+import SideNavLink from '../../SideNavLink';
+import LessonBanner from '../LessonBanner';
 import './styles.scss';
 
 const fetchLesson = async (

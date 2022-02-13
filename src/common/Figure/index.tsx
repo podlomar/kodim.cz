@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import './styles.scss';
 
 interface Props {
@@ -16,7 +15,7 @@ const Figure = ({ src, alt, size }: Props) => {
         alt={alt}
       />
     </div>
-  )
-}
+  );
+};
 
 export default Figure;

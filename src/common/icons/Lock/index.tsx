@@ -14,6 +14,6 @@ const Lock = ({ color }: Props) => {
       />
     </svg>
   );
-}
+};
 
 export default Lock;

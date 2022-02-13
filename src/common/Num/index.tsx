@@ -11,7 +11,7 @@ const Num = ({ className, value }: Props) => {
     <div className={clsx('num', className)}>
       {value}
     </div>
-  )
-}
+  );
+};
 
 export default Num;

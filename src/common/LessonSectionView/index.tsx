@@ -1,12 +1,32 @@
+import { JsmlAttrs, JsmlNode } from 'kodim-cms/esm/jsml';
+import { ReactNode, createElement } from 'react';
 import { useParams } from 'react-router-dom';
 import { ServerAppContext, useData } from '../AppContext';
+import ExerciseView from '../ExerciseView';
 import JsmlContainer from '../JsmlContainer';
+import { JsmlComponents } from '../JsmlContainer/components';
 import SiblingLink from '../SiblingLink';
 import './styles.scss';
 
+const components: JsmlComponents = {
+  exc(tag: string, attrs: JsmlAttrs, children: JsmlNode[]): ReactNode {
+    return createElement(
+      ExerciseView,
+      {
+        num: Number(attrs.num),
+        title: String(attrs.title),
+        demand: Number(attrs.demand),
+        path: String(attrs.path),
+        hasSolution: Boolean(attrs.hasSolution),
+        jsml: children,
+      },
+    );
+  },
+};
+
 interface Props {
   sectionLink: string;
-};
+}
 
 const fetchSection = async (
   { cms, accessCheck }: ServerAppContext,
@@ -29,7 +49,7 @@ const LessonSectionView = ({ sectionLink }: Props) => {
       params.courseLink!,
       params.chapterLink!,
       params.lessonLink!,
-      sectionLink
+      sectionLink,
     ],
     (serverContext: ServerAppContext) => fetchSection(
       serverContext,
@@ -55,8 +75,7 @@ const LessonSectionView = ({ sectionLink }: Props) => {
       >
         {section.content.type === 'broken'
           ? <p>Špatný formát lekce</p>
-          : <JsmlContainer jsml={section.content.jsml} />
-        }
+          : <JsmlContainer components={components} jsml={section.content.jsml} />}
       </article>
       {section.content.type === 'broken' ? null : (
         <div className="section-navlinks">

@@ -11,4 +11,3 @@ hydrate(
   </ClientContextProvider>,
   document.getElementById('app'),
 );
-

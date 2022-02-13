@@ -1,5 +1,5 @@
-import { LessonResource } from "kodim-cms/esm/content/lesson";
-import SiblingLink from "../../SiblingLink";
+import { LessonResource } from 'kodim-cms/esm/content/lesson';
+import SiblingLink from '../../SiblingLink';
 import './styles.scss';
 
 interface Props {

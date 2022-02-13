@@ -1,13 +1,14 @@
+import { useParams } from 'react-router';
 import Layout from '../../Layout';
 import ChapterView from '../../ChapterView';
-import Navbar from "../../Navbar";
+import Navbar from '../../Navbar';
 import CourseBanner from '../../CourseBanner';
 import { ServerAppContext, useData } from '../../AppContext';
-import { useParams } from 'react-router';
 import './styles.scss';
 
 const fetchCourse = async (
-  { cms, accessCheck }: ServerAppContext, courseLink: string
+  { cms, accessCheck }: ServerAppContext,
+  courseLink: string,
 ) => cms.getRoot(accessCheck).find(courseLink).fetch();
 
 const CoursePage = () => {
@@ -29,7 +30,7 @@ const CoursePage = () => {
   } else if (course.content.type !== 'broken') {
     mainSection = course.content.chapters.map((chapter) => (
       <ChapterView key={chapter.link} chapterLink={chapter.link} />
-    ))
+    ));
   }
 
   return (

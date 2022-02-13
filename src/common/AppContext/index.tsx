@@ -1,16 +1,17 @@
 import md5 from 'blueimp-md5';
-import { createContext, useContext } from 'react';
-import { User } from '../../server/db.js';
+import { createContext, useContext, useMemo } from 'react';
 import type { KodimCms } from 'kodim-cms';
 import type { AccessCheck } from 'kodim-cms/esm/content/access-check.js';
+import { User } from '../../server/db.js';
 
 export interface Store {
   dataEntries: Record<string, any>,
   user: User | null,
-};
+}
 
 function storeData<T>(store: Store, keys: string[], data: T) {
   const hash = md5(keys.join('/'));
+  // eslint-disable-next-line no-param-reassign
   store.dataEntries[hash] = data;
 }
 
@@ -55,18 +56,19 @@ export const useAppContext = () => useContext(appContext);
 
 export function useData<T>(
   keys: string[],
-  fetcher: (serverContext: ServerAppContext) => Promise<T>
+  fetcher: (serverContext: ServerAppContext) => Promise<T>,
 ): T {
-  const appContext = useAppContext();
+  const context = useAppContext();
 
-  const data = appContext.retrieveData(keys);
+  const data = context.retrieveData(keys);
 
   if (data === null) {
-    if (appContext.env === 'client') {
+    if (context.env === 'client') {
       throw Error('bad server data');
     } else {
-      throw fetcher(appContext).then(
-        (resource) => appContext.storeData(keys, resource)
+      // eslint-disable-next-line @typescript-eslint/no-throw-literal
+      throw fetcher(context).then(
+        (resource) => context.storeData(keys, resource),
       );
     }
   }
@@ -79,21 +81,24 @@ interface ClientProviderProps {
 }
 
 export const ClientContextProvider = ({ children }: ClientProviderProps) => {
-  //@ts-ignore
+  // @ts-ignore
+  // eslint-disable-next-line no-underscore-dangle
   const store = window.__STORE__ as Store;
 
+  const value = useMemo((): ClientAppContext => ({
+    dataEntries: store.dataEntries,
+    user: store.user,
+    env: 'client',
+    storeData: (keys: string[], data: any) => storeData(store, keys, data),
+    retrieveData: (keys: string[]) => getData(store, keys),
+  }), [store]);
+
   return (
-    <appContext.Provider value={{
-      dataEntries: store.dataEntries,
-      user: store.user,
-      env: 'client',
-      storeData: (keys: string[], data: any) => storeData(store, keys, data),
-      retrieveData: (keys: string[]) => getData(store, keys),
-    }}>
+    <appContext.Provider value={value}>
       {children}
     </appContext.Provider>
   );
-}
+};
 
 interface ServerProviderProps {
   cms: KodimCms,
@@ -103,10 +108,10 @@ interface ServerProviderProps {
   children: React.ReactNode;
 }
 
-export const ServerContextProvider = (
-  { cms, accessCheck, store, logins, children }: ServerProviderProps
-) => (
-  <appContext.Provider value={{
+export const ServerContextProvider = ({
+  cms, accessCheck, store, logins, children,
+}: ServerProviderProps) => {
+  const value = useMemo((): ServerAppContext => ({
     dataEntries: store.dataEntries,
     user: store.user,
     env: 'server',
@@ -115,7 +120,11 @@ export const ServerContextProvider = (
     cms,
     accessCheck,
     logins,
-  }}>
-    {children}
-  </appContext.Provider>
-);
+  }), [cms, accessCheck, store, logins]);
+
+  return (
+    <appContext.Provider value={value}>
+      {children}
+    </appContext.Provider>
+  );
+};

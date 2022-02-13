@@ -22,17 +22,15 @@ const ChapterView = ({ chapterLink }: Props) => {
 
   const chapter = useData(
     ['root', courseLink, chapterLink],
-    (serverContext: ServerAppContext) => fetchChapter(
-      serverContext, courseLink, chapterLink
-    ),
+    (serverContext: ServerAppContext) => fetchChapter(serverContext, courseLink, chapterLink),
   );
 
   if (chapter.status === 'not-found') {
-    return <div className="failed">NOT FOUND</div>
+    return <div className="failed">NOT FOUND</div>;
   }
 
   if (chapter.status === 'forbidden') {
-    return <div className="failed">FORBIDDEN!</div>
+    return <div className="failed">FORBIDDEN!</div>;
   }
 
   return (
@@ -41,20 +39,17 @@ const ChapterView = ({ chapterLink }: Props) => {
       <p className="chapter__lead">
         {chapter.content.type === 'broken'
           ? 'Chyba ve formátu kapitoly'
-          : chapter.content.lead
-        }
+          : chapter.content.lead}
       </p>
 
       <div className="chapter__lessons">
         {chapter.content.type === 'broken'
           ? null
-          : chapter.content.lessons.map((lessonRef, idx) => (
-            <LessonCard key={idx} lessonRef={lessonRef} />)
-          )
-        }
+          : chapter.content.lessons.map((lessonRef) => (
+            <LessonCard key={lessonRef.link} lessonRef={lessonRef} />))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ChapterView;

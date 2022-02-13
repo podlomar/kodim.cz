@@ -1,11 +1,11 @@
-import Navbar from "../../Navbar";
-import Layout from "../../Layout";
-import { ServerAppContext, useData } from "../../AppContext";
-import { useParams } from "react-router";
-import JsmlContainer from "../../JsmlContainer";
+import { useParams } from 'react-router';
+import Navbar from '../../Navbar';
+import Layout from '../../Layout';
+import { ServerAppContext, useData } from '../../AppContext';
+import JsmlContainer from '../../JsmlContainer';
+import ArticleContent from '../../ArticleContent';
+import SideNavLink from '../../SideNavLink';
 import './styles.scss';
-import ArticleContent from "../../ArticleContent";
-import SideNavLink from "../../SideNavLink";
 
 const fetchExercise = async (
   { cms, accessCheck }: ServerAppContext,

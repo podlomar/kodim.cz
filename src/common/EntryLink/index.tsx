@@ -16,14 +16,14 @@ const EntryLink = ({ className, entryRef, text }: Props) => {
         <Lock color="white" />
         <span className="entry-link__text">{text}</span>
       </span>
-    )
+    );
   }
 
   return (
-    <a className={clsx(`entry-link`, className)} href={entryRef.path}>
+    <a className={clsx('entry-link', className)} href={entryRef.path}>
       {text}
     </a>
   );
-}
+};
 
 export default EntryLink;

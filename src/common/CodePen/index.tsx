@@ -4,11 +4,12 @@ interface Props {
   user: string,
   id: string,
   tab: string,
-};
+}
 
 const CodePen = ({ user, id, tab }: Props) => {
   return (
     <iframe
+      title={id}
       className="codepen"
       scrolling="no"
       src={`https://codepen.io/${user}/embed/${id}?default-tab=${tab}&theme-id=dark`}

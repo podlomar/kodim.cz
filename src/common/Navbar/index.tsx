@@ -14,21 +14,25 @@ const Navbar = ({ crumbs, showBrand }: Props) => {
       <div className="navbar-menu">
         {showBrand
           ? <Brand size="small" />
-          : <div />
-        }
+          : <div />}
         <NavbarUser />
       </div>
 
       {crumbs === undefined
         ? null
-        : <div className="crumbs">
-          {crumbs.map((step) => (
-            <span key={step.path} > / <a href={step.path}>{step.title}</a></span>
-          ))}
-        </div>
-      }
+        : (
+          <div className="crumbs">
+            {crumbs.map((step) => (
+              <span key={step.path}>
+                {' '}
+                /
+                <a href={step.path}>{step.title}</a>
+              </span>
+            ))}
+          </div>
+        )}
     </div>
-  )
-}
+  );
+};
 
 export default Navbar;

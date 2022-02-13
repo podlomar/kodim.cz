@@ -1,13 +1,13 @@
+import queryString from 'query-string';
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
-import queryString from 'query-string';
 import { ServerAppContext, useData } from '../../AppContext';
 import './styles.scss';
 
 const LoginPage = () => {
   const githubClientId = useData(
     ['logins'],
-    async (serverContext: ServerAppContext) => serverContext.logins.githubClientId
+    async (serverContext: ServerAppContext) => serverContext.logins.githubClientId,
   );
 
   const params = queryString.stringify({

@@ -21,7 +21,9 @@ const demandText = [
   'smrt v přímém přenosu',
 ] as const;
 
-const ExerciseView = ({ num, title, demand, hasSolution, path, jsml }: Props) => {
+const ExerciseView = ({
+  num, title, demand, hasSolution, path, jsml,
+}: Props) => {
   return (
     <div className="exercise-assign">
       <Num className="exercise-assign__num" value={num} />
@@ -45,12 +47,11 @@ const ExerciseView = ({ num, title, demand, hasSolution, path, jsml }: Props) =>
               </span>
             ) : (
               <a className="entry-link btn" href={path}>Řešení</a>
-            )
-          }
+            )}
         </div>
       ) : null}
     </div>
-  )
-}
+  );
+};
 
 export default ExerciseView;

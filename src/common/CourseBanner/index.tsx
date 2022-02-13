@@ -1,5 +1,5 @@
-import { CourseResource } from 'kodim-cms/esm/content/course.js';
-import './styles.scss'
+import { CourseResource } from 'kodim-cms/esm/content/course';
+import './styles.scss';
 
 interface Props {
   course: CourseResource
@@ -21,12 +21,12 @@ const CourseBanner = ({ course }: Props) => {
           className="course-banner__image"
           src={course.content.type === 'broken'
             ? undefined
-            : course.content.image
-          }
+            : course.content.image}
+          alt={course.title}
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CourseBanner;

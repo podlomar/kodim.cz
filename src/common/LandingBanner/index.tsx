@@ -1,5 +1,5 @@
 import Brand from '../Brand';
-import './styles.scss'
+import './styles.scss';
 
 const LandingBanner = () => {
   return (
@@ -8,9 +8,13 @@ const LandingBanner = () => {
         <Brand size="big" />
         <p className="landing-banner__lead">Programování hravě i vážně</p>
       </div>
-      <img src="/assets/coding-room.svg" className="landing-banner__image" />
+      <img
+        className="landing-banner__image"
+        src="/assets/coding-room.svg"
+        alt="Programátoři"
+      />
     </div>
-  )
-}
+  );
+};
 
 export default LandingBanner;

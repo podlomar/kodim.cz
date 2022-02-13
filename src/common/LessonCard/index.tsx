@@ -1,5 +1,5 @@
-import EntryLink from '..//EntryLink';
 import { LessonRef } from 'kodim-cms/esm/content/lesson';
+import EntryLink from '../EntryLink';
 import Num from '../Num';
 import './styles.scss';
 
@@ -15,15 +15,14 @@ const LessonCard = ({ lessonRef }: Props) => {
       <p className="lesson-card__lead">
         {lessonRef.publicContent === 'broken'
           ? 'Chyba ve formátu lekce'
-          : lessonRef.publicContent.lead
-        }
+          : lessonRef.publicContent.lead}
       </p>
 
       <div className="lesson-card__controls">
         <EntryLink className="btn" entryRef={lessonRef} text="Přejít na lekci" />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default LessonCard;

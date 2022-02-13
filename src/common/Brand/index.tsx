@@ -7,17 +7,23 @@ interface Props {
 
 const Brand = ({ size = 'small' }: Props) => {
   return (
-    <a className={clsx("brand", `brand--${size}`)} href="/">
+    <a className={clsx('brand', `brand--${size}`)} href="/">
       <div className="site-logo" />
       <div className="site-name">
         <span
           className="site-name__name"
-        >Kódím</span><span
+        >
+          Kódím
+
+        </span>
+        <span
           className="site-name__tld"
-        >.cz</span>
+        >
+          .cz
+        </span>
       </div>
     </a>
-  )
-}
+  );
+};
 
 export default Brand;

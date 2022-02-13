@@ -16,12 +16,12 @@ const DivisionView = ({ segment }: Props) => {
       </p>
 
       <div className="division__courses">
-        {segment.courses.map((courseRef, idx) => (
-          <CourseCard key={idx} courseRef={courseRef} />
+        {segment.courses.map((courseRef) => (
+          <CourseCard key={courseRef.link} courseRef={courseRef} />
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default DivisionView;

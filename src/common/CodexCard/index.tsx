@@ -4,7 +4,7 @@ interface Props {
   image: 'playfulness' | 'warmth' | 'knowledge';
   title: string;
   text: string;
-};
+}
 
 const CodexCard = ({ image, title, text }: Props) => {
   return (
@@ -16,6 +16,6 @@ const CodexCard = ({ image, title, text }: Props) => {
       </div>
     </div>
   );
-}
+};
 
 export default CodexCard;
