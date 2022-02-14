@@ -10,11 +10,12 @@ const SideNavLink = ({ children, active }: Props) => {
   return (
     <div className={clsx(
       'sidenav-link',
-      { 'sidenav-link--active': active ?? false }
-    )}>
+      { 'sidenav-link--active': active ?? false },
+    )}
+    >
       {children}
     </div>
-  )
-}
+  );
+};
 
 export default SideNavLink;

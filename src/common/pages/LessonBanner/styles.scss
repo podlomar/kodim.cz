@@ -1,26 +1,36 @@
 .lesson-banner {
+  padding: 3rem 1.5rem;
+  background-color: $color-palette-2;
+  color: white;
+    
+  a {
+    color: white;
+  }
+  
+  @include breakpoint-sm {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  @include breakpoint-lg {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+  
   &__navlinks {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 3rem;
+    margin-bottom: 2rem;
 
-    a {
-      color: white;
-    }
-  }
-
-  &__head {
-    padding: 3rem 4rem;
-    background-color: $color-palette-2;
-    color: white;
-    
     a {
       color: white;
     }
   }
 
   &__title {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    line-height: 2.7rem;
+    font-size: 2.7rem;
   }
 
   &__lead {
