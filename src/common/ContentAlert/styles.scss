@@ -1,0 +1,11 @@
+.content-alert {
+  @include article-element;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+
+  &--error {
+    color: white;
+    background-color: #e94e2e;
+  }
+}
+

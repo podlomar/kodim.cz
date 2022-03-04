@@ -2,6 +2,7 @@ import { JsmlAttrs, JsmlNode } from 'kodim-cms/esm/jsml';
 import { ReactNode, createElement } from 'react';
 import { useParams } from 'react-router-dom';
 import { ServerAppContext, useData } from '../AppContext';
+import ContentAlert from '../ContentAlert';
 import ExerciseView from '../ExerciseView';
 import JsmlContainer from '../JsmlContainer';
 import { JsmlComponents } from '../JsmlContainer/components';
@@ -70,13 +71,13 @@ const LessonSectionView = ({ sectionLink }: Props) => {
 
   return (
     <>
-      <article
-        className="lesson__section"
-      >
-        {section.content.type === 'broken'
-          ? <p>Špatný formát lekce</p>
-          : <JsmlContainer components={components} jsml={section.content.jsml} />}
-      </article>
+      {section.content.type === 'broken'
+        ? (
+          <ContentAlert type="error" title="Špatný formát sekce">
+            <p>Lekce nejspíš odkazuje na neexistující sekci.</p>
+          </ContentAlert>
+        ) : <JsmlContainer components={components} jsml={section.content.jsml} />}
+
       {section.content.type === 'broken' ? null : (
         <div className="section-navlinks">
           {section.content.prev === null ? <div /> : (

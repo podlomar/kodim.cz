@@ -27,3 +27,17 @@
   padding-right: 2rem;
 }
 
+@mixin article-element {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+      
+  @include breakpoint-sm {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  @include breakpoint-lg {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}

@@ -1,18 +1,3 @@
-@mixin article-element {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-      
-  @include breakpoint-sm {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-
-  @include breakpoint-lg {
-    padding-left: 4rem;
-    padding-right: 4rem;
-  }
-}
-
 .article-content { 
   display: flex;
   align-items: flex-start; // to make the sticky position work
@@ -55,7 +40,7 @@
       color: $color-palette-1;
     }
 
-    p, ul, ol, h2, h3, h4, h5, h6 {
+    & > p, & > ul, & > ol, & > h2, & > h3, & > h4, & > h5, & > h6, & > pre {
       @include article-element;
     }
 
@@ -66,12 +51,11 @@
     pre {
       background-color: #555;
       color: white;
-      padding: 1.5rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
       margin-top: 1.5rem;
       margin-bottom: 1.5rem;
       overflow-x: auto;
-
-      @include article-element;
     }
 
     li pre {
