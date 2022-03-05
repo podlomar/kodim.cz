@@ -44,7 +44,7 @@ const LessonPage = () => {
     return <p>Špatný formát lekce</p>;
   }
 
-  const activeSectionLink = params.sectionLink ?? lesson.content.sections[0].link;
+  const activeSectionLink = params.sectionLink ?? lesson.content.sections[0]?.link;
 
   const articleNavigation = lesson.content.sections.map((secRef) => (
     <SideNavLink key={secRef.link} active={secRef.link === activeSectionLink}>
@@ -57,7 +57,9 @@ const LessonPage = () => {
       <Navbar crumbs={lesson.crumbs} showBrand />
       <LessonBanner lesson={lesson} />
       <ArticleContent navElement={articleNavigation}>
-        <LessonSectionView sectionLink={activeSectionLink} />
+        { activeSectionLink === undefined ? (
+          <p><strong>CHYBA: Tato lekce neobsahuje odkazy na žádné sekce!</strong></p>
+        ) : <LessonSectionView sectionLink={activeSectionLink} />}
       </ArticleContent>
     </Layout>
   );
