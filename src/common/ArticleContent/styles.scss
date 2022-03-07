@@ -76,5 +76,24 @@
     li {
       margin-left: 2rem;
     }
+
+    table {
+      width: 100%;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    thead {
+      text-align: left;
+      background-color: #e0e0e0;
+    }
+
+    td, th {
+      padding: 0.5rem 1rem;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f0f0f0;
+    }
   }
 }
