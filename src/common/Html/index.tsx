@@ -27,6 +27,7 @@ const Html = ({ store, bundlePath, children }: Props) => {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,800;1,500&family=Roboto+Mono:wght@400;700&display=swap"
         />
+        <link rel="stylesheet" href="/assets/normalize.css" />
         <link rel="stylesheet" href="/assets/style.css" />
 
         {/* <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134495569-1"></script>

@@ -1,13 +1,8 @@
 .exercise-assign {
   margin-top: 4rem;
   margin-bottom: 4rem;
-  padding-top: 1px;
-  padding-bottom: 2rem;
+  padding: 1px 0 2rem 0;
   background-color: $color-palette-3;
-  
-  h3 {
-    padding: 0;
-  }
 
   ol {
     list-style: lower-alpha;
@@ -27,6 +22,10 @@
     display: flex;
     align-items: flex-start;
     padding: 0 4rem;
+  }
+
+  &__body > *{
+    @include article-element;
   }
 
   &__controls {

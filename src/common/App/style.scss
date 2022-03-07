@@ -6,8 +6,11 @@
   font-family: inherit;
 }
 
-html {
+html, * {
   font-family: 'Montserrat', sans-serif;
+}
+
+html {
   font-size: $font-size;
   font-weight: 500;
 }
