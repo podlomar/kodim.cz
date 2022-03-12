@@ -11,7 +11,7 @@ const Term = ({ cs, en }: Props) => {
       <span>{cs}</span>
       <i className="term__flag" />
     </span>
-  )
-}
+  );
+};
 
 export default Term;
