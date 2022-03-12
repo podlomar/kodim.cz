@@ -21,13 +21,12 @@ api.use(async (req, res, next) => {
 
 api.get('/groups', async (req, res) => {
   const groups = await GroupModel.find();
-  res.send(groups.map((group) => ({
-    url: `${req.protocol}://${req.get('host')}${req.originalUrl}/${group.name}`,
+  res.json(groups.map((group) => ({
+    url: `${req.protocol}://${req.hostname}${req.originalUrl}/${group.name}`,
     data: {
       name: group.name,
     },
   })));
-  res.send(groups);
 });
 
 api.get('/groups/:name', async (req, res) => {
@@ -39,12 +38,12 @@ api.get('/groups/:name', async (req, res) => {
   }
 
   const users = await UserModel.find({ groups: group.id });
-  res.send({
+  res.json({
     ...group.toObject(),
     users: users.map((user) => ({
       type: 'users',
       data: {
-        url: `${req.protocol}://${req.get('host')}${req.baseUrl}/users/${user.login}`,
+        url: `${req.protocol}://${req.hostname}${req.baseUrl}/users/${user.login}`,
         login: user.login,
         name: user.name,
       },
@@ -54,8 +53,8 @@ api.get('/groups/:name', async (req, res) => {
 
 api.get('/users', async (req, res) => {
   const users = await UserModel.find();
-  res.send(users.map((user) => ({
-    url: `${req.protocol}://${req.get('host')}${req.originalUrl}/${user.login}`,
+  res.json(users.map((user) => ({
+    url: `${req.protocol}://${req.hostname}${req.originalUrl}/${user.login}`,
     data: {
       login: user.login,
       name: user.name,
@@ -73,11 +72,11 @@ api.get('/users/:login', async (req, res) => {
   }
 
   const groups = user.groups.map((group) => ({
-    url: `${req.protocol}://${req.get('host')}${req.baseUrl}/groups/${group.name}`,
+    url: `${req.protocol}://${req.hostname}${req.baseUrl}/groups/${group.name}`,
     name: group.name,
   }));
 
-  res.send({
+  res.json({
     ...user.toObject(),
     groups,
   });
