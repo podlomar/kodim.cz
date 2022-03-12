@@ -21,9 +21,7 @@
   &__courses {
     display: flex;
     flex-flow: column nowrap;
-    margin-top: 2rem;
-
-    justify-content: space-between;
+    margin: 2rem -0.5rem 2rem -0.5rem;
 
     @include breakpoint-md {
       flex-flow: row wrap;
