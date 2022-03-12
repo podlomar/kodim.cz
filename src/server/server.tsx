@@ -14,6 +14,7 @@ import sessions from 'express-session';
 import {
   AccessCheck, AccessClaimCheck, AccessGrantAll, User,
 } from 'kodim-cms/esm/content/access-check.js';
+import { api } from './api';
 import { UserModel } from './db';
 import Html from '../common/Html';
 import { ServerContextProvider } from '../common/AppContext';
@@ -32,6 +33,7 @@ const cms = await KodimCms.load(
 const cmsApp = new CmsApp(cms, () => new AccessGrantAll());
 
 const server = express();
+server.use(express.json());
 server.use(sessions({
   secret: config.sessionSecret,
   saveUninitialized: true,
@@ -42,6 +44,7 @@ server.use('/assets', express.static('./assets', { fallthrough: false }));
 server.use('/js', express.static('./js', { fallthrough: false }));
 
 server.use('/cms', cmsApp.router);
+server.use('/api', api);
 
 server.get('/odhlasit', (req, res) => {
   req.session.user = undefined;
@@ -71,8 +74,6 @@ server.get('/prihlasit/github', async (req, res) => {
       },
     },
   );
-
-  console.log('user', user);
 
   let dbUser = await UserModel.findOne({ login: user.login });
 
@@ -142,5 +143,5 @@ server.get('*', async (req, res) => {
 });
 
 server.listen(config.port, () => {
-  console.log(`Serving on localhost:${config.port}`);
+  console.info(`Serving on localhost:${config.port}`);
 });
