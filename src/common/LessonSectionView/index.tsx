@@ -3,6 +3,7 @@ import { ReactNode, createElement } from 'react';
 import { useParams } from 'react-router-dom';
 import { ServerAppContext, useData } from '../AppContext';
 import ContentAlert from '../ContentAlert';
+import ExerciseError from '../ExerciseError';
 import ExerciseView from '../ExerciseView';
 import JsmlContainer from '../JsmlContainer';
 import { JsmlComponents } from '../JsmlContainer/components';
@@ -22,6 +23,9 @@ const components: JsmlComponents = {
         jsml: children,
       },
     );
+  },
+  excerr(tag: string, attrs: JsmlAttrs): ReactNode {
+    return createElement(ExerciseError, { link: String(attrs.link) });
   },
 };
 
