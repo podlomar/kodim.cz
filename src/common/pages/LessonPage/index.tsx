@@ -9,6 +9,7 @@ import SideNavLink from '../../SideNavLink';
 import LessonBanner from '../LessonBanner';
 import './styles.scss';
 import NotFoundPage from '../NotFoundPage';
+import ForbiddenPage from '../ForbiddenPage';
 
 const fetchLesson = async (
   { cms, accessCheck }: ServerAppContext,
@@ -38,7 +39,7 @@ const LessonPage = () => {
   }
 
   if (lesson.status === 'forbidden') {
-    return <h1>Forbidden</h1>;
+    return <ForbiddenPage />;
   }
 
   if (lesson.content.type === 'broken') {

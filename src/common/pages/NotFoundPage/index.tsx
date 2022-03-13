@@ -1,16 +1,8 @@
-import Layout from '../../Layout';
-import Navbar from '../../Navbar';
-import './styles.scss';
+import ErrorLayout from '../../ErrorLayout';
 
 const NotFoundPage = () => {
   return (
-    <Layout>
-      <Navbar showBrand />
-      <div className="container not-found">
-        <h2>Stránka nenalezena</h2>
-        <p>Chyba 404</p>
-      </div>
-    </Layout>
+    <ErrorLayout title="Stránka nenalezena" note="Chyba 404" />
   );
 };
 
