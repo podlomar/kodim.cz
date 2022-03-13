@@ -30,6 +30,8 @@ const Html = ({ store, bundlePath, children }: Props) => {
         <link rel="stylesheet" href="/assets/normalize.css" />
         <link rel="stylesheet" href="/assets/style.css" />
 
+        <meta name="color-scheme" content="only light" />
+
         {/* <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134495569-1"></script>
         <script type="text/javascript">
           window.dataLayer = window.dataLayer || [];
