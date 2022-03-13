@@ -1,0 +1,27 @@
+.breadcrumbs {
+  $gap: 0.5ex;
+
+  margin: 1rem 0;
+
+  &__list {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $gap;
+  }
+
+  &__item {
+    &:not(:last-child) {
+      &::after {
+        content: '/';
+        margin-left: $gap;
+      }
+    }
+  }
+
+  &__link {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
