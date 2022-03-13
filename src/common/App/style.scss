@@ -60,7 +60,7 @@ h3 {
   border-radius: 0.5rem;
   text-decoration: none;
 
-  &:hover {
+  &:is(a, button):hover {
     background-color: $color-palette-2-darker;
   }
 }
