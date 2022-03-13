@@ -8,6 +8,7 @@ import { ServerAppContext, useData } from '../../AppContext';
 import SideNavLink from '../../SideNavLink';
 import LessonBanner from '../LessonBanner';
 import './styles.scss';
+import NotFoundPage from '../NotFoundPage';
 
 const fetchLesson = async (
   { cms, accessCheck }: ServerAppContext,
@@ -33,7 +34,7 @@ const LessonPage = () => {
   );
 
   if (lesson.status === 'not-found') {
-    return <h1>Not found</h1>;
+    return <NotFoundPage />;
   }
 
   if (lesson.status === 'forbidden') {
