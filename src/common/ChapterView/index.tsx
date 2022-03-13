@@ -7,7 +7,7 @@ interface Props {
   chapterLink: string;
 }
 
-const fetchChapter = async (
+export const fetchChapter = async (
   { cms, accessCheck }: ServerAppContext,
   courseLink: string,
   chapterLink: string,

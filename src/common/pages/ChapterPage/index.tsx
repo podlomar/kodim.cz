@@ -1,17 +1,9 @@
 import { useParams } from 'react-router';
 import { ServerAppContext, useData } from '../../AppContext';
-import ChapterView from '../../ChapterView';
+import ChapterView, { fetchChapter } from '../../ChapterView';
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
 import NotFoundPage from '../NotFoundPage';
-
-const fetchChapter = async (
-  { cms, accessCheck }: ServerAppContext,
-  courseLink: string,
-  chapterLink: string,
-) => cms.getRoot(accessCheck)
-  .find(courseLink)
-  .find(chapterLink).fetch();
 
 const ChapterPage = () => {
   const params = useParams();
