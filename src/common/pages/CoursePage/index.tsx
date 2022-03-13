@@ -6,6 +6,7 @@ import CourseBanner from '../../CourseBanner';
 import { ServerAppContext, useData } from '../../AppContext';
 import './styles.scss';
 import NotFoundPage from '../NotFoundPage';
+import ForbiddenPage from '../ForbiddenPage';
 
 const fetchCourse = async (
   { cms, accessCheck }: ServerAppContext,
@@ -24,14 +25,12 @@ const CoursePage = () => {
     return <NotFoundPage />;
   }
 
-  let mainSection = null;
-
   if (course.status === 'forbidden') {
-    mainSection = <h2>K tomuto kurzu nemáte přistup</h2>;
-  } else if (course.content.type !== 'broken') {
-    mainSection = course.content.chapters.map((chapter) => (
-      <ChapterView key={chapter.link} chapterLink={chapter.link} />
-    ));
+    return <ForbiddenPage />;
+  }
+
+  if (course.content.type === 'broken') {
+    return <p>Broken</p>;
   }
 
   return (
@@ -40,7 +39,9 @@ const CoursePage = () => {
       <CourseBanner course={course} />
 
       <section className="container chapters-section">
-        {mainSection}
+        {course.content.chapters.map((chapter) => (
+          <ChapterView key={chapter.link} chapterLink={chapter.link} />
+        ))}
       </section>
     </Layout>
   );
