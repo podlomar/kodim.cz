@@ -96,6 +96,10 @@ server.get('/prihlasit/github', async (req, res) => {
   res.redirect('/');
 });
 
+server.get('/kurzy/:course/:chapter', (req, res) => {
+  res.redirect(301, `/kurzy/${req.params.course}/#${req.params.chapter}`);
+});
+
 server.get('*', async (req, res) => {
   const store = {
     dataEntries: {},

@@ -34,7 +34,7 @@ const ChapterView = ({ chapterLink }: Props) => {
   }
 
   return (
-    <div className="chapter">
+    <div id={chapter.link} className="chapter">
       <h2>{chapter.title}</h2>
       <p className="chapter__lead">
         {chapter.content.type === 'broken'
