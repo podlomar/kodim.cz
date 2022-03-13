@@ -1,5 +1,6 @@
 import { Crumbs } from 'kodim-cms/esm/content/resource';
 import Brand from '../Brand';
+import Breadcrumbs from '../Breadcrumbs';
 import NavbarUser from './NavbarUser';
 import './styles.scss';
 
@@ -18,19 +19,7 @@ const Navbar = ({ crumbs, showBrand }: Props) => {
         <NavbarUser />
       </div>
 
-      {crumbs === undefined
-        ? null
-        : (
-          <div className="crumbs">
-            {crumbs.map((step) => (
-              <span key={step.path}>
-                {' '}
-                /
-                <a href={step.path}>{step.title}</a>
-              </span>
-            ))}
-          </div>
-        )}
+      {crumbs !== undefined && <Breadcrumbs steps={crumbs} />}
     </div>
   );
 };
