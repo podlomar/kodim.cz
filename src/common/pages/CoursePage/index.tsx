@@ -5,6 +5,7 @@ import Navbar from '../../Navbar';
 import CourseBanner from '../../CourseBanner';
 import { ServerAppContext, useData } from '../../AppContext';
 import './styles.scss';
+import NotFoundPage from '../NotFoundPage';
 
 const fetchCourse = async (
   { cms, accessCheck }: ServerAppContext,
@@ -20,7 +21,7 @@ const CoursePage = () => {
   );
 
   if (course.status === 'not-found') {
-    return <h1>Not found</h1>;
+    return <NotFoundPage />;
   }
 
   let mainSection = null;
