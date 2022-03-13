@@ -6,7 +6,10 @@ const NotFoundPage = () => {
   return (
     <Layout>
       <Navbar showBrand />
-      <p>404</p>
+      <div className="container not-found">
+        <h2>Stránka nenalezena</h2>
+        <p>Chyba 404</p>
+      </div>
     </Layout>
   );
 };
