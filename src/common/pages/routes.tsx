@@ -6,15 +6,10 @@ import ExercisePage from './ExercisePage';
 import LoginPage from './LoginPage';
 import AccountPage from './AccountPage';
 import NotFoundPage from './NotFoundPage';
-import ChapterPage from './ChapterPage';
 
 const routes: RouteObject[] = [
   { path: '/prihlasit', element: <LoginPage /> },
   { path: '/ucet', element: <AccountPage /> },
-  {
-    path: '/kurzy/:courseLink/:chapterLink',
-    element: <ChapterPage />,
-  },
   {
     path: '/kurzy/:courseLink/:chapterLink/:lessonLink',
     element: <LessonPage />,
