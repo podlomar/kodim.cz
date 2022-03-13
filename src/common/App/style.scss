@@ -13,12 +13,12 @@ html, * {
 html {
   font-size: $font-size;
   font-weight: 500;
+  line-height: 1.2;
 }
 
 body {
   margin: 0;
   background-color: $color-palette-4;
-  line-height: 1.2rem;
   overflow-y: scroll;
 }
 
