@@ -143,7 +143,7 @@ server.get('*', async (req, res) => {
 
   const element = createElement(html);
   await ssrPrepass(element);
-  res.send(renderToString(element));
+  res.send(`<!DOCTYPE html>${renderToString(element)}`);
 });
 
 server.listen(config.port, () => {
