@@ -6,6 +6,7 @@ import './styles.scss';
 interface Props {
   num: number,
   title: string,
+  link: string,
   path: string,
   demand: number,
   hasSolution: boolean,
@@ -22,12 +23,17 @@ const demandText = [
 ] as const;
 
 const ExerciseView = ({
-  num, title, demand, hasSolution, path, jsml,
+  num, title, link, demand, hasSolution, path, jsml,
 }: Props) => {
   return (
-    <div className="exercise-assign">
+    <div id={link} className="exercise-assign">
       <Num className="exercise-assign__num" value={num} />
       <div className="exercise-assign__head">
+        <h3 className="exercise-assign__title">
+          <a href={`#${link}`} className="exercise-assign__title-anchor">
+            {title}
+          </a>
+        </h3>
         <h3 className="exercise-assign__title">{title}</h3>
         <div className="exercise-assign__demand">
           <div className={`demand demand--${demand}`} />

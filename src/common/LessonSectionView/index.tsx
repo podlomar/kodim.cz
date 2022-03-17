@@ -17,6 +17,7 @@ const components: JsmlComponents = {
       {
         num: Number(attrs.num),
         title: String(attrs.title),
+        link: String(attrs.link),
         demand: Number(attrs.demand),
         path: String(attrs.path),
         hasSolution: Boolean(attrs.hasSolution),
