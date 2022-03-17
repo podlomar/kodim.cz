@@ -8,16 +8,17 @@
 
     &::before {
       position: absolute;
-      right: 100%;
-      opacity: 0.2;
-      visibility: hidden;
+      left: -2rem;
+      opacity: 0;
+      transition: 400ms;
       content: '#';
     }
     
     &:hover,
     &:focus {
       &::before {
-        visibility: inherit;
+        opacity: 0.4;
+        transition: 400ms;
       }
     }
   }
