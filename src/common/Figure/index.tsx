@@ -10,7 +10,7 @@ const Figure = ({ src, alt, size }: Props) => {
   return (
     <div className="figure">
       <img
-        style={{ width: `${size ?? 100}%` }}
+        style={size ? { width: `${size}%` } : undefined}
         src={src}
         alt={alt}
       />

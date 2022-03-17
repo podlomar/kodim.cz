@@ -28,7 +28,7 @@ export const baseJsmlComponents: JsmlComponents = {
       Figure,
       {
         src: String(attrs.src),
-        size: Number(attrs.size ?? 100),
+        size: Number(attrs.size),
         alt: String(attrs.alt),
       },
     );
