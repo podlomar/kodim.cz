@@ -35,7 +35,11 @@ const ChapterView = ({ chapterLink }: Props) => {
 
   return (
     <div id={chapter.link} className="chapter">
-      <h2>{chapter.title}</h2>
+      <h2>
+        <a href={`#${chapter.link}`} className="chapter__title-anchor">
+          {chapter.title}
+        </a>
+      </h2>
       <p className="chapter__lead">
         {chapter.content.type === 'broken'
           ? 'Chyba ve formátu kapitoly'

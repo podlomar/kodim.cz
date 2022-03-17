@@ -1,6 +1,27 @@
 .chapter {
   scroll-margin-top: 2rem;
 
+  &__title-anchor {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+
+    &::before {
+      position: absolute;
+      right: 100%;
+      opacity: 0.2;
+      visibility: hidden;
+      content: '#';
+    }
+    
+    &:hover,
+    &:focus {
+      &::before {
+        visibility: inherit;
+      }
+    }
+  }
+
   &__lead {
     max-width: 20rem;
   }
