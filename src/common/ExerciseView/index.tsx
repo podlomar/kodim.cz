@@ -34,7 +34,6 @@ const ExerciseView = ({
             {title}
           </a>
         </h3>
-        <h3 className="exercise-assign__title">{title}</h3>
         <div className="exercise-assign__demand">
           <div className={`demand demand--${demand}`} />
           <div className="demand-text">{demandText[demand]}</div>
