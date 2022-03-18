@@ -11,6 +11,8 @@ const LandingBanner = () => {
       <img
         className="landing-banner__image"
         src="/assets/coding-room.svg"
+        width="980"
+        height="600"
         alt="Programátoři"
       />
     </div>

@@ -16,25 +16,7 @@
   }
 
   &__title-anchor {
-    color: inherit;
-    text-decoration: none;
-    position: relative;
-  
-    &::before {
-      position: absolute;
-      left: -1.5rem;
-      opacity: 0;
-      transition: 400ms;
-      content: '#';
-    }
-    
-    &:hover,
-    &:focus {
-      &::before {
-        opacity: 0.4;
-        transition: 400ms;
-      }
-    }
+    @include title-anchor;
   }
 
   &__num {

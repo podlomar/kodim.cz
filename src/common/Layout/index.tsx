@@ -8,8 +8,12 @@ interface Props {
 const Layout = ({ children }: Props) => {
   return (
     <div className="layout">
-      {children}
-      <Footer />
+      <div>
+        {children}
+      </div>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };
