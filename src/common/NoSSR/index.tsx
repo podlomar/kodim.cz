@@ -1,16 +1,14 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode } from 'react';
+import { useAppContext } from '../AppContext';
 
 interface Props {
   children: ReactNode,
 }
 
 const NoSSR = ({ children }: Props) => {
-  const [first, setFirst] = useState(true);
-  useEffect(() => {
-    setFirst(false);
-  }, []);
+  const { env } = useAppContext();
 
-  if (first) {
+  if (env === 'server') {
     return null;
   }
   // eslint-disable-next-line react/jsx-no-useless-fragment
