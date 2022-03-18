@@ -9,7 +9,7 @@ interface Props {
   link: string,
   path: string,
   demand: number,
-  hasSolution: boolean,
+  offerSolution: boolean,
   jsml: Jsml,
 }
 
@@ -23,7 +23,7 @@ const demandText = [
 ] as const;
 
 const ExerciseView = ({
-  num, title, link, demand, hasSolution, path, jsml,
+  num, title, link, demand, offerSolution, path, jsml,
 }: Props) => {
   return (
     <div id={link} className="exercise-assign">
@@ -42,7 +42,7 @@ const ExerciseView = ({
       <div className="exercise-assign__body">
         <JsmlContainer jsml={jsml} />
       </div>
-      {hasSolution ? (
+      {offerSolution ? (
         <div className="exercise-assign__controls">
           {path === 'forbidden'
             ? (
