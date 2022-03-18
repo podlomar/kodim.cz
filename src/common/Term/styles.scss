@@ -3,7 +3,8 @@
   padding: 0.25rem 0.65rem;
   border-radius: 0.5rem;
   white-space: nowrap;
-  
+  position: relative;
+
   &__flag {
     display: inline-block;
     position: relative;
@@ -17,10 +18,35 @@
   }
 
   &__tooltip {
-    position: relative;
-    top: -2rem;
-    background-color: #444;
-    color: white;
+    position: absolute;
+    bottom: 120%;
+    
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    
+    opacity: 0;
+    z-index: 1;
+    transition: 400ms;
+
+    &::after {
+      content: " ";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: black transparent transparent transparent;
+    }
+  }
+
+  &:hover &__tooltip {
+    opacity: 1;
+    transition: 400ms;
   }
 }
 

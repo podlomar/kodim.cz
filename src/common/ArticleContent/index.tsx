@@ -1,5 +1,3 @@
-import ReactTooltip from 'react-tooltip';
-import NoSSR from '../NoSSR';
 import './styles.scss';
 
 interface Props {
@@ -14,13 +12,6 @@ const ArticleContent = ({ navElement, children }: Props) => {
         {navElement}
       </aside>
       <div className="article-content__section">
-        <NoSSR>
-          <ReactTooltip
-            place="top"
-            effect="solid"
-            border
-          />
-        </NoSSR>
         {children}
       </div>
     </div>

@@ -7,7 +7,8 @@ interface Props {
 
 const Term = ({ cs, en }: Props) => {
   return (
-    <span data-tip={en} className="term">
+    <span className="term">
+      <span className="term__tooltip">{en}</span>
       <span>{cs}</span>
       <i className="term__flag" />
     </span>
