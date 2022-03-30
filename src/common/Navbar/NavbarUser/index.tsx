@@ -1,13 +1,15 @@
 import { useAppContext } from '../../AppContext';
+import useLoginUrl from '../../pages/useLoginUrl';
 import './styles.scss';
 
 const NavbarUser = () => {
   const { user } = useAppContext();
+  const loginUrl = useLoginUrl();
 
   if (user === null) {
     return (
       <div className="navbar-user">
-        <a className="btn" href="/prihlasit">Přihlásit</a>
+        <a className="btn" href={loginUrl}>Přihlásit</a>
       </div>
     );
   }

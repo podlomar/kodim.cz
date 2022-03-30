@@ -133,6 +133,7 @@ server.get('*', async (req, res) => {
         logins={{
           githubClientId: config.githubApp.clientId,
         }}
+        url={req.originalUrl}
       >
         <StaticRouter location={req.url}>
           <App />
