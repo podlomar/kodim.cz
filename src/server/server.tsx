@@ -93,7 +93,7 @@ server.get('/prihlasit/github', async (req, res) => {
   const claims = req.session.user.groups.flatMap((group) => group.claims);
   // const claims = ['/kurzy'];
   req.session.claims = claims;
-  res.redirect('/');
+  res.redirect(req.session.returnUrl ?? '/');
 });
 
 server.get('/kurzy/:course/:chapter', (req, res) => {
@@ -117,6 +117,10 @@ server.get('*', async (req, res) => {
     defaultAccessCheck = new AccessGrantAll();
   } else if (config.defaultAccess.claims !== undefined) {
     defaultAccessCheck = AccessClaimCheck.create(accessUser, ...config.defaultAccess.claims);
+  }
+
+  if (typeof req.query.returnUrl === 'string') {
+    req.session.returnUrl = req.query.returnUrl;
   }
 
   const html = () => (

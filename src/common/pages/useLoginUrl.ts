@@ -5,9 +5,9 @@ const useLoginUrl = () => {
   const baseUrl = '/prihlasit';
 
   if (url.startsWith(baseUrl)) {
-    return baseUrl;
+    return url;
   }
-  return `${baseUrl}?return=${encodeURIComponent(url)}`;
+  return `${baseUrl}?returnUrl=${encodeURIComponent(url)}`;
 };
 
 export default useLoginUrl;
