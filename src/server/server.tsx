@@ -96,6 +96,13 @@ server.get('/prihlasit/github', async (req, res) => {
   res.redirect(req.session.returnUrl ?? '/');
 });
 
+server.use('/prihlasit', (req, res, next) => {
+  if (typeof req.query.returnUrl === 'string') {
+    req.session.returnUrl = req.query.returnUrl;
+  }
+  next();
+});
+
 server.get('/kurzy/:course/:chapter', (req, res) => {
   res.redirect(301, `/kurzy/${req.params.course}/#${req.params.chapter}`);
 });
@@ -117,10 +124,6 @@ server.get('*', async (req, res) => {
     defaultAccessCheck = new AccessGrantAll();
   } else if (config.defaultAccess.claims !== undefined) {
     defaultAccessCheck = AccessClaimCheck.create(accessUser, ...config.defaultAccess.claims);
-  }
-
-  if (typeof req.query.returnUrl === 'string') {
-    req.session.returnUrl = req.query.returnUrl;
   }
 
   const html = () => (
