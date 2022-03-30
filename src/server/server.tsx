@@ -97,9 +97,12 @@ server.get('/prihlasit/github', async (req, res) => {
 });
 
 server.use('/prihlasit', (req, res, next) => {
-  if (typeof req.query.returnUrl === 'string') {
-    req.session.returnUrl = req.query.returnUrl;
+  const returnUrl = typeof req.query.returnUrl === 'string' ? req.query.returnUrl : '/';
+  if (req.session.user) {
+    res.redirect(returnUrl);
+    return;
   }
+  req.session.returnUrl = returnUrl;
   next();
 });
 
