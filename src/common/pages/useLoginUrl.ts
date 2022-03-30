@@ -1,13 +1,13 @@
 import { useAppContext } from '../AppContext/index';
 
 const useLoginUrl = () => {
-  const { url } = useAppContext();
+  const { url: returnUrl } = useAppContext();
   const baseUrl = '/prihlasit';
 
-  if (url.startsWith(baseUrl)) {
-    return url;
+  if (returnUrl.startsWith(baseUrl)) {
+    return returnUrl;
   }
-  return `${baseUrl}?returnUrl=${encodeURIComponent(url)}`;
+  return `${baseUrl}?returnUrl=${encodeURIComponent(returnUrl)}`;
 };
 
 export default useLoginUrl;
