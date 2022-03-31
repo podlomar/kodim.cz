@@ -93,7 +93,17 @@ server.get('/prihlasit/github', async (req, res) => {
   const claims = req.session.user.groups.flatMap((group) => group.claims);
   // const claims = ['/kurzy'];
   req.session.claims = claims;
-  res.redirect('/');
+  res.redirect(req.session.returnUrl ?? '/');
+});
+
+server.use('/prihlasit', (req, res, next) => {
+  const returnUrl = typeof req.query.returnUrl === 'string' ? req.query.returnUrl : '/';
+  if (req.session.user) {
+    res.redirect(returnUrl);
+    return;
+  }
+  req.session.returnUrl = returnUrl;
+  next();
 });
 
 server.get('/kurzy/:course/:chapter', (req, res) => {
@@ -133,6 +143,7 @@ server.get('*', async (req, res) => {
         logins={{
           githubClientId: config.githubApp.clientId,
         }}
+        url={req.originalUrl}
       >
         <StaticRouter location={req.url}>
           <App />
