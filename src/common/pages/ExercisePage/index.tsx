@@ -6,6 +6,8 @@ import JsmlContainer from '../../JsmlContainer';
 import ArticleContent from '../../ArticleContent';
 import SideNavLink from '../../SideNavLink';
 import './styles.scss';
+import NotFoundPage from '../NotFoundPage';
+import ForbiddenPage from '../ForbiddenPage';
 
 const fetchExercise = async (
   { cms, accessCheck }: ServerAppContext,
@@ -37,11 +39,11 @@ const ExercisePage = () => {
   );
 
   if (exercise.status === 'not-found') {
-    return <h1>Not found</h1>;
+    return <NotFoundPage />;
   }
 
   if (exercise.status === 'forbidden') {
-    return <h1>Forbidden</h1>;
+    return <ForbiddenPage />;
   }
 
   return (
