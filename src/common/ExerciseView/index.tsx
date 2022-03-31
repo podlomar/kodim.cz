@@ -7,7 +7,7 @@ interface Props {
   num: number,
   title: string,
   link: string,
-  path: string,
+  path?: string,
   demand: number,
   offerSolution: boolean,
   jsml: Jsml,
@@ -42,7 +42,7 @@ const ExerciseView = ({
       <div className="exercise-assign__body">
         <JsmlContainer jsml={jsml} />
       </div>
-      {offerSolution ? (
+      {offerSolution && path ? (
         <div className="exercise-assign__controls">
           {path === 'forbidden'
             ? (
