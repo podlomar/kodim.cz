@@ -42,6 +42,7 @@ server.use(sessions({
 
 server.use('/assets', express.static('./assets', { fallthrough: false }));
 server.use('/js', express.static('./js', { fallthrough: false }));
+server.use('/changelog', express.static('../changelog', { fallthrough: false }));
 
 server.use('/cms', cmsApp.router);
 server.use('/api', api);
