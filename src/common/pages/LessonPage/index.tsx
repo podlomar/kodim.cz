@@ -50,7 +50,11 @@ const LessonPage = () => {
 
   const articleNavigation = lesson.content.sections.map((secRef) => (
     <SideNavLink key={secRef.link} active={secRef.link === activeSectionLink}>
-      <EntryLink entryRef={secRef} text={secRef.title} />
+      <EntryLink
+        path={secRef.path}
+        text={secRef.title}
+        forbidden={secRef.status === 'forbidden'}
+      />
     </SideNavLink>
   ));
 

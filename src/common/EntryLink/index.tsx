@@ -1,16 +1,18 @@
-import { ResourceRef } from 'kodim-cms/esm/content/resource';
 import clsx from 'clsx';
 import { Lock } from '../icons';
 import './style.scss';
 
 interface Props {
   className?: string,
-  entryRef: ResourceRef<any>;
-  text: string;
+  path: string,
+  text: string,
+  forbidden: boolean,
 }
 
-const EntryLink = ({ className, entryRef, text }: Props) => {
-  if (entryRef.status === 'forbidden') {
+const EntryLink = ({
+  className, path, text, forbidden,
+}: Props) => {
+  if (forbidden) {
     return (
       <span className={clsx('entry-link', 'entry-link--locked', className)}>
         <Lock color="white" />
@@ -20,7 +22,7 @@ const EntryLink = ({ className, entryRef, text }: Props) => {
   }
 
   return (
-    <a className={clsx('entry-link', className)} href={entryRef.path}>
+    <a className={clsx('entry-link', className)} href={path}>
       {text}
     </a>
   );

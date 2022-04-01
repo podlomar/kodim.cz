@@ -19,7 +19,12 @@ const LessonCard = ({ lessonRef }: Props) => {
       </p>
 
       <div className="lesson-card__controls">
-        <EntryLink className="btn" entryRef={lessonRef} text="Přejít na lekci" />
+        <EntryLink
+          className="btn"
+          path={lessonRef.path}
+          text="Přejít na lekci"
+          forbidden={lessonRef.status === 'forbidden'}
+        />
       </div>
     </div>
   );

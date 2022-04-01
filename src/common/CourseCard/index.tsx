@@ -24,7 +24,12 @@ const CourseCard = ({ courseRef }: Props) => {
       </p>
 
       <p className="course-card__controls">
-        <EntryLink className="btn" entryRef={courseRef} text="Přejít na kurz" />
+        <EntryLink
+          className="btn"
+          path={courseRef.path}
+          text="Přejít na kurz"
+          forbidden={courseRef.status === 'forbidden'}
+        />
       </p>
     </div>
   );

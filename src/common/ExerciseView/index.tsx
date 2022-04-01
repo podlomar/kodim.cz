@@ -1,4 +1,5 @@
 import { Jsml } from 'kodim-cms/esm/jsml';
+import EntryLink from '../EntryLink';
 import JsmlContainer from '../JsmlContainer';
 import Num from '../Num';
 import './styles.scss';
@@ -44,15 +45,12 @@ const ExerciseView = ({
       </div>
       {offerSolution && path ? (
         <div className="exercise-assign__controls">
-          {path === 'forbidden'
-            ? (
-              <span className="entry-link entry-link--locked btn">
-                <i className="icon-lock" />
-                <span>Řešení</span>
-              </span>
-            ) : (
-              <a className="entry-link btn" href={path}>Řešení</a>
-            )}
+          <EntryLink
+            className="btn"
+            path={path}
+            text="Řešení"
+            forbidden={path === 'forbidden'}
+          />
         </div>
       ) : null}
     </div>
