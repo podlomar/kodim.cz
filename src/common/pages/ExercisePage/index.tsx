@@ -6,6 +6,9 @@ import JsmlContainer from '../../JsmlContainer';
 import ArticleContent from '../../ArticleContent';
 import SideNavLink from '../../SideNavLink';
 import './styles.scss';
+import NotFoundPage from '../NotFoundPage';
+import ForbiddenPage from '../ForbiddenPage';
+import ExerciseView from '../../ExerciseView';
 
 const fetchExercise = async (
   { cms, accessCheck }: ServerAppContext,
@@ -37,11 +40,11 @@ const ExercisePage = () => {
   );
 
   if (exercise.status === 'not-found') {
-    return <h1>Not found</h1>;
+    return <NotFoundPage />;
   }
 
   if (exercise.status === 'forbidden') {
-    return <h1>Forbidden</h1>;
+    return <ForbiddenPage />;
   }
 
   return (
@@ -69,8 +72,15 @@ const ExercisePage = () => {
             ? <p>Špatný formát cvičení</p>
             : (
               <>
-                <h2 id="zadani">Zadání</h2>
-                <JsmlContainer jsml={exercise.content.assignJsml} />
+                <h2>Zadání</h2>
+                <ExerciseView
+                  demand={exercise.content.demand}
+                  num={exercise.content.num}
+                  title={exercise.title}
+                  offerSolution={false}
+                  jsml={exercise.content.assignJsml}
+                  link="zadani"
+                />
                 <h2 id="reseni">Řešení</h2>
                 <JsmlContainer jsml={exercise.content.solutionJsml} />
               </>
