@@ -35,6 +35,7 @@ const Html = ({ store, bundlePath, children }: Props) => {
         <meta property="og:image" content="https://stage.kodim.cz/assets/og-image.png" />
 
         <meta name="color-scheme" content="only light" />
+        <meta name="theme-color" content="#2C3E66" />
 
         {/* <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134495569-1"></script>
         <script type="text/javascript">
