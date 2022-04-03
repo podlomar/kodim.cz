@@ -23,6 +23,19 @@ const demandText = [
   'smrt v přímém přenosu',
 ] as const;
 
+const SolutionEntryLink = ({ path }: { path: string }) => {
+  const isForbidden = path === 'forbidden';
+
+  return (
+    <EntryLink
+      className="btn"
+      path={path}
+      text={isForbidden ? 'Řešení zamčeno' : 'Zobrazit řešení'}
+      forbidden={isForbidden}
+    />
+  );
+};
+
 const ExerciseView = ({
   num, title, link, demand, offerSolution, path, jsml,
 }: Props) => {
@@ -45,12 +58,7 @@ const ExerciseView = ({
       </div>
       {offerSolution && path ? (
         <div className="exercise-assign__controls">
-          <EntryLink
-            className="btn"
-            path={path}
-            text="Řešení"
-            forbidden={path === 'forbidden'}
-          />
+          <SolutionEntryLink path={path} />
         </div>
       ) : null}
     </div>

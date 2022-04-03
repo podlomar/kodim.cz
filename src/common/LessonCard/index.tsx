@@ -8,6 +8,8 @@ interface Props {
 }
 
 const LessonCard = ({ lessonRef }: Props) => {
+  const isForbidden = lessonRef.status === 'forbidden';
+
   return (
     <div className="lesson-card">
       <Num value={lessonRef.publicContent === 'broken' ? -1 : lessonRef.publicContent.num} />
@@ -22,8 +24,8 @@ const LessonCard = ({ lessonRef }: Props) => {
         <EntryLink
           className="btn"
           path={lessonRef.path}
-          text="Přejít na lekci"
-          forbidden={lessonRef.status === 'forbidden'}
+          text={isForbidden ? 'Lekce zamčena' : 'Přejít na lekci'}
+          forbidden={isForbidden}
         />
       </div>
     </div>

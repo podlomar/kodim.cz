@@ -7,6 +7,8 @@ interface Props {
 }
 
 const CourseCard = ({ courseRef }: Props) => {
+  const isForbidden = courseRef.path === 'forbidden';
+
   return (
     <div className="course-card">
       <img
@@ -27,8 +29,8 @@ const CourseCard = ({ courseRef }: Props) => {
         <EntryLink
           className="btn"
           path={courseRef.path}
-          text="Přejít na kurz"
-          forbidden={courseRef.status === 'forbidden'}
+          text={isForbidden ? 'Kurz zamčen' : 'Přejít na kurz'}
+          forbidden={isForbidden}
         />
       </p>
     </div>
