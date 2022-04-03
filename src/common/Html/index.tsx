@@ -30,6 +30,10 @@ const Html = ({ store, bundlePath, children }: Props) => {
         <link rel="stylesheet" href="/assets/normalize.css" />
         <link rel="stylesheet" href="/assets/style.css" />
 
+        <meta property="og:image:width" content="2400" />
+        <meta property="og:image:height" content="1260" />
+        <meta property="og:image" content="https://stage.kodim.cz/assets/og-image.png" />
+
         <meta name="color-scheme" content="only light" />
 
         {/* <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134495569-1"></script>
