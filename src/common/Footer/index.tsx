@@ -8,11 +8,11 @@ const Footer = () => {
         <div className="footer__title">
           Kódím.cz
         </div>
-        <div className="footer__version">
+        <a className="footer__version" href="/changelog/">
           Verze
           {' '}
           {pkg.version}
-        </div>
+        </a>
       </div>
     </footer>
   );
