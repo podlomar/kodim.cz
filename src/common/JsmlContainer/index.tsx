@@ -1,4 +1,4 @@
-import { ReactNode, createElement } from 'react';
+import { ReactNode, createElement, Fragment } from 'react';
 import {
   Jsml,
   JsmlNode,
@@ -24,33 +24,27 @@ export const renderJsmlNode = (components: JsmlComponents, node: JsmlNode): Reac
     return createElement(
       tag,
       attrs,
-      children.length > 0 ? children.map(
-        (child) => renderJsmlNode(components, child),
-      ) : undefined,
+      ...children.map((child) => renderJsmlNode(components, child)),
     );
   }
 
   return component(tag, attrs, children);
 };
 
-export const renderJsml = (components: JsmlComponents, jsml: Jsml): ReactNode[] => jsml.map(
-  (node) => renderJsmlNode(components, node),
-);
-
 interface Props {
   components?: JsmlComponents,
   jsml: Jsml,
 }
 
-const JsmlContainer = ({ components, jsml }: Props): JSX.Element => (
-  <>
-    {
-      renderJsml({
-        ...baseJsmlComponents,
-        ...components,
-      }, jsml)
-    }
-  </>
+const JsmlContainer = ({ components, jsml }: Props): JSX.Element => createElement(
+  Fragment,
+  null,
+  ...jsml.map(
+    (node) => renderJsmlNode({
+      ...baseJsmlComponents,
+      ...components,
+    }, node),
+  ),
 );
 
 export default JsmlContainer;

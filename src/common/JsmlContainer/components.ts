@@ -37,7 +37,7 @@ export const baseJsmlComponents: JsmlComponents = {
     return createElement(
       tag,
       attrs,
-      children.map((node) => unescape(String(node))),
+      ...children.map((node) => unescape(String(node))),
     );
   },
 };
