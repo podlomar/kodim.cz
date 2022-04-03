@@ -1,9 +1,15 @@
+$assign-code-emph-color: #ffe353;
+
 .exercise-assign {
   scroll-margin-top: 3rem;
   margin-top: 4rem;
   margin-bottom: 4rem;
   padding: 1px 0 2rem 0;
   background-color: $color-palette-3;
+
+  code {
+    background-color: $assign-code-emph-color;
+  }
 
   ol {
     list-style: lower-alpha;

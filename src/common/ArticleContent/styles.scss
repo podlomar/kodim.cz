@@ -1,3 +1,5 @@
+$code-emph-color: #e3e3e3;
+
 .article-content { 
   display: flex;
   align-items: flex-start; // to make the sticky position work
@@ -68,15 +70,15 @@
     
     code {
       font-family: 'Roboto Mono';
-      background-color: #e3e3e3;
-      padding: 0.15rem 0.5rem;
+      background-color: $code-emph-color;
+      padding: 3px 5px;
       border-radius: 3px;
     }
 
     kbd {
       background-color: #fff;
       box-shadow: 0 0 3px #555;
-      border-radius: 4px;
+      border-radius: 3px;
       padding: 0rem 0.5rem;
     }
 
