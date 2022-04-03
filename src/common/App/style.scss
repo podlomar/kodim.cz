@@ -64,4 +64,8 @@ h3 {
   &:is(a, button):hover {
     background-color: $color-palette-2-darker;
   }
+
+  &:not(a, button) {
+    background-color: $color-palette-2-lighter;
+  }
 }
