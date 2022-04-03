@@ -52,6 +52,10 @@ const Html = ({ store, bundlePath, children }: Props) => {
         <script defer src={bundlePath} />
 
         <title>Kódím.cz</title>
+        <meta
+          name="description"
+          content="Programování hravě i vážně. Podklady pro prezenční kurzy vytvořené ve spolupráci s organizací Czechitas."
+        />
       </head>
 
       <body>
