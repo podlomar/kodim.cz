@@ -20,17 +20,19 @@
   &__tooltip {
     position: absolute;
     bottom: 120%;
-    
+
     padding: 0.5rem 1rem;
     border-radius: 6px;
 
     background-color: black;
     color: #fff;
     text-align: center;
-    
+
     opacity: 0;
+    visibility: hidden;
     z-index: 1;
-    transition: 400ms;
+    transition-property: opacity, visibility;
+    transition-duration: 400ms;
 
     &::after {
       content: " ";
@@ -46,7 +48,7 @@
 
   &:hover &__tooltip {
     opacity: 1;
-    transition: 400ms;
+    visibility: inherit;
   }
 }
 
