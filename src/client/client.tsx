@@ -1,3 +1,4 @@
+import hljs from 'highlight.js';
 import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { ClientContextProvider } from '../common/AppContext';
@@ -11,3 +12,5 @@ hydrate(
   </ClientContextProvider>,
   document.getElementById('app'),
 );
+
+hljs.highlightAll();
