@@ -15,7 +15,7 @@ import {
   AccessCheck, AccessClaimCheck, AccessGrantAll, User,
 } from 'kodim-cms/esm/content/access-check.js';
 import { api } from './api';
-import { UserModel } from './db';
+import { Claims, UserModel } from './db';
 import Html from '../common/Html';
 import { ServerContextProvider } from '../common/AppContext';
 import App from '../common/App';
@@ -91,8 +91,13 @@ server.get('/prihlasit/github', async (req, res) => {
 
   await dbUser.populate('groups');
   req.session.user = dbUser.toObject();
-  const claims = req.session.user.groups.flatMap((group) => group.claims);
-  // const claims = ['/kurzy'];
+  const claims: Claims = req.session.user.groups.reduce((acc: Claims, group): Claims => ({
+    content: [...acc.content, ...group.claims.content],
+    web: [...acc.web, ...group.claims.web],
+  }), { content: [], web: [] });
+
+  console.log('claims', claims);
+
   req.session.claims = claims;
   res.redirect(req.session.returnUrl ?? '/');
 });
@@ -127,7 +132,10 @@ server.get('*', async (req, res) => {
   if (config.defaultAccess === 'granted') {
     defaultAccessCheck = new AccessGrantAll();
   } else if (config.defaultAccess.claims !== undefined) {
-    defaultAccessCheck = AccessClaimCheck.create(accessUser, ...config.defaultAccess.claims);
+    defaultAccessCheck = AccessClaimCheck.create(
+      accessUser,
+      ...config.defaultAccess.claims.content,
+    );
   }
 
   const html = () => (
@@ -139,7 +147,7 @@ server.get('*', async (req, res) => {
         cms={cms}
         accessCheck={req.session.claims === undefined
           ? defaultAccessCheck
-          : AccessClaimCheck.create(accessUser, ...req.session.claims)}
+          : AccessClaimCheck.create(accessUser, ...req.session.claims.content)}
         store={store}
         logins={{
           githubClientId: config.githubApp.clientId,

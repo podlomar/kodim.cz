@@ -1,13 +1,18 @@
 import mongoose from 'mongoose';
 
+export interface Claims {
+  content: string[],
+  web: string[],
+}
+
 export interface Group {
   name: string,
-  claims: string[],
+  claims: Claims,
 }
 
 export const groupSchema = new mongoose.Schema<Group>({
   name: { type: String, required: true, unique: true },
-  claims: { type: [String], required: true },
+  claims: { type: { content: [String], web: [String] }, required: true },
 });
 
 export const GroupModel = mongoose.model<Group>('Group', groupSchema);
