@@ -142,6 +142,7 @@ server.get('*', async (req, res) => {
     <Html
       store={store}
       bundlePath={`/${stats.bundle}`}
+      baseUrl={config.serverUrl}
     >
       <ServerContextProvider
         cms={cms}

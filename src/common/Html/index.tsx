@@ -3,10 +3,13 @@ import json5 from 'json5';
 interface Props {
   store: any,
   bundlePath: string,
+  baseUrl: string,
   children: React.ReactNode,
 }
 
-const Html = ({ store, bundlePath, children }: Props) => {
+const Html = ({
+  store, bundlePath, baseUrl, children,
+}: Props) => {
   return (
     <html lang="cs">
       <head>
@@ -30,7 +33,12 @@ const Html = ({ store, bundlePath, children }: Props) => {
         <link rel="stylesheet" href="/assets/normalize.css" />
         <link rel="stylesheet" href="/assets/style.css" />
 
+        <meta property="og:image:width" content="2400" />
+        <meta property="og:image:height" content="1260" />
+        <meta property="og:image" content={`${baseUrl}/assets/og-image.png`} />
+
         <meta name="color-scheme" content="only light" />
+        <meta name="theme-color" content="#2C3E66" />
 
         {/* <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134495569-1"></script>
         <script type="text/javascript">
@@ -48,6 +56,10 @@ const Html = ({ store, bundlePath, children }: Props) => {
         <script defer src={bundlePath} />
 
         <title>Kódím.cz</title>
+        <meta
+          name="description"
+          content="Programování hravě i vážně. Podklady pro prezenční kurzy vytvořené ve spolupráci s organizací Czechitas."
+        />
       </head>
 
       <body>
