@@ -1,5 +1,6 @@
-import md5 from 'blueimp-md5';
-import { createContext, useContext, useMemo } from 'react';
+import {
+  createContext, MutableRefObject, useContext, useMemo, useRef,
+} from 'react';
 import type { KodimCms } from 'kodim-cms';
 import type { AccessCheck } from 'kodim-cms/esm/content/access-check.js';
 import { User } from '../../server/db.js';
@@ -9,15 +10,13 @@ export interface Store {
   user: User | null,
 }
 
-function storeData<T>(store: Store, keys: string[], data: T) {
-  const hash = md5(keys.join('/'));
+function storeData<T>(store: Store, key: string, data: T) {
   // eslint-disable-next-line no-param-reassign
-  store.dataEntries[hash] = data;
+  store.dataEntries[key] = data;
 }
 
-function getData<T>(store: Store, keys: string[]): T | null {
-  const hash = md5(keys.join('/'));
-  return store.dataEntries[hash] ?? null;
+function getData<T>(store: Store, key: string): T | null {
+  return store.dataEntries[key] ?? null;
 }
 
 export interface Logins {
@@ -27,9 +26,10 @@ export interface Logins {
 export interface BaseAppContext {
   dataEntries: Record<string, any>,
   user: User | null,
-  storeData: (keys: string[], data: any) => void,
-  retrieveData: (keys: string[]) => any,
+  storeData: (key: string, data: any) => void,
+  retrieveData: (key: string) => any,
   url: string,
+  idRef: MutableRefObject<number>,
 }
 
 export interface ServerAppContext extends BaseAppContext {
@@ -52,17 +52,28 @@ const appContext = createContext<AppContext>({
   storeData: () => { },
   retrieveData: () => { },
   url: '/',
+  idRef: { current: 0 },
 });
 
 export const useAppContext = () => useContext(appContext);
 
+export const useId = (): string => {
+  const { idRef } = useAppContext();
+
+  return useMemo((): string => {
+    const newId = `id${idRef.current}`;
+    idRef.current += 1;
+    return newId;
+  }, []);
+};
+
 export function useData<T>(
-  keys: string[],
   fetcher: (serverContext: ServerAppContext) => Promise<T>,
 ): T {
+  const key = useId();
   const context = useAppContext();
 
-  const data = context.retrieveData(keys);
+  const data = context.retrieveData(key);
 
   if (data === null) {
     if (context.env === 'client') {
@@ -70,7 +81,7 @@ export function useData<T>(
     } else {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw fetcher(context).then(
-        (resource) => context.storeData(keys, resource),
+        (resource) => context.storeData(key, resource),
       );
     }
   }
@@ -87,13 +98,16 @@ export const ClientContextProvider = ({ children }: ClientProviderProps) => {
   // eslint-disable-next-line no-underscore-dangle
   const store = window.__STORE__ as Store;
 
+  const idRef = useRef(0);
+
   const value = useMemo((): ClientAppContext => ({
     dataEntries: store.dataEntries,
     user: store.user,
     env: 'client',
-    storeData: (keys: string[], data: any) => storeData(store, keys, data),
-    retrieveData: (keys: string[]) => getData(store, keys),
+    storeData: (key: string, data: any) => storeData(store, key, data),
+    retrieveData: (key: string) => getData(store, key),
     url: `${window.location.pathname}${window.location.search}`,
+    idRef,
   }), [store]);
 
   return (
@@ -115,16 +129,19 @@ interface ServerProviderProps {
 export const ServerContextProvider = ({
   cms, accessCheck, store, logins, children, url,
 }: ServerProviderProps) => {
+  const idRef = useRef(0);
+
   const value = useMemo((): ServerAppContext => ({
     dataEntries: store.dataEntries,
     user: store.user,
     env: 'server',
-    storeData: (keys: string[], data: any) => storeData(store, keys, data),
-    retrieveData: (keys: string[]) => getData(store, keys),
+    storeData: (key: string, data: any) => storeData(store, key, data),
+    retrieveData: (key: string) => getData(store, key),
     cms,
     accessCheck,
     logins,
     url,
+    idRef,
   }), [cms, accessCheck, store, logins, url]);
 
   return (

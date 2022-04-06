@@ -21,7 +21,6 @@ const ChapterView = ({ chapterLink }: Props) => {
   const courseLink = useParams().courseLink!;
 
   const chapter = useData(
-    ['root', courseLink, chapterLink],
     (serverContext: ServerAppContext) => fetchChapter(serverContext, courseLink, chapterLink),
   );
 

@@ -6,7 +6,6 @@ import './styles.scss';
 
 const LoginPage = () => {
   const githubClientId = useData(
-    ['logins'],
     async (serverContext: ServerAppContext) => serverContext.logins.githubClientId,
   );
 

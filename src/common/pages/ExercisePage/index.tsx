@@ -28,7 +28,6 @@ const fetchExercise = async (
 const ExercisePage = () => {
   const params = useParams();
   const exercise = useData(
-    ['root', params.courseLink!, params.chapterLink!, params.lessonLink!, params.excLink!],
     (serverContext: ServerAppContext) => fetchExercise(
       serverContext,
       params.courseLink!,

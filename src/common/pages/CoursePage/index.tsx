@@ -17,7 +17,6 @@ const CoursePage = () => {
   const courseLink = useParams().courseLink!;
 
   const course = useData(
-    ['root', courseLink],
     (serverContext: ServerAppContext) => fetchCourse(serverContext, courseLink),
   );
 

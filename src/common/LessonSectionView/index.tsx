@@ -50,13 +50,6 @@ const fetchSection = async (
 const LessonSectionView = ({ sectionLink }: Props) => {
   const params = useParams();
   const section = useData(
-    [
-      'root',
-      params.courseLink!,
-      params.chapterLink!,
-      params.lessonLink!,
-      sectionLink,
-    ],
     (serverContext: ServerAppContext) => fetchSection(
       serverContext,
       params.courseLink!,

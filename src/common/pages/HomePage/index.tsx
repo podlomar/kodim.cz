@@ -7,7 +7,7 @@ import CodexCard from '../../CodexCard';
 import './styles.scss';
 
 const HomePage = () => {
-  const coursesRoot = useData(['root'], async ({ cms, accessCheck }: ServerAppContext) => {
+  const coursesRoot = useData(async ({ cms, accessCheck }: ServerAppContext) => {
     return cms.getRoot(accessCheck).fetch();
   });
 

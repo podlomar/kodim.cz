@@ -25,7 +25,6 @@ const fetchLesson = async (
 const LessonPage = () => {
   const params = useParams();
   const lesson = useData(
-    ['root', params.courseLink!, params.chapterLink!, params.lessonLink!],
     (serverContext: ServerAppContext) => fetchLesson(
       serverContext,
       params.courseLink!,
