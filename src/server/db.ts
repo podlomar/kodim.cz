@@ -34,8 +34,3 @@ export const userSchema = new mongoose.Schema<User>({
 });
 
 export const UserModel = mongoose.model<User>('User', userSchema);
-
-export interface Account {
-  user: User;
-  claims: Claims;
-}

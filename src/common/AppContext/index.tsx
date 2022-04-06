@@ -3,7 +3,12 @@ import {
 } from 'react';
 import type { KodimCms } from 'kodim-cms';
 import type { AccessCheck } from 'kodim-cms/esm/content/access-check.js';
-import type { Account } from '../../server/db';
+import type { User, Claims } from '../../server/db';
+
+export interface Account {
+  user: User;
+  claims: Claims;
+}
 
 export type Store = Record<string, any>;
 

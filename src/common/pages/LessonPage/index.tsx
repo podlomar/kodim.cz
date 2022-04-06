@@ -10,6 +10,7 @@ import LessonBanner from '../LessonBanner';
 import './styles.scss';
 import NotFoundPage from '../NotFoundPage';
 import ForbiddenPage from '../ForbiddenPage';
+import Restricted from '../../Restricted';
 
 const fetchLesson = async (
   { cms, accessCheck }: ServerAppContext,
@@ -66,6 +67,14 @@ const LessonPage = () => {
           <p><strong>CHYBA: Tato lekce neobsahuje odkazy na žádné sekce!</strong></p>
         ) : <LessonSectionView sectionLink={activeSectionLink} />}
       </ArticleContent>
+      <Restricted claim="lessonManagement">
+        <div className="container management">
+          <p>
+            Pokud vidíš tento panel, máš práva ke správě lekcí v tomto běhu kurzu.
+            Zatím se tu nedá nic provést, ale to se časem změní a tvá moc naroste.
+          </p>
+        </div>
+      </Restricted>
     </Layout>
   );
 };

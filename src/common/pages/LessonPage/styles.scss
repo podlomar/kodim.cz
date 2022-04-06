@@ -5,3 +5,12 @@
   margin-bottom: 6rem;
   overflow: visible;  
 }
+
+.management {
+  @include page-content;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  margin-bottom: 4rem;
+
+  background-color: white;;
+}
