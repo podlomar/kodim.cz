@@ -1,4 +1,5 @@
 import queryString from 'query-string';
+import { Helmet } from 'react-helmet';
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
 import { ServerAppContext, useData } from '../../AppContext';
@@ -19,6 +20,9 @@ const LoginPage = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Přihlášení</title>
+      </Helmet>
       <Navbar showBrand />
       <div className="container login">
         <div className="login-panel">

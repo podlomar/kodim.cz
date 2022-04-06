@@ -7,6 +7,7 @@ import { User } from '../../server/db.js';
 export interface Store {
   dataEntries: Record<string, any>,
   user: User | null,
+  baseUrl: string,
 }
 
 function storeData<T>(store: Store, keys: string[], data: T) {
@@ -30,6 +31,7 @@ export interface BaseAppContext {
   storeData: (keys: string[], data: any) => void,
   retrieveData: (keys: string[]) => any,
   url: string,
+  baseUrl: string,
 }
 
 export interface ServerAppContext extends BaseAppContext {
@@ -52,6 +54,7 @@ const appContext = createContext<AppContext>({
   storeData: () => { },
   retrieveData: () => { },
   url: '/',
+  baseUrl: '/',
 });
 
 export const useAppContext = () => useContext(appContext);
@@ -94,6 +97,7 @@ export const ClientContextProvider = ({ children }: ClientProviderProps) => {
     storeData: (keys: string[], data: any) => storeData(store, keys, data),
     retrieveData: (keys: string[]) => getData(store, keys),
     url: `${window.location.pathname}${window.location.search}`,
+    baseUrl: store.baseUrl,
   }), [store]);
 
   return (
@@ -110,10 +114,11 @@ interface ServerProviderProps {
   store: Store;
   children: React.ReactNode;
   url: string
+  baseUrl: string
 }
 
 export const ServerContextProvider = ({
-  cms, accessCheck, store, logins, children, url,
+  cms, accessCheck, store, logins, children, url, baseUrl,
 }: ServerProviderProps) => {
   const value = useMemo((): ServerAppContext => ({
     dataEntries: store.dataEntries,
@@ -125,7 +130,8 @@ export const ServerContextProvider = ({
     accessCheck,
     logins,
     url,
-  }), [cms, accessCheck, store, logins, url]);
+    baseUrl,
+  }), [cms, accessCheck, store, logins, url, baseUrl]);
 
   return (
     <appContext.Provider value={value}>
