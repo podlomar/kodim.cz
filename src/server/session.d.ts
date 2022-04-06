@@ -5,8 +5,10 @@ import { Claims, User } from './db.js';
 
 declare module 'express-session' {
   interface SessionData {
-    user: User;
-    claims: Claims;
+    account: {
+      user: User;
+      claims: Claims;
+    }
     returnUrl: string;
   }
 }

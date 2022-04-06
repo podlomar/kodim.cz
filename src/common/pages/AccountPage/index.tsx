@@ -1,13 +1,21 @@
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
-import { useAppContext } from '../../AppContext';
+import { ServerAppContext, useData } from '../../AppContext';
 import NotFoundPage from '../NotFoundPage';
 import './styles.scss';
 
-const AccountPage = () => {
-  const { user } = useAppContext();
+const getUserName = (context: ServerAppContext): string | null => {
+  if (context.account === null) {
+    return null;
+  }
 
-  if (user === null) {
+  return context.account.user.name;
+};
+
+const AccountPage = () => {
+  const userName = useData(getUserName);
+
+  if (userName === null) {
     return <NotFoundPage />;
   }
 
@@ -16,7 +24,7 @@ const AccountPage = () => {
       <Navbar showBrand />
       <div className="container account">
         <div className="account-panel">
-          <p>{user.name}</p>
+          <p>{userName}</p>
           <a href="/odhlasit">Odhlásit</a>
         </div>
       </div>

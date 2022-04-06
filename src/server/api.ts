@@ -4,13 +4,13 @@ import { GroupModel, UserModel } from './db';
 export const api = express.Router();
 
 api.use(async (req, res, next) => {
-  if (req.session.user === undefined) {
+  if (req.session.account === undefined) {
     res.status(403);
     res.send();
     return;
   }
 
-  if (req.session.user.login !== 'podlomar') {
+  if (req.session.account.user.login !== 'podlomar') {
     res.status(403);
     res.send();
     return;

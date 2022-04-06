@@ -48,8 +48,7 @@ server.use('/cms', cmsApp.router);
 server.use('/api', api);
 
 server.get('/odhlasit', (req, res) => {
-  req.session.user = undefined;
-  req.session.claims = undefined;
+  req.session.account = undefined;
   res.redirect('/');
 });
 
@@ -66,7 +65,7 @@ server.get('/prihlasit/github', async (req, res) => {
   );
 
   const parsed = queryString.parse(data);
-  const { data: user } = await axios.get(
+  const { data: githubUser } = await axios.get(
     'https://api.github.com/user',
     {
       headers: {
@@ -76,35 +75,35 @@ server.get('/prihlasit/github', async (req, res) => {
     },
   );
 
-  let dbUser = await UserModel.findOne({ login: user.login });
+  let dbUser = await UserModel.findOne({ login: githubUser.login });
 
   if (dbUser === null) {
     dbUser = new UserModel({
-      login: user.login,
-      name: user.name ?? user.login,
-      avatarUrl: user.avatar_url,
-      email: user.email ?? undefined,
+      login: githubUser.login,
+      name: githubUser.name ?? githubUser.login,
+      avatarUrl: githubUser.avatar_url,
+      email: githubUser.email ?? undefined,
       groups: [],
     });
     await dbUser.save();
   }
 
   await dbUser.populate('groups');
-  req.session.user = dbUser.toObject();
-  const claims: Claims = req.session.user.groups.reduce((acc: Claims, group): Claims => ({
+  const user = dbUser.toObject();
+  const claims: Claims = user.groups.reduce((acc: Claims, group): Claims => ({
     content: [...acc.content, ...group.claims.content],
     web: [...acc.web, ...group.claims.web],
   }), { content: [], web: [] });
 
   console.log('claims', claims);
 
-  req.session.claims = claims;
+  req.session.account = { user, claims };
   res.redirect(req.session.returnUrl ?? '/');
 });
 
 server.use('/prihlasit', (req, res, next) => {
   const returnUrl = typeof req.query.returnUrl === 'string' ? req.query.returnUrl : '/';
-  if (req.session.user) {
+  if (req.session.account !== undefined) {
     res.redirect(returnUrl);
     return;
   }
@@ -117,14 +116,11 @@ server.get('/kurzy/:course/:chapter', (req, res) => {
 });
 
 server.get('*', async (req, res) => {
-  const store = {
-    dataEntries: {},
-    user: req.session.user ?? null,
-  };
+  const store = {};
 
   const accessUser: User = {
-    login: req.session.user === undefined ? '' : req.session.user.login,
-    access: req.session.user === undefined ? 'public' : 'registered',
+    login: req.session.account?.user.login ?? '',
+    access: req.session.account === undefined ? 'public' : 'registered',
   };
 
   let defaultAccessCheck: AccessCheck = AccessClaimCheck.create(accessUser, '/kurzy');
@@ -146,9 +142,10 @@ server.get('*', async (req, res) => {
     >
       <ServerContextProvider
         cms={cms}
-        accessCheck={req.session.claims === undefined
+        account={req.session.account ?? null}
+        accessCheck={req.session.account === undefined
           ? defaultAccessCheck
-          : AccessClaimCheck.create(accessUser, ...req.session.claims.content)}
+          : AccessClaimCheck.create(accessUser, ...req.session.account.claims.content)}
         store={store}
         logins={{
           githubClientId: config.githubApp.clientId,
