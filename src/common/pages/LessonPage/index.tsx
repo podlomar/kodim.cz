@@ -1,4 +1,5 @@
 import { useParams } from 'react-router';
+import { Helmet } from 'react-helmet';
 import EntryLink from '../../EntryLink';
 import Navbar from '../../Navbar';
 import ArticleContent from '../../ArticleContent';
@@ -58,8 +59,23 @@ const LessonPage = () => {
     </SideNavLink>
   ));
 
+  const activeSectionTitle = lesson.content.sections.find(
+    (secRef) => secRef.link === activeSectionLink,
+  )?.title;
+
   return (
     <Layout>
+      <Helmet>
+        <title>
+          {activeSectionTitle
+            ? `${activeSectionTitle} | ${lesson.title}`
+            : lesson.title}
+        </title>
+        <meta
+          name="description"
+          content={lesson.content.lead}
+        />
+      </Helmet>
       <Navbar crumbs={lesson.crumbs} showBrand />
       <LessonBanner lesson={lesson} />
       <ArticleContent navElement={articleNavigation}>
