@@ -1,4 +1,5 @@
 import { useParams } from 'react-router';
+import { Helmet } from 'react-helmet';
 import Navbar from '../../Navbar';
 import Layout from '../../Layout';
 import { ServerAppContext, useData } from '../../AppContext';
@@ -48,6 +49,9 @@ const ExercisePage = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>{exercise.title}</title>
+      </Helmet>
       <Navbar crumbs={exercise.crumbs} showBrand />
       <div className="stripe">
         <div className="container exercise-banner">

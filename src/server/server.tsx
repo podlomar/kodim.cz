@@ -14,10 +14,10 @@ import sessions from 'express-session';
 import {
   AccessCheck, AccessClaimCheck, AccessGrantAll, User,
 } from 'kodim-cms/esm/content/access-check.js';
+import { Helmet } from 'react-helmet';
 import { api } from './api';
 import { Claims, UserModel } from './db';
-import Html from '../common/Html';
-import { ServerContextProvider } from '../common/AppContext';
+import { ServerContextProvider, Store } from '../common/AppContext';
 import App from '../common/App';
 
 const config = json5.parse(fs.readFileSync('./server-config.json5', 'utf-8'));
@@ -116,7 +116,7 @@ server.get('/kurzy/:course/:chapter', (req, res) => {
 });
 
 server.get('*', async (req, res) => {
-  const store = {};
+  const store: Store = {};
 
   const accessUser: User = {
     login: req.session.account?.user.login ?? '',
@@ -134,34 +134,47 @@ server.get('*', async (req, res) => {
     );
   }
 
-  const html = () => (
-    <Html
+  const app = () => (
+    <ServerContextProvider
+      cms={cms}
+      account={req.session.account ?? null}
+      accessCheck={req.session.account === undefined
+        ? defaultAccessCheck
+        : AccessClaimCheck.create(accessUser, ...req.session.account.claims.content)}
       store={store}
-      bundlePath={`/${stats.bundle}`}
+      logins={{
+        githubClientId: config.githubApp.clientId,
+      }}
+      url={req.originalUrl}
       baseUrl={config.serverUrl}
     >
-      <ServerContextProvider
-        cms={cms}
-        account={req.session.account ?? null}
-        accessCheck={req.session.account === undefined
-          ? defaultAccessCheck
-          : AccessClaimCheck.create(accessUser, ...req.session.account.claims.content)}
-        store={store}
-        logins={{
-          githubClientId: config.githubApp.clientId,
-        }}
-        url={req.originalUrl}
-      >
-        <StaticRouter location={req.url}>
-          <App />
-        </StaticRouter>
-      </ServerContextProvider>
-    </Html>
+      <StaticRouter location={req.url}>
+        <App />
+      </StaticRouter>
+    </ServerContextProvider>
   );
 
-  const element = createElement(html);
+  const element = createElement(app);
   await ssrPrepass(element);
-  res.send(`<!DOCTYPE html>${renderToString(element)}`);
+  const appContent = renderToString(element);
+  const helmet = Helmet.renderStatic();
+  res.send(`<!DOCTYPE html>
+    <html ${helmet.htmlAttributes.toString()}>
+      <head>
+        ${helmet.title.toString()}
+        ${helmet.meta.toString()}
+        ${helmet.link.toString()}
+        ${helmet.script.toString()}
+      </head>
+      <body ${helmet.bodyAttributes.toString()}>
+        <script>
+          window.__STORE__ = ${json5.stringify(store)}
+        </script>
+        <script defer src="/${stats.bundle}"></script>
+        <div id="app">${appContent}</div>
+      </body>
+    </html>
+  `);
 });
 
 server.listen(config.port, () => {

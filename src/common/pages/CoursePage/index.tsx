@@ -1,4 +1,5 @@
 import { useParams } from 'react-router';
+import { Helmet } from 'react-helmet';
 import Layout from '../../Layout';
 import ChapterView from '../../ChapterView';
 import Navbar from '../../Navbar';
@@ -34,6 +35,13 @@ const CoursePage = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>{course.title}</title>
+        <meta
+          name="description"
+          content={course.content.lead}
+        />
+      </Helmet>
       <Navbar crumbs={course.crumbs} showBrand />
       <CourseBanner course={course} />
 
