@@ -1,13 +1,13 @@
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
 import Layout from '../../Layout';
+import NotFoundPage from '../NotFoundPage';
+import ForbiddenPage from '../ForbiddenPage';
 import ChapterView from '../../ChapterView';
 import Navbar from '../../Navbar';
 import CourseBanner from '../../CourseBanner';
 import { ServerAppContext, useData } from '../../AppContext';
 import './styles.scss';
-import NotFoundPage from '../NotFoundPage';
-import ForbiddenPage from '../ForbiddenPage';
 
 const fetchCourse = async (
   { cms, accessCheck }: ServerAppContext,
