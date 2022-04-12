@@ -10,7 +10,7 @@ interface Props {
   link: string,
   path?: string,
   demand: number,
-  offerSolution: boolean,
+  draftSolution: boolean,
   jsml: Jsml,
 }
 
@@ -37,7 +37,7 @@ const SolutionEntryLink = ({ path }: { path: string }) => {
 };
 
 const ExerciseView = ({
-  num, title, link, demand, offerSolution, path, jsml,
+  num, title, link, demand, draftSolution, path, jsml,
 }: Props) => {
   return (
     <div id={link} className="exercise-assign">
@@ -56,7 +56,7 @@ const ExerciseView = ({
       <div className="exercise-assign__body">
         <JsmlContainer jsml={jsml} />
       </div>
-      {offerSolution && path ? (
+      {!draftSolution && path ? (
         <div className="exercise-assign__controls">
           <SolutionEntryLink path={path} />
         </div>
