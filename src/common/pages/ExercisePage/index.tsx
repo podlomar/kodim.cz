@@ -80,7 +80,7 @@ const ExercisePage = () => {
                   demand={exercise.content.demand}
                   num={exercise.content.num}
                   title={exercise.title}
-                  draftSolution
+                  hasSolution={false}
                   jsml={exercise.content.assignJsml}
                   link="zadani"
                 />

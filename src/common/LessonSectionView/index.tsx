@@ -20,7 +20,7 @@ const components: JsmlComponents = {
         link: String(attrs.link),
         demand: Number(attrs.demand),
         path: String(attrs.path),
-        draftSolution: Boolean(attrs.draftSolution),
+        hasSolution: Boolean(attrs.hasSolution),
         jsml: children,
       },
     );
