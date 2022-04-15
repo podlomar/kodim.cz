@@ -1,7 +1,6 @@
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { useMemo } from 'react';
-import EntryLink from '../../EntryLink';
 import Navbar from '../../Navbar';
 import ArticleContent from '../../ArticleContent';
 import LessonSectionView from '../../LessonSectionView';
@@ -14,6 +13,7 @@ import NotFoundPage from '../NotFoundPage';
 import ForbiddenPage from '../ForbiddenPage';
 import Restricted from '../../Restricted';
 import EditPageButton, { EditPageButtonProps } from '../../EditPageButton';
+import { Lock } from '../../icons';
 
 const fetchLesson = async (
   { cms, accessCheck }: ServerAppContext,
@@ -63,11 +63,15 @@ const LessonPage = () => {
 
   const articleNavigation = lesson.content.sections.map((secRef) => (
     <SideNavLink key={secRef.link} active={secRef.link === activeSectionLink}>
-      <EntryLink
-        path={secRef.path}
-        text={secRef.title}
-        forbidden={secRef.status === 'forbidden'}
-      />
+      {secRef.status === 'forbidden' ? (
+        <>
+          <Lock />
+          {' '}
+          {secRef.title}
+        </>
+      ) : (
+        <a href={secRef.path}>{secRef.title}</a>
+      )}
     </SideNavLink>
   ));
 

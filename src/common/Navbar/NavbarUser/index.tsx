@@ -1,4 +1,5 @@
 import { ServerAppContext, useData } from '../../AppContext';
+import Button from '../../Button';
 import useLoginUrl from '../../pages/useLoginUrl';
 import './styles.scss';
 
@@ -27,7 +28,7 @@ const NavbarUser = () => {
   if (user === null) {
     return (
       <div className="navbar-user">
-        <a className="btn" href={loginUrl}>Přihlásit</a>
+        <Button href={loginUrl}>Přihlásit</Button>
       </div>
     );
   }

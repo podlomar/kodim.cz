@@ -28,7 +28,6 @@ const SolutionEntryLink = ({ path }: { path: string }) => {
 
   return (
     <EntryLink
-      className="btn"
       path={path}
       text={isForbidden ? 'Řešení zamčeno' : 'Zobrazit řešení'}
       forbidden={isForbidden}

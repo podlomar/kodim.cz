@@ -27,7 +27,6 @@ const CourseCard = ({ courseRef }: Props) => {
 
       <p className="course-card__controls">
         <EntryLink
-          className="btn"
           path={courseRef.path}
           text={isForbidden ? 'Kurz zamčen' : 'Přejít na kurz'}
           forbidden={isForbidden}

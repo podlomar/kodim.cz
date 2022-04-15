@@ -1,0 +1,26 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  background-color: $color-palette-2;
+  color: white;
+  padding: 0.6rem 1rem;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+  text-decoration: none;
+
+  &:is(a, button):hover {
+    background-color: $color-palette-2-darker;
+  }
+
+  &:not(a, button) {
+    background-color: $color-palette-2-lighter;
+  }
+
+  &__icon {
+    position: relative;
+    top: -0.17em;
+    align-self: flex-start;
+  }
+}
