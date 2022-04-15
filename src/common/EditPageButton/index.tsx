@@ -1,3 +1,5 @@
+import Pencil from '../icons/Pencil';
+
 export interface EditPageButtonProps {
   path: string
   mode: 'edit' | 'tree' | 'blob'
@@ -9,7 +11,10 @@ const EditPageButton = ({ path, mode }: EditPageButtonProps) => {
   const repositoryBaseUrl = 'https://github.com/Czechitas-podklady-WEB/daweb-vyuka';
 
   return (
-    <a className="btn" href={`${repositoryBaseUrl}/${mode}/${branch}/${path}`}>Upravit tuto stránku na GitHubu</a>
+    <a className="btn" href={`${repositoryBaseUrl}/${mode}/${branch}/${path}`}>
+      <Pencil />
+      Upravit tuto stránku na GitHubu
+    </a>
   );
 };
 
