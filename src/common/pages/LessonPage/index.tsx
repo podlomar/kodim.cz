@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
+import { useMemo } from 'react';
 import EntryLink from '../../EntryLink';
 import Navbar from '../../Navbar';
 import ArticleContent from '../../ArticleContent';
@@ -12,6 +13,7 @@ import './styles.scss';
 import NotFoundPage from '../NotFoundPage';
 import ForbiddenPage from '../ForbiddenPage';
 import Restricted from '../../Restricted';
+import EditPageButton, { EditPageButtonProps } from '../../EditPageButton';
 
 const fetchLesson = async (
   { cms, accessCheck }: ServerAppContext,
@@ -33,6 +35,16 @@ const LessonPage = () => {
       params.chapterLink!,
       params.lessonLink!,
     ),
+  );
+
+  const editPageParameters = useMemo<EditPageButtonProps>(
+    () => {
+      if (params.sectionLink) {
+        return { mode: 'edit', path: `${params.chapterLink}/${params.lessonLink}/${params.sectionLink}.md` };
+      }
+      return { mode: 'tree', path: `${params.chapterLink}/${params.lessonLink}` };
+    },
+    [params],
   );
 
   if (lesson.status === 'not-found') {
@@ -85,10 +97,7 @@ const LessonPage = () => {
       </ArticleContent>
       <Restricted claim="lessonManagement">
         <div className="container management">
-          <p>
-            Pokud vidíš tento panel, máš práva ke správě lekcí v tomto běhu kurzu.
-            Zatím se tu nedá nic provést, ale to se časem změní a tvá moc naroste.
-          </p>
+          <EditPageButton mode={editPageParameters.mode} path={editPageParameters.path} />
         </div>
       </Restricted>
     </Layout>
