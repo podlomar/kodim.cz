@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
+import { useMemo } from 'react';
 import Navbar from '../../Navbar';
 import Layout from '../../Layout';
 import { ServerAppContext, useData } from '../../AppContext';
@@ -10,6 +11,8 @@ import './styles.scss';
 import NotFoundPage from '../NotFoundPage';
 import ForbiddenPage from '../ForbiddenPage';
 import ExerciseView from '../../ExerciseView';
+import Restricted from '../../Restricted';
+import EditPageButton from '../../EditPageButton';
 
 const fetchExercise = async (
   { cms, accessCheck }: ServerAppContext,
@@ -37,6 +40,11 @@ const ExercisePage = () => {
       params.sectionLink!,
       params.excLink!,
     ),
+  );
+
+  const editPagePath = useMemo(
+    () => `${params.chapterLink}/${params.lessonLink}/${params.excLink?.replace('>', '/')}.md`,
+    [params],
   );
 
   if (exercise.status === 'not-found') {
@@ -90,6 +98,11 @@ const ExercisePage = () => {
             )
         }
       </ArticleContent>
+      <Restricted claim="lessonManagement">
+        <div className="container management">
+          <EditPageButton mode="edit" path={editPagePath} />
+        </div>
+      </Restricted>
     </Layout>
   );
 };
