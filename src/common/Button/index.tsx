@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react';
+import { ReactNode } from 'react';
 import './style.scss';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 const Button = ({ children, href, icon }: Props) => {
   const baseClassName = 'btn';
 
-  const content = useMemo(() => (
+  const content = (
     <>
       {icon && (
       <span className="btn__icon">
@@ -19,7 +19,7 @@ const Button = ({ children, href, icon }: Props) => {
       )}
       {children}
     </>
-  ), [children, icon]);
+  );
 
   if (href === undefined) {
     return <span className={baseClassName}>{content}</span>;
