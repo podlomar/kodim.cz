@@ -20,7 +20,7 @@
     "express-session": "^1.17.2",
     "html-escaper": "^3.0.3",
     "json5": "^2.2.0",
-    "kodim-cms": "git+https://github.com/podlomar/kodim-cms.git#v0.4.1",
+    "kodim-cms": "git+https://github.com/podlomar/kodim-cms.git#v0.4.2",
     "mongoose": "^6.1.5",
     "query-string": "^7.1.0",
     "react": "^17.0.2",

@@ -1,18 +1,22 @@
+import { ResourceRepository } from 'kodim-cms/esm/content/resource';
 import Button from '../Button';
 import Pencil from '../icons/Pencil';
 
-export interface EditPageButtonProps {
-  path: string
+interface Props {
+  repo?: ResourceRepository
+  // @TODO: extensions should be handled by kodim-cms by default
+  extension?: string,
   mode: 'edit' | 'tree' | 'blob'
 }
 
-const EditPageButton = ({ path, mode }: EditPageButtonProps) => {
-  // @TODO: get branch and repositoryBaseUrl from kodim-cms
-  const branch = 'master';
-  const repositoryBaseUrl = 'https://github.com/Czechitas-podklady-WEB/daweb-vyuka';
+const EditPageButton = ({ repo, extension, mode }: Props) => {
+  if (repo === undefined) {
+    return <span>No repository</span>;
+  }
 
+  const href = `${repo.url}/${mode}/${repo.branch}/${repo.contentPath}${extension ?? ''}`;
   return (
-    <Button icon={<Pencil />} href={`${repositoryBaseUrl}/${mode}/${branch}/${path}`}>
+    <Button icon={<Pencil />} href={href}>
       Upravit tuto stránku na GitHubu
     </Button>
   );

@@ -8,6 +8,8 @@ import ExerciseView from '../ExerciseView';
 import JsmlContainer from '../JsmlContainer';
 import { JsmlComponents } from '../JsmlContainer/components';
 import SiblingLink from '../SiblingLink';
+import Restricted from '../Restricted';
+import EditPageButton from '../EditPageButton';
 import './styles.scss';
 
 const components: JsmlComponents = {
@@ -75,6 +77,16 @@ const LessonSectionView = ({ sectionLink }: Props) => {
             <p>Lekce nejspíš odkazuje na neexistující sekci.</p>
           </ContentAlert>
         ) : <JsmlContainer components={components} jsml={section.content.jsml} />}
+
+      <Restricted claim="lessonManagement">
+        <div className="content-controls">
+          <EditPageButton
+            repo={section.repository}
+            extension=".md"
+            mode="edit"
+          />
+        </div>
+      </Restricted>
 
       {section.content.type === 'broken' ? null : (
         <div className="section-navlinks">

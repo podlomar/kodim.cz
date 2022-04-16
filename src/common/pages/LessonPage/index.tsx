@@ -1,6 +1,5 @@
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
-import { useMemo } from 'react';
 import Navbar from '../../Navbar';
 import ArticleContent from '../../ArticleContent';
 import LessonSectionView from '../../LessonSectionView';
@@ -8,12 +7,10 @@ import Layout from '../../Layout';
 import { ServerAppContext, useData } from '../../AppContext';
 import SideNavLink from '../../SideNavLink';
 import LessonBanner from '../LessonBanner';
-import './styles.scss';
 import NotFoundPage from '../NotFoundPage';
 import ForbiddenPage from '../ForbiddenPage';
-import Restricted from '../../Restricted';
-import EditPageButton, { EditPageButtonProps } from '../../EditPageButton';
 import { Lock } from '../../icons';
+import './styles.scss';
 
 const fetchLesson = async (
   { cms, accessCheck }: ServerAppContext,
@@ -35,16 +32,6 @@ const LessonPage = () => {
       params.chapterLink!,
       params.lessonLink!,
     ),
-  );
-
-  const editPageParameters = useMemo<EditPageButtonProps>(
-    () => {
-      if (params.sectionLink) {
-        return { mode: 'edit', path: `${params.chapterLink}/${params.lessonLink}/${params.sectionLink}.md` };
-      }
-      return { mode: 'tree', path: `${params.chapterLink}/${params.lessonLink}` };
-    },
-    [params],
   );
 
   if (lesson.status === 'not-found') {
@@ -99,11 +86,6 @@ const LessonPage = () => {
           <p><strong>CHYBA: Tato lekce neobsahuje odkazy na žádné sekce!</strong></p>
         ) : <LessonSectionView sectionLink={activeSectionLink} />}
       </ArticleContent>
-      <Restricted claim="lessonManagement">
-        <div className="container management">
-          <EditPageButton mode={editPageParameters.mode} path={editPageParameters.path} />
-        </div>
-      </Restricted>
     </Layout>
   );
 };
