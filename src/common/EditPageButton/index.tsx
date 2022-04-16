@@ -17,7 +17,7 @@ const EditPageButton = ({ repo, extension, mode }: Props) => {
   const href = `${repo.url}/${mode}/${repo.branch}/${repo.contentPath}${extension ?? ''}`;
   return (
     <Button icon={<Pencil />} href={href}>
-      Upravit tuto stránku na GitHubu
+      Upravit stránku na GitHubu
     </Button>
   );
 };

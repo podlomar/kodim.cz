@@ -109,6 +109,8 @@ $code-emph-color: #e3e3e3;
 }
 
 .content-controls {
-  padding: 2rem;
+  @include article-element;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   text-align: right;
 }
