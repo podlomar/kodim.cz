@@ -51,21 +51,3 @@ h3 {
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
-
-.btn {
-  background-color: $color-palette-2;
-  color: white;
-  padding: 0.6rem 1rem;
-  border: none;
-  outline: none;
-  border-radius: 0.5rem;
-  text-decoration: none;
-
-  &:is(a, button):hover {
-    background-color: $color-palette-2-darker;
-  }
-
-  &:not(a, button) {
-    background-color: $color-palette-2-lighter;
-  }
-}

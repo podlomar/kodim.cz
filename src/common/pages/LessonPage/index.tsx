@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
-import EntryLink from '../../EntryLink';
+import { useMemo } from 'react';
 import Navbar from '../../Navbar';
 import ArticleContent from '../../ArticleContent';
 import LessonSectionView from '../../LessonSectionView';
@@ -12,6 +12,8 @@ import './styles.scss';
 import NotFoundPage from '../NotFoundPage';
 import ForbiddenPage from '../ForbiddenPage';
 import Restricted from '../../Restricted';
+import EditPageButton, { EditPageButtonProps } from '../../EditPageButton';
+import { Lock } from '../../icons';
 
 const fetchLesson = async (
   { cms, accessCheck }: ServerAppContext,
@@ -35,6 +37,16 @@ const LessonPage = () => {
     ),
   );
 
+  const editPageParameters = useMemo<EditPageButtonProps>(
+    () => {
+      if (params.sectionLink) {
+        return { mode: 'edit', path: `${params.chapterLink}/${params.lessonLink}/${params.sectionLink}.md` };
+      }
+      return { mode: 'tree', path: `${params.chapterLink}/${params.lessonLink}` };
+    },
+    [params],
+  );
+
   if (lesson.status === 'not-found') {
     return <NotFoundPage />;
   }
@@ -51,11 +63,15 @@ const LessonPage = () => {
 
   const articleNavigation = lesson.content.sections.map((secRef) => (
     <SideNavLink key={secRef.link} active={secRef.link === activeSectionLink}>
-      <EntryLink
-        path={secRef.path}
-        text={secRef.title}
-        forbidden={secRef.status === 'forbidden'}
-      />
+      {secRef.status === 'forbidden' ? (
+        <>
+          <Lock />
+          {' '}
+          {secRef.title}
+        </>
+      ) : (
+        <a href={secRef.path}>{secRef.title}</a>
+      )}
     </SideNavLink>
   ));
 
@@ -85,10 +101,7 @@ const LessonPage = () => {
       </ArticleContent>
       <Restricted claim="lessonManagement">
         <div className="container management">
-          <p>
-            Pokud vidíš tento panel, máš práva ke správě lekcí v tomto běhu kurzu.
-            Zatím se tu nedá nic provést, ale to se časem změní a tvá moc naroste.
-          </p>
+          <EditPageButton mode={editPageParameters.mode} path={editPageParameters.path} />
         </div>
       </Restricted>
     </Layout>

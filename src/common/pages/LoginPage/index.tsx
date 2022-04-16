@@ -4,6 +4,8 @@ import Layout from '../../Layout';
 import Navbar from '../../Navbar';
 import { ServerAppContext, useData } from '../../AppContext';
 import './styles.scss';
+import Button from '../../Button';
+import GitHub from '../../icons/GitHub';
 
 const LoginPage = () => {
   const githubClientId = useData(
@@ -29,10 +31,9 @@ const LoginPage = () => {
             Přihlášení
           </div>
           <div className="login-panel__apps">
-            <a className="btn btn-app-login" href={loginUrl}>
-              <i className="github-icon" />
-              <span>Pokračovat přes GitHub</span>
-            </a>
+            <Button icon={<GitHub />} href={loginUrl}>
+              Pokračovat přes GitHub
+            </Button>
           </div>
         </div>
       </div>

@@ -22,7 +22,6 @@ const LessonCard = ({ lessonRef }: Props) => {
 
       <div className="lesson-card__controls">
         <EntryLink
-          className="btn"
           path={lessonRef.path}
           text={isForbidden ? 'Lekce zamčena' : 'Přejít na lekci'}
           forbidden={isForbidden}
