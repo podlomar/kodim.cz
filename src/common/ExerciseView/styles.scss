@@ -1,4 +1,4 @@
-$assign-code-emph-color: #ffe353;
+$assign-code-emph-color: #d8d8d8;
 
 .exercise-assign {
   scroll-margin-top: 3rem;
@@ -28,14 +28,14 @@ $assign-code-emph-color: #ffe353;
   &__num {
     margin-left: 4rem;
   }
-  
+
   &__head {
     display: flex;
     align-items: flex-start;
     padding: 0 4rem;
   }
 
-  &__body > *{
+  &__body > * {
     @include article-element;
   }
 
@@ -78,4 +78,3 @@ $assign-code-emph-color: #ffe353;
   font-size: 0.8rem;
   font-weight: 800;
 }
-
