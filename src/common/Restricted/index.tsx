@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
-import { Account, ServerAppContext, useData } from '../AppContext';
+import { ServerAppContext, useData } from '../AppContext';
+import type { Account } from '../../server/account';
+
 import './style.scss';
 
 interface Props {
