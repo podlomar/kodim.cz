@@ -4,7 +4,7 @@ import { useAppContext } from '../AppContext';
 const title = 'Kódím.cz';
 
 const Head = () => {
-  const { baseUrl } = useAppContext();
+  const { serverUrl } = useAppContext();
 
   return (
     <Helmet defaultTitle={title} titleTemplate={`%s | ${title}`}>
@@ -71,7 +71,7 @@ const Head = () => {
 
       <meta property="og:image:width" content="2400" />
       <meta property="og:image:height" content="1260" />
-      <meta property="og:image" content={`${baseUrl}/assets/og-image.png`} />
+      <meta property="og:image" content={`${serverUrl}/assets/og-image.png`} />
 
       <meta name="color-scheme" content="only light" />
       <meta name="theme-color" content="#2C3E66" />

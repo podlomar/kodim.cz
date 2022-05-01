@@ -1,4 +1,4 @@
-import express, { Request } from 'express';
+import express, { ErrorRequestHandler, Request } from 'express';
 import fs from 'fs';
 import json5 from 'json5';
 import { createElement } from 'react';
@@ -10,7 +10,6 @@ import { CmsApp } from 'kodim-cms/esm/server.js';
 import mongoose from 'mongoose';
 import axios from 'axios';
 import queryString from 'query-string';
-import sessions from 'express-session';
 import {
   AccessCheck,
   AccessClaimCheck,
@@ -40,13 +39,6 @@ const server = express();
 server.use(express.json());
 server.use(cookieParser());
 server.use(
-  sessions({
-    secret: config.sessionSecret,
-    saveUninitialized: true,
-    resave: false,
-  }),
-);
-server.use(
   expressjwt({
     secret: config.sessionSecret,
     algorithms: ['HS256'],
@@ -59,6 +51,28 @@ server.use(
     },
   }),
 );
+
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).send(`
+      <!DOCTYPE html>
+      <html lang="cs">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>401</title>
+        </head>
+        <body>
+          <pre>Chyba 401: Chybné přihlašovací údaje. Zkuste vymazat cookies</pre>
+        </body>
+      </html>
+    `);
+  } else {
+    next(err);
+  }
+};
+
+server.use(errorHandler);
 
 server.use('/assets', express.static('./assets', { fallthrough: false }));
 server.use('/js', express.static('./js', { fallthrough: false }));
@@ -73,6 +87,24 @@ server.get('/odhlasit', (req, res) => {
 });
 
 server.get('/prihlasit/github', async (req, res) => {
+  const parseReturnUrl = (state: any): string => {
+    if (typeof state !== 'string') {
+      return '/';
+    }
+
+    try {
+      const parsed = JSON.parse(state);
+      if (typeof parsed.returnUrl === 'string') {
+        return parsed.returnUrl;
+      }
+      return '/';
+    } catch (e) {
+      return '/';
+    }
+  };
+
+  const returnUrl = parseReturnUrl(req.query.state);
+
   const { data } = await axios.get(
     'https://github.com/login/oauth/access_token',
     {
@@ -108,8 +140,7 @@ server.get('/prihlasit/github', async (req, res) => {
 
   const token = jwt.sign({ login: user.login }, config.sessionSecret);
   res.cookie('token', token);
-
-  res.redirect(req.session.returnUrl ?? '/');
+  res.redirect(returnUrl);
 });
 
 server.use('/prihlasit', (req, res, next) => {
@@ -118,7 +149,6 @@ server.use('/prihlasit', (req, res, next) => {
     res.redirect(returnUrl);
     return;
   }
-  req.session.returnUrl = returnUrl;
   next();
 });
 
@@ -163,7 +193,7 @@ server.get('*', async (req, res) => {
         githubClientId: config.githubApp.clientId,
       }}
       url={req.originalUrl}
-      baseUrl={config.serverUrl}
+      serverUrl={config.serverUrl}
     >
       <StaticRouter location={req.url}>
         <App />

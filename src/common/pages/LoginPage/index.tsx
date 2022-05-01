@@ -1,23 +1,29 @@
 import queryString from 'query-string';
+import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
 import { ServerAppContext, useData } from '../../AppContext';
-import './styles.scss';
 import Button from '../../Button';
 import GitHub from '../../icons/GitHub';
+import './styles.scss';
 
 const LoginPage = () => {
+  const [searchParams] = useSearchParams();
+  const returnUrl = searchParams.get('returnUrl') ?? '/';
+
   const githubClientId = useData(
     async (serverContext: ServerAppContext) => serverContext.logins.githubClientId,
   );
 
-  const params = queryString.stringify({
+  const authParams = queryString.stringify({
     client_id: githubClientId,
     scope: 'read:user user:email',
     allow_signup: true,
+    state: JSON.stringify({ returnUrl }),
   });
-  const loginUrl = `https://github.com/login/oauth/authorize?${params}`;
+
+  const loginUrl = `https://github.com/login/oauth/authorize?${authParams}`;
 
   return (
     <Layout>

@@ -1,6 +1,5 @@
-import { ServerAppContext, useData } from '../../AppContext';
+import { ServerAppContext, useData, useAppContext } from '../../AppContext';
 import Button from '../../Button';
-import useLoginUrl from '../../pages/useLoginUrl';
 import './styles.scss';
 
 interface UserInfo {
@@ -23,9 +22,13 @@ const getUser = (context: ServerAppContext): UserInfo | null => {
 
 const NavbarUser = () => {
   const user = useData(getUser);
-  const loginUrl = useLoginUrl();
+  const { url } = useAppContext();
 
   if (user === null) {
+    const loginUrl = url.startsWith('/prihlasit')
+      ? url
+      : `/prihlasit?returnUrl=${encodeURIComponent(url)}`;
+
     return (
       <div className="navbar-user">
         <Button href={loginUrl}>Přihlásit</Button>

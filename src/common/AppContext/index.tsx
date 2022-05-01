@@ -25,7 +25,7 @@ export interface BaseAppContext {
   storeData: (key: string, data: any) => void,
   retrieveData: (key: string) => any,
   url: string,
-  baseUrl: string,
+  serverUrl: string,
   idRef: MutableRefObject<number>,
 }
 
@@ -49,7 +49,7 @@ const appContext = createContext<AppContext>({
   storeData: () => { },
   retrieveData: () => { },
   url: '/',
-  baseUrl: '/',
+  serverUrl: '',
   idRef: { current: 0 },
 });
 
@@ -103,7 +103,7 @@ export const ClientContextProvider = ({ children }: ClientProviderProps) => {
     storeData: (key: string, data: any) => storeData(store, key, data),
     retrieveData: (key: string) => getData(store, key),
     url: `${window.location.pathname}${window.location.search}`,
-    baseUrl: getData(store, 'baseUrl')!,
+    serverUrl: getData(store, 'serverUrl')!,
     idRef,
   }), [store]);
 
@@ -122,11 +122,11 @@ interface ServerProviderProps {
   store: Store;
   children: React.ReactNode;
   url: string
-  baseUrl: string
+  serverUrl: string
 }
 
 export const ServerContextProvider = ({
-  account, cms, accessCheck, store, logins, children, url, baseUrl,
+  account, cms, accessCheck, store, logins, children, url, serverUrl,
 }: ServerProviderProps) => {
   const idRef = useRef(0);
 
@@ -140,9 +140,9 @@ export const ServerContextProvider = ({
     accessCheck,
     logins,
     url,
-    baseUrl,
+    serverUrl,
     idRef,
-  }), [cms, account, accessCheck, store, logins, url, baseUrl]);
+  }), [cms, account, accessCheck, store, logins, url, serverUrl]);
 
   return (
     <appContext.Provider value={value}>
