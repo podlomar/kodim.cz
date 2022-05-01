@@ -1,13 +1,16 @@
 import { Claims, User, UserModel } from './db';
 
-export const getAccount = async (login: string): Promise<null | {
-  user: User,
-  claims: Claims,
-}> => {
+export interface Account {
+  user: User;
+  claims: Claims;
+}
+
+export const getAccount = async (login: string): Promise<Account | null> => {
   const dbUser = await UserModel.findOne({ login });
   if (dbUser === null) {
     return null;
   }
+
   await dbUser.populate('groups');
   const user = dbUser.toObject();
   const claims: Claims = user.groups.reduce(
@@ -17,8 +20,6 @@ export const getAccount = async (login: string): Promise<null | {
     }),
     { content: [], web: [] },
   );
-  return {
-    user,
-    claims,
-  };
+
+  return { user, claims };
 };

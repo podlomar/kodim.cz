@@ -25,7 +25,7 @@ import { api } from './api';
 import { UserModel } from './db';
 import { ServerContextProvider, Store } from '../common/AppContext';
 import App from '../common/App';
-import { getAccount } from './getAccount';
+import { getAccount } from './account';
 
 const config = json5.parse(fs.readFileSync('./server-config.json5', 'utf-8'));
 const stats = json5.parse(fs.readFileSync('./stats.json5', 'utf-8'));
