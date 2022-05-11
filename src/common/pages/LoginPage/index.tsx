@@ -23,7 +23,7 @@ const LoginPage = () => {
     state: JSON.stringify({ returnUrl }),
   });
 
-  const loginUrl = `https://github.com/login/oauth/authorize?${authParams}`;
+  const githubLoginUrl = `https://github.com/login/oauth/authorize?${authParams}`;
 
   return (
     <Layout>
@@ -37,7 +37,7 @@ const LoginPage = () => {
             Přihlášení
           </div>
           <div className="login-panel__apps">
-            <Button icon={<GitHub />} href={loginUrl}>
+            <Button icon={<GitHub />} href={githubLoginUrl}>
               Pokračovat přes GitHub
             </Button>
           </div>
