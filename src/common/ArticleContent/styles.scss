@@ -1,13 +1,15 @@
+@import "highlight.js/scss/gml.scss";
+
 $code-emph-color: #e3e3e3;
 
-.article-content { 
+.article-content {
   display: flex;
   align-items: flex-start; // to make the sticky position work
   padding-top: 3rem;
   margin-bottom: 6rem;
   background-color: white;
   color: #333;
-  
+
   &__nav {
     display: none;
     position: sticky;
@@ -32,13 +34,17 @@ $code-emph-color: #e3e3e3;
   &__section {
     flex: 1;
     // wierd min-width hack to ensure pre tags do not overflow
-    // inside flex container. 
+    // inside flex container.
     // See: https://weblog.west-wind.com/posts/2016/feb/15/flexbox-containers-pre-tags-and-managing-overflow
     min-width: 0;
     padding-bottom: 3rem;
     line-height: 1.7rem;
 
-    h2, h3, h4, h5, h6 {
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: $color-palette-1;
     }
 
@@ -68,9 +74,9 @@ $code-emph-color: #e3e3e3;
     li pre {
       padding: 0.5rem 1rem;
     }
-    
+
     code {
-      font-family: 'Roboto Mono';
+      font-family: "Roboto Mono";
       background-color: $code-emph-color;
       padding: 3px 5px;
       border-radius: 3px;
@@ -98,7 +104,8 @@ $code-emph-color: #e3e3e3;
       background-color: #e0e0e0;
     }
 
-    td, th {
+    td,
+    th {
       padding: 0.5rem 1rem;
     }
 

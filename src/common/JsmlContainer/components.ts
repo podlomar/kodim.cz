@@ -1,8 +1,6 @@
-import { unescape } from 'html-escaper';
 import { ReactNode, createElement } from 'react';
 import { JsmlAttrs, JsmlNode } from 'kodim-cms/esm/jsml.js';
 import YouTubeVideo from '../YouTubeVideo';
-// import ExerciseView from '../ExerciseView';
 import Figure from '../Figure';
 import Term from '../Term';
 import CodePen from '../CodePen';
@@ -31,13 +29,6 @@ export const baseJsmlComponents: JsmlComponents = {
         size: Number(attrs.size),
         alt: String(attrs.alt),
       },
-    );
-  },
-  code(tag: string, attrs: JsmlAttrs, children: JsmlNode[]): ReactNode {
-    return createElement(
-      tag,
-      attrs,
-      ...children.map((node) => unescape(String(node))),
     );
   },
 };
