@@ -2,7 +2,10 @@
 import { NodeSSH } from 'node-ssh';
 import prompt from 'prompt';
 
-const remoteDir = '/var/www/stage.kodim.cz';
+const instance = process.argv[2];
+
+const remoteDir = `/var/www/${instance}.kodim.cz`;
+console.info(`Deploying to ${remoteDir}`);
 
 prompt.start();
 const { username, password } = await prompt.get({
@@ -25,7 +28,7 @@ await ssh.connect({
 });
 
 console.info(
-  (await ssh.execCommand('supervisorctl stop kodim_stage')).stdout,
+  (await ssh.execCommand(`supervisorctl stop kodim_${instance}`)).stdout,
 );
 await ssh.execCommand('rm -rf dist/* node_modules package*', { cwd: remoteDir });
 await ssh.putDirectory('./dist', `${remoteDir}/dist`, {
@@ -42,7 +45,7 @@ console.info(
   (await ssh.execCommand('npm install --production', { cwd: remoteDir })).stdout,
 );
 console.info(
-  (await ssh.execCommand('supervisorctl start kodim_stage')).stdout,
+  (await ssh.execCommand(`supervisorctl start kodim_${instance}`)).stdout,
 );
 
 ssh.dispose();
