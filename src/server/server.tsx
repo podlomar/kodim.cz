@@ -5,6 +5,7 @@ import { createElement } from 'react';
 import ssrPrepass from 'react-ssr-prepass';
 import { renderToString } from 'react-dom/server.js';
 import { StaticRouter } from 'react-router-dom/server.js';
+import bcrypt from 'bcrypt';
 import { KodimCms } from 'kodim-cms';
 import { CmsApp } from 'kodim-cms/esm/server.js';
 import mongoose from 'mongoose';
@@ -37,6 +38,7 @@ const cmsApp = new CmsApp(cms, () => new AccessGrantAll());
 
 const server = express();
 server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 server.use(cookieParser());
 server.use(
   expressjwt({
@@ -136,9 +138,42 @@ server.get('/prihlasit/github', async (req, res) => {
     });
     await dbUser.save();
   }
+
   const user = dbUser.toObject();
 
   const token = jwt.sign({ login: user.login }, config.sessionSecret);
+  res.cookie('token', token);
+  res.redirect(returnUrl);
+});
+
+server.post('/prihlasit/kodim', async (req, res) => {
+  const returnUrl = typeof req.query.returnUrl === 'string' ? req.query.returnUrl : '/';
+  const { loginOrEmail, password } = req.body;
+
+  console.log(req.body);
+
+  if (typeof password !== 'string' || typeof loginOrEmail !== 'string') {
+    res.sendStatus(400);
+    return;
+  }
+
+  const dbUser = await UserModel.findOne(
+    loginOrEmail.includes('@') ? { email: loginOrEmail } : { login: loginOrEmail },
+  );
+
+  if (dbUser === null) {
+    res.sendStatus(400);
+    return;
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, dbUser.password!);
+
+  if (!isPasswordCorrect) {
+    res.sendStatus(400);
+    return;
+  }
+
+  const token = jwt.sign({ login: dbUser.login }, config.sessionSecret);
   res.cookie('token', token);
   res.redirect(returnUrl);
 });

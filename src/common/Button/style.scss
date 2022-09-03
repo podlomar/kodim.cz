@@ -9,6 +9,7 @@
   outline: none;
   border-radius: 0.5rem;
   text-decoration: none;
+  cursor: pointer;
 
   &:is(a, button):hover {
     background-color: $color-palette-2-darker;

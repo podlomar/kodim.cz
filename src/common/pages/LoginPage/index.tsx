@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import queryString from 'query-string';
 import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -38,9 +39,31 @@ const LoginPage = () => {
           </div>
           <div className="login-panel__apps">
             <Button icon={<GitHub />} href={githubLoginUrl}>
-              Pokračovat přes GitHub
+              Přihlásit přes GitHub
             </Button>
           </div>
+          <form
+            className="login-panel__form"
+            action="/prihlasit/kodim"
+            method="POST"
+          >
+            <label htmlFor="loginOrEmail">Login or email:</label>
+            <input
+              type="text"
+              id="loginOrEmail"
+              name="loginOrEmail"
+            />
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <div className="form-controls">
+              <button className="btn" type="submit">Přihlásit</button>
+            </div>
+          </form>
         </div>
       </div>
     </Layout>

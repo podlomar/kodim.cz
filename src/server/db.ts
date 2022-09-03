@@ -18,9 +18,10 @@ export const groupSchema = new mongoose.Schema<Group>({
 export const GroupModel = mongoose.model<Group>('Group', groupSchema);
 
 export interface User {
-  login: string;
+  login: string,
   name: string,
-  email?: string;
+  email?: string,
+  password?: string,
   avatarUrl: string,
   groups: Group[],
 }
@@ -29,6 +30,7 @@ export const userSchema = new mongoose.Schema<User>({
   login: { type: String, required: true },
   name: { type: String, required: true },
   email: { type: String },
+  password: { type: String },
   avatarUrl: { type: String, required: true },
   groups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
 });
