@@ -144,8 +144,6 @@ server.post('/prihlasit', async (req, res) => {
   const returnUrl = typeof req.query.returnUrl === 'string' ? req.query.returnUrl : '/';
   const { loginOrEmail, password } = req.body;
 
-  console.log(req.body);
-
   if (typeof password !== 'string' || typeof loginOrEmail !== 'string') {
     res.sendStatus(400);
     return;

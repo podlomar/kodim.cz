@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import queryString from 'query-string';
 import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -50,7 +49,7 @@ const LoginPage = () => {
           </div>
           <form
             className="login-panel__form"
-            action="/prihlasit"
+            action={`/prihlasit?returnUrl=${encodeURIComponent(returnUrl)}`}
             method="POST"
           >
             <label htmlFor="loginOrEmail">Login or email:</label>
