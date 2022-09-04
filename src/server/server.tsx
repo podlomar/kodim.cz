@@ -1,40 +1,29 @@
 import express, { ErrorRequestHandler, Request } from 'express';
 import fs from 'fs';
 import json5 from 'json5';
-import { createElement } from 'react';
-import ssrPrepass from 'react-ssr-prepass';
-import { renderToString } from 'react-dom/server.js';
-import { StaticRouter } from 'react-router-dom/server.js';
 import bcrypt from 'bcrypt';
 import { KodimCms } from 'kodim-cms';
 import { CmsApp } from 'kodim-cms/esm/server.js';
 import mongoose from 'mongoose';
 import axios from 'axios';
 import queryString from 'query-string';
-import {
-  AccessCheck,
-  AccessClaimCheck,
-  AccessGrantAll,
-  User,
-} from 'kodim-cms/esm/content/access-check.js';
-import { Helmet } from 'react-helmet';
+import { AccessGrantAll } from 'kodim-cms/esm/content/access-check.js';
 import { expressjwt } from 'express-jwt';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import { api } from './api';
 import { UserModel } from './db';
-import { ServerContextProvider, Store } from '../common/AppContext';
-import App from '../common/App';
-import { getAccount } from './account';
+import { createAppController } from './app';
 
 const config = json5.parse(fs.readFileSync('./server-config.json5', 'utf-8'));
-const stats = json5.parse(fs.readFileSync('./stats.json5', 'utf-8'));
 
 await mongoose.connect(config.dbUrl);
 
 const cms = await KodimCms.load(config.contentDir, `${config.serverUrl}/cms`);
 
 const cmsApp = new CmsApp(cms, () => new AccessGrantAll());
+
+const appController = createAppController(config, cms);
 
 const server = express();
 server.use(express.json());
@@ -82,6 +71,11 @@ server.use('/changelog', express.static('../changelog', { fallthrough: false }))
 
 server.use('/cms', cmsApp.router);
 server.use('/api', api);
+
+server.use((req, res, next) => {
+  req.store = {};
+  next();
+});
 
 server.get('/odhlasit', (req, res) => {
   res.clearCookie('token');
@@ -146,7 +140,7 @@ server.get('/prihlasit/github', async (req, res) => {
   res.redirect(returnUrl);
 });
 
-server.post('/prihlasit/kodim', async (req, res) => {
+server.post('/prihlasit', async (req, res) => {
   const returnUrl = typeof req.query.returnUrl === 'string' ? req.query.returnUrl : '/';
   const { loginOrEmail, password } = req.body;
 
@@ -162,14 +156,15 @@ server.post('/prihlasit/kodim', async (req, res) => {
   );
 
   if (dbUser === null) {
-    res.sendStatus(400);
+    req.store.badCredentials = true;
+    await appController(req, res);
     return;
   }
 
   const isPasswordCorrect = await bcrypt.compare(password, dbUser.password!);
-
   if (!isPasswordCorrect) {
-    res.sendStatus(400);
+    req.store.badCredentials = true;
+    await appController(req, res);
     return;
   }
 
@@ -191,73 +186,7 @@ server.get('/kurzy/:course/:chapter', (req, res) => {
   res.redirect(301, `/kurzy/${req.params.course}/#${req.params.chapter}`);
 });
 
-server.get('*', async (req, res) => {
-  const store: Store = {};
-
-  const login: string | undefined = req.auth?.login;
-  const account = login ? (await getAccount(login)) : null;
-
-  const accessUser: User = {
-    login: account?.user.login ?? '',
-    access: account === undefined ? 'public' : 'registered',
-  };
-
-  let defaultAccessCheck: AccessCheck = AccessClaimCheck.create(
-    accessUser,
-    '/kurzy',
-  );
-
-  if (config.defaultAccess === 'granted') {
-    defaultAccessCheck = new AccessGrantAll();
-  } else if (config.defaultAccess.claims !== undefined) {
-    defaultAccessCheck = AccessClaimCheck.create(
-      accessUser,
-      ...config.defaultAccess.claims.content,
-    );
-  }
-
-  const app = () => (
-    <ServerContextProvider
-      cms={cms}
-      account={account}
-      accessCheck={account === null
-        ? defaultAccessCheck
-        : AccessClaimCheck.create(accessUser, ...account.claims.content)}
-      store={store}
-      logins={{
-        githubClientId: config.githubApp.clientId,
-      }}
-      url={req.originalUrl}
-      serverUrl={config.serverUrl}
-    >
-      <StaticRouter location={req.url}>
-        <App />
-      </StaticRouter>
-    </ServerContextProvider>
-  );
-
-  const element = createElement(app);
-  await ssrPrepass(element);
-  const appContent = renderToString(element);
-  const helmet = Helmet.renderStatic();
-  res.send(`<!DOCTYPE html>
-    <html ${helmet.htmlAttributes.toString()}>
-      <head>
-        ${helmet.title.toString()}
-        ${helmet.meta.toString()}
-        ${helmet.link.toString()}
-        ${helmet.script.toString()}
-      </head>
-      <body ${helmet.bodyAttributes.toString()}>
-        <script>
-          window.__STORE__ = ${json5.stringify(store)}
-        </script>
-        <script defer src="/${stats.bundle}"></script>
-        <div id="app">${appContent}</div>
-      </body>
-    </html>
-  `);
-});
+server.get('*', appController);
 
 server.listen(config.port, () => {
   console.info(`Serving on localhost:${config.port}`);

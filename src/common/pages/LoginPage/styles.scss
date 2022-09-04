@@ -26,3 +26,19 @@
 .form-controls {
   text-align: right;
 }
+
+.alert {
+  display: flex;
+
+  &__icon {
+    width: 2rem;
+    height: 2rem;
+    background-image: url(./img/alert.svg);
+    background-size: contain;
+  }
+
+  &__body {
+    margin-left: 0.5rem;
+    padding-top: 0.5rem;
+  }
+}

@@ -9,8 +9,14 @@ import Button from '../../Button';
 import GitHub from '../../icons/GitHub';
 import './styles.scss';
 
+const getBadCredentials = (context: ServerAppContext): boolean => {
+  return context.store.badCredentials ?? false;
+};
+
 const LoginPage = () => {
   const [searchParams] = useSearchParams();
+  const badCredentials = useData(getBadCredentials);
+
   const returnUrl = searchParams.get('returnUrl') ?? '/';
 
   const githubClientId = useData(
@@ -44,7 +50,7 @@ const LoginPage = () => {
           </div>
           <form
             className="login-panel__form"
-            action="/prihlasit/kodim"
+            action="/prihlasit"
             method="POST"
           >
             <label htmlFor="loginOrEmail">Login or email:</label>
@@ -58,8 +64,15 @@ const LoginPage = () => {
               type="password"
               id="password"
               name="password"
-              onChange={(e) => setPassword(e.target.value)}
             />
+            {badCredentials ? (
+              <div className="alert">
+                <div className="alert__icon" />
+                <div className="alert__body">
+                  Nesprávný login, email nebo heslo
+                </div>
+              </div>
+            ) : null}
             <div className="form-controls">
               <button className="btn" type="submit">Přihlásit</button>
             </div>

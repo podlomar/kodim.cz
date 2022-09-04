@@ -1,3 +1,5 @@
+import type { Store } from '../common/AppContext';
+
 export {};
 
 declare global {
@@ -9,6 +11,7 @@ declare global {
   namespace Express {
     interface Request {
       auth?: ParsedToken
+      store: Store,
     }
   }
 }
