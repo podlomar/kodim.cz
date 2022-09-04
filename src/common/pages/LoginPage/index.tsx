@@ -52,18 +52,24 @@ const LoginPage = () => {
             action={`/prihlasit?returnUrl=${encodeURIComponent(returnUrl)}`}
             method="POST"
           >
-            <label htmlFor="loginOrEmail">Login or email:</label>
-            <input
-              type="text"
-              id="loginOrEmail"
-              name="loginOrEmail"
-            />
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-            />
+            <label htmlFor="loginOrEmail">
+              Login or email:
+              <input
+                type="text"
+                id="loginOrEmail"
+                name="loginOrEmail"
+              />
+            </label>
+
+            <label htmlFor="password">
+              Password:
+              <input
+                type="password"
+                id="password"
+                name="password"
+              />
+            </label>
+
             {badCredentials ? (
               <div className="alert">
                 <div className="alert__icon" />
