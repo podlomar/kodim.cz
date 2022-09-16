@@ -8,7 +8,7 @@
     "clean": "rm -rf dist",
     "dev": "webpack -w",
     "build": "npm run clean && webpack --mode=production",
-    "deploy:stage": "npm run build && node scripts/deploy.js stage",
+    "deploy:prod": "npm run build && node scripts/deploy.js prod",
     "deploy:dev": "npm run build && node scripts/deploy.js dev"
   },
   "author": "Martin Podloucký",
