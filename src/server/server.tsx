@@ -193,7 +193,7 @@ server.get('/pozvanky/skupina/:inviteToken', async (req, res) => {
 
   const login: string | undefined = req.auth?.login;
 
-  if (login !== 'podlomar') {
+  if (login === undefined) {
     invitation.status = 'no-login';
     appController(req, res);
     return;
