@@ -12,6 +12,7 @@ const routes: RouteObject[] = [
   { path: '/prihlasit', element: <LoginPage /> },
   { path: '/ucet', element: <AccountPage /> },
   { path: '/pozvanky/skupina/:inviteToken', element: <InvitePage /> },
+  { path: '/pozvanky/skupina/:inviteToken/:action', element: <InvitePage /> },
   {
     path: '/kurzy/:courseLink/:chapterLink/:lessonLink',
     element: <LessonPage />,

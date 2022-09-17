@@ -1,18 +1,16 @@
 import { Helmet } from 'react-helmet';
-import { useLocation } from 'react-router';
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
 import { ServerAppContext, useData } from '../../AppContext';
 import InfoPanel from '../../InfoPanel';
 import InvitationMessage, { Invitation } from './InvitationMessage';
-import Button from '../../Button';
+import InvitationFooter from './InvitationFooter';
 
 const getInvitation = (context: ServerAppContext): Invitation => {
   return context.store.invitation;
 };
 
 const InvitePage = () => {
-  const { pathname } = useLocation();
   const invitation = useData(getInvitation);
 
   return (
@@ -24,11 +22,7 @@ const InvitePage = () => {
       <div className="container">
         <InfoPanel
           heading="Pozvánka do skupiny"
-          footer={invitation.status === 'no-login' ? (
-            <Button href={`/prihlasit?returnUrl=${pathname}`}>Přihlásit</Button>
-          ) : (
-            <Button href="/">Zpět na hlavní stránku</Button>
-          )}
+          footer={<InvitationFooter invitation={invitation} />}
         >
           <InvitationMessage invitation={invitation} />
         </InfoPanel>

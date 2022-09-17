@@ -185,7 +185,7 @@ server.get('/pozvanky/skupina/:inviteToken', async (req, res) => {
   const { inviteToken } = req.params;
 
   const invitation: Invitation = {
-    status: 'success',
+    status: 'invite',
     groupTitle: '',
   };
 
@@ -214,11 +214,62 @@ server.get('/pozvanky/skupina/:inviteToken', async (req, res) => {
 
   invitation.groupTitle = dbGroup.title;
 
-  const result = await dbUser.updateOne({ $addToSet: { groups: dbGroup.id } });
-  if (result.modifiedCount === 0) {
-    invitation.status = 'already-done';
+  if (dbUser.groups.includes(dbGroup.id)) {
+    invitation.status = 'already-joined';
+  }
+
+  appController(req, res);
+});
+
+server.post('/pozvanky/skupina/:inviteToken/:action', async (req, res) => {
+  const { inviteToken, action } = req.params;
+
+  const invitation: Invitation = {
+    status: 'no-login',
+    groupTitle: '',
+  };
+
+  req.store.invitation = invitation;
+
+  const login: string | undefined = req.auth?.login;
+
+  if (login === undefined) {
+    appController(req, res);
+    return;
+  }
+
+  const dbUser = await UserModel.findOne({ login });
+  if (dbUser === null) {
+    res.sendStatus(500);
+    return;
+  }
+
+  const dbGroup = await GroupModel.findOne({ inviteToken });
+  if (dbGroup === null) {
+    invitation.status = 'no-group';
+    appController(req, res);
+    return;
+  }
+
+  invitation.groupTitle = dbGroup.title;
+
+  if (action === 'vstoupit') {
+    const result = await dbUser.updateOne({ $addToSet: { groups: dbGroup.id } });
+    if (result.modifiedCount === 0) {
+      invitation.status = 'already-joined';
+    } else {
+      invitation.status = 'joined';
+    }
+  } else if (action === 'opustit') {
+    const result = await dbUser.updateOne({ $pull: { groups: dbGroup.id } });
+    if (result.modifiedCount === 0) {
+      invitation.status = 'already-left';
+    } else {
+      invitation.status = 'left';
+    }
   } else {
-    invitation.status = 'success';
+    res.sendStatus(404);
+    return;
   }
 
   appController(req, res);

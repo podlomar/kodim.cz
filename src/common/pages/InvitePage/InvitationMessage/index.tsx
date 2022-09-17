@@ -1,7 +1,13 @@
-// import Button from '../../Button';
-
 export interface Invitation {
-  status: 'already-done' | 'success' | 'no-login' | 'no-group',
+  status: (
+    | 'invite'
+    | 'already-joined'
+    | 'joined'
+    | 'already-left'
+    | 'left'
+    | 'no-login'
+    | 'no-group'
+  ),
   groupTitle: string,
 }
 
@@ -14,7 +20,7 @@ const InvitationMessage = ({ invitation }: Props): JSX.Element => {
 
   if (status === 'no-login') {
     return (
-      <p>Pro uplatnění pozvánky musíte být přihlášeni.</p>
+      <p>Pro vstup nebo opuštění skupiny musíte být přihlášeni.</p>
     );
   }
 
@@ -24,10 +30,44 @@ const InvitationMessage = ({ invitation }: Props): JSX.Element => {
     );
   }
 
-  if (status === 'success') {
+  if (status === 'invite') {
     return (
       <p>
-        Byl jste úspešně přidán/a do skupiny
+        Jste zváni ke vstupu do skupiny
+        {' '}
+        <strong>{groupTitle}</strong>
+        .
+      </p>
+    );
+  }
+
+  if (status === 'already-joined') {
+    return (
+      <p>
+        Již jste členem skupiny
+        {' '}
+        <strong>{groupTitle}</strong>
+        .
+      </p>
+    );
+  }
+
+  if (status === 'already-left') {
+    return (
+      <p>
+        Skupinu
+        {' '}
+        <strong>{groupTitle}</strong>
+        {' '}
+        jste již opustili.
+      </p>
+    );
+  }
+
+  if (status === 'joined') {
+    return (
+      <p>
+        Byli jste úspešně přidáni do skupiny
         {' '}
         <strong>{groupTitle}</strong>
         .
@@ -37,7 +77,7 @@ const InvitationMessage = ({ invitation }: Props): JSX.Element => {
 
   return (
     <p>
-      Již jste členem skupiny
+      Opustili jste skupinu
       {' '}
       <strong>{groupTitle}</strong>
       .
