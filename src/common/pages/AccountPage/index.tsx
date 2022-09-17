@@ -4,7 +4,6 @@ import { ServerAppContext, useData } from '../../AppContext';
 import InfoPanel from '../../InfoPanel';
 import Button from '../../Button';
 import NotFoundPage from '../NotFoundPage';
-import './styles.scss';
 
 const getUserName = (context: ServerAppContext): string | null => {
   if (context.account === null) {

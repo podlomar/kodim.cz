@@ -6,7 +6,6 @@ import { ServerAppContext, useData } from '../../AppContext';
 import InfoPanel from '../../InfoPanel';
 import InvitationMessage, { Invitation } from './InvitationMessage';
 import Button from '../../Button';
-import './styles.scss';
 
 const getInvitation = (context: ServerAppContext): Invitation => {
   return context.store.invitation;
