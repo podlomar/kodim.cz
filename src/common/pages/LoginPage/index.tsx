@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
 import { ServerAppContext, useData } from '../../AppContext';
+import InfoPanel from '../../InfoPanel';
 import Button from '../../Button';
 import GitHub from '../../icons/GitHub';
 import './styles.scss';
@@ -37,18 +38,15 @@ const LoginPage = () => {
         <title>Přihlášení</title>
       </Helmet>
       <Navbar showBrand />
-      <div className="container login">
-        <div className="login-panel">
-          <div className="login-panel__title">
-            Přihlášení
-          </div>
-          <div className="login-panel__apps">
+      <div className="container">
+        <InfoPanel heading="Přihlášení">
+          <div className="login-apps">
             <Button icon={<GitHub />} href={githubLoginUrl}>
               Přihlásit přes GitHub
             </Button>
           </div>
           <form
-            className="login-panel__form"
+            className="login-form"
             action={`/prihlasit?returnUrl=${encodeURIComponent(returnUrl)}`}
             method="POST"
           >
@@ -82,7 +80,7 @@ const LoginPage = () => {
               <button className="btn" type="submit">Přihlásit</button>
             </div>
           </form>
-        </div>
+        </InfoPanel>
       </div>
     </Layout>
   );
