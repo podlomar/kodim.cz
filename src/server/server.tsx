@@ -12,8 +12,9 @@ import { expressjwt } from 'express-jwt';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import { api } from './api';
-import { UserModel } from './db';
+import { GroupModel, UserModel } from './db';
 import { createAppController } from './app';
+import type { Invitation } from '../common/pages/InvitePage/InvitationMessage';
 
 const config = json5.parse(fs.readFileSync('./server-config.json5', 'utf-8'));
 
@@ -178,6 +179,49 @@ server.use('/prihlasit', (req, res, next) => {
     return;
   }
   next();
+});
+
+server.get('/pozvanky/skupina/:inviteToken', async (req, res) => {
+  const { inviteToken } = req.params;
+
+  const invitation: Invitation = {
+    status: 'success',
+    groupTitle: '',
+  };
+
+  req.store.invitation = invitation;
+
+  const login: string | undefined = req.auth?.login;
+
+  if (login !== 'podlomar') {
+    invitation.status = 'no-login';
+    appController(req, res);
+    return;
+  }
+
+  const dbUser = await UserModel.findOne({ login });
+  if (dbUser === null) {
+    res.sendStatus(500);
+    return;
+  }
+
+  const dbGroup = await GroupModel.findOne({ inviteToken });
+  if (dbGroup === null) {
+    invitation.status = 'no-group';
+    appController(req, res);
+    return;
+  }
+
+  invitation.groupTitle = dbGroup.title;
+
+  const result = await dbUser.updateOne({ $addToSet: { groups: dbGroup.id } });
+  if (result.modifiedCount === 0) {
+    invitation.status = 'already-done';
+  } else {
+    invitation.status = 'success';
+  }
+
+  appController(req, res);
 });
 
 server.get('/kurzy/:course/:chapter', (req, res) => {

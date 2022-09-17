@@ -7,11 +7,15 @@ export interface Claims {
 
 export interface Group {
   name: string,
+  title: string,
+  inviteToken?: string,
   claims: Claims,
 }
 
 export const groupSchema = new mongoose.Schema<Group>({
   name: { type: String, required: true, unique: true },
+  title: { type: String, required: true },
+  inviteToken: { type: String, unique: true },
   claims: { type: { content: [String], web: [String] }, required: true },
 });
 
