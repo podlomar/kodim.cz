@@ -1,4 +1,5 @@
-import { useParams } from 'react-router';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
 import Navbar from '../../Navbar';
 import ArticleContent from '../../ArticleContent';
@@ -25,6 +26,8 @@ const fetchLesson = async (
 
 const LessonPage = () => {
   const params = useParams();
+  const navigate = useNavigate();
+
   const lesson = useData(
     (serverContext: ServerAppContext) => fetchLesson(
       serverContext,
@@ -47,6 +50,12 @@ const LessonPage = () => {
   }
 
   const activeSectionLink = params.sectionLink ?? lesson.content.sections[0]?.link;
+
+  useEffect(() => {
+    if (params.sectionLink === undefined) {
+      navigate(activeSectionLink, { replace: true });
+    }
+  }, [params.sectionLink]);
 
   const articleNavigation = lesson.content.sections.map((secRef) => (
     <SideNavLink key={secRef.link} active={secRef.link === activeSectionLink}>
