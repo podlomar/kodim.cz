@@ -1,6 +1,8 @@
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
 import { ServerAppContext, useData } from '../../AppContext';
+import InfoPanel from '../../InfoPanel';
+import Button from '../../Button';
 import NotFoundPage from '../NotFoundPage';
 import './styles.scss';
 
@@ -22,11 +24,13 @@ const AccountPage = () => {
   return (
     <Layout>
       <Navbar showBrand />
-      <div className="container account">
-        <div className="account-panel">
+      <div className="container">
+        <InfoPanel
+          heading="Účet"
+          footer={<Button href="/odhlasit">Odhlásit</Button>}
+        >
           <p>{userName}</p>
-          <a href="/odhlasit">Odhlásit</a>
-        </div>
+        </InfoPanel>
       </div>
     </Layout>
   );
