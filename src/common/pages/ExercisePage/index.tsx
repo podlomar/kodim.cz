@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
 import Navbar from '../../Navbar';
 import Layout from '../../Layout';
-import { ServerAppContext, useData } from '../../AppContext';
+import { ServerContextValue, useData } from '../../AppContext';
 import JsmlContainer from '../../JsmlContainer';
 import ArticleContent from '../../ArticleContent';
 import SideNavLink from '../../SideNavLink';
@@ -14,7 +14,7 @@ import EditPageButton from '../../EditPageButton';
 import './styles.scss';
 
 const fetchExercise = async (
-  { cms, accessCheck }: ServerAppContext,
+  { cms, accessCheck }: ServerContextValue,
   courseLink: string,
   chapterLink: string,
   lessonLink: string,
@@ -31,7 +31,7 @@ const fetchExercise = async (
 const ExercisePage = () => {
   const params = useParams();
   const exercise = useData(
-    (serverContext: ServerAppContext) => fetchExercise(
+    (serverContext: ServerContextValue) => fetchExercise(
       serverContext,
       params.courseLink!,
       params.chapterLink!,

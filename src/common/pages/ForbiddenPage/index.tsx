@@ -1,8 +1,8 @@
-import ErrorLayout from '../../ErrorLayout';
+import ErrorReport from '../../ErrorLayout';
 
 const ForbiddenPage = () => {
   return (
-    <ErrorLayout title="Přístup odepřen" note="Chyba 403" />
+    <ErrorReport title="Přístup odepřen" status={403} />
   );
 };
 

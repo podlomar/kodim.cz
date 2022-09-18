@@ -3,13 +3,13 @@ import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
-import { ServerAppContext, useData } from '../../AppContext';
+import { ServerContextValue, useData } from '../../AppContext';
 import InfoPanel from '../../InfoPanel';
 import Button from '../../Button';
 import GitHub from '../../icons/GitHub';
 import './styles.scss';
 
-const getBadCredentials = (context: ServerAppContext): boolean => {
+const getBadCredentials = (context: ServerContextValue): boolean => {
   return context.store.badCredentials ?? false;
 };
 
@@ -20,7 +20,7 @@ const LoginPage = () => {
   const returnUrl = searchParams.get('returnUrl') ?? '/';
 
   const githubClientId = useData(
-    async (serverContext: ServerAppContext) => serverContext.logins.githubClientId,
+    async (serverContext: ServerContextValue) => serverContext.logins.githubClientId,
   );
 
   const authParams = queryString.stringify({

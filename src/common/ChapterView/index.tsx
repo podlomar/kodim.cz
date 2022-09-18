@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { ServerAppContext, useData } from '../AppContext';
+import { ServerContextValue, useData } from '../AppContext';
 import LessonCard from '../LessonCard';
 import './styles.scss';
 
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const fetchChapter = async (
-  { cms, accessCheck }: ServerAppContext,
+  { cms, accessCheck }: ServerContextValue,
   courseLink: string,
   chapterLink: string,
 ) => cms
@@ -21,7 +21,7 @@ const ChapterView = ({ chapterLink }: Props) => {
   const courseLink = useParams().courseLink!;
 
   const chapter = useData(
-    (serverContext: ServerAppContext) => fetchChapter(serverContext, courseLink, chapterLink),
+    (serverContext: ServerContextValue) => fetchChapter(serverContext, courseLink, chapterLink),
   );
 
   if (chapter.status === 'not-found') {

@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet';
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
-import { ServerAppContext, useData } from '../../AppContext';
+import { ServerContextValue, useData } from '../../AppContext';
 import InfoPanel from '../../InfoPanel';
 import InvitationMessage, { Invitation } from './InvitationMessage';
 import InvitationFooter from './InvitationFooter';
 
-const getInvitation = (context: ServerAppContext): Invitation => {
+const getInvitation = (context: ServerContextValue): Invitation => {
   return context.store.invitation;
 };
 

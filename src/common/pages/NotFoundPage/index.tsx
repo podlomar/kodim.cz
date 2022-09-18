@@ -1,8 +1,8 @@
-import ErrorLayout from '../../ErrorLayout';
+import ErrorReport from '../../ErrorLayout';
 
 const NotFoundPage = () => {
   return (
-    <ErrorLayout title="Stránka nenalezena" note="Chyba 404" />
+    <ErrorReport title="Stránka nenalezena" status={404} />
   );
 };
 

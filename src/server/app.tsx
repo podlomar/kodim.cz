@@ -48,6 +48,8 @@ export const createAppController = (
     );
   }
 
+  const httpStatusRef = { status: 200 };
+
   const app = () => (
     <ServerContextProvider
       cms={cms}
@@ -61,6 +63,7 @@ export const createAppController = (
       }}
       url={req.originalUrl}
       serverUrl={config.serverUrl}
+      httpStatusRef={httpStatusRef}
     >
       <StaticRouter location={req.url}>
         <App />
@@ -73,6 +76,7 @@ export const createAppController = (
   const appContent = renderToString(element);
   const helmet = Helmet.renderStatic();
 
+  res.status(httpStatusRef.status);
   return res.send(`<!DOCTYPE html>
     <html ${helmet.htmlAttributes.toString()}>
       <head>

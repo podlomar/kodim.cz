@@ -1,4 +1,4 @@
-import { ServerAppContext, useData, useAppContext } from '../../AppContext';
+import { ServerContextValue, useData, useAppContext } from '../../AppContext';
 import Button from '../../Button';
 import './styles.scss';
 
@@ -7,7 +7,7 @@ interface UserInfo {
   name: string;
 }
 
-const getUser = (context: ServerAppContext): UserInfo | null => {
+const getUser = (context: ServerContextValue): UserInfo | null => {
   if (context.account === null) {
     return null;
   }

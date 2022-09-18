@@ -1,22 +1,30 @@
+import { useSetHttpStatus } from '../AppContext';
 import Layout from '../Layout';
 import Navbar from '../Navbar';
 import './styles.scss';
 
 interface Props {
   title: React.ReactNode
-  note: React.ReactNode
+  status: number,
 }
 
-const ErrorLayout = ({ title, note }: Props) => {
+const ErrorReport = ({ title, status }: Props) => {
+  const setHttpStatus = useSetHttpStatus();
+  setHttpStatus(status);
+
   return (
     <Layout>
       <Navbar showBrand />
       <div className="container error-layout">
         <h2>{title}</h2>
-        <p>{note}</p>
+        <p>
+          Chyba
+          {' '}
+          {status}
+        </p>
       </div>
     </Layout>
   );
 };
 
-export default ErrorLayout;
+export default ErrorReport;

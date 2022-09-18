@@ -5,7 +5,7 @@ import Navbar from '../../Navbar';
 import ArticleContent from '../../ArticleContent';
 import LessonSectionView from '../../LessonSectionView';
 import Layout from '../../Layout';
-import { ServerAppContext, useData } from '../../AppContext';
+import { ServerContextValue, useData } from '../../AppContext';
 import SideNavLink from '../../SideNavLink';
 import LessonBanner from '../LessonBanner';
 import NotFoundPage from '../NotFoundPage';
@@ -14,7 +14,7 @@ import { Lock } from '../../icons';
 import './styles.scss';
 
 const fetchLesson = async (
-  { cms, accessCheck }: ServerAppContext,
+  { cms, accessCheck }: ServerContextValue,
   courseLink: string,
   chapterLink: string,
   lessonLink: string,
@@ -29,7 +29,7 @@ const LessonPage = () => {
   const navigate = useNavigate();
 
   const lesson = useData(
-    (serverContext: ServerAppContext) => fetchLesson(
+    (serverContext: ServerContextValue) => fetchLesson(
       serverContext,
       params.courseLink!,
       params.chapterLink!,

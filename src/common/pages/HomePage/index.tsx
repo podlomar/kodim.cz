@@ -2,12 +2,12 @@ import Layout from '../../Layout';
 import LandingBanner from '../../LandingBanner';
 import DivisionView from '../../DivisionView';
 import Navbar from '../../Navbar';
-import { ServerAppContext, useData } from '../../AppContext';
+import { ServerContextValue, useData } from '../../AppContext';
 import CodexCard from '../../CodexCard';
 import './styles.scss';
 
 const HomePage = () => {
-  const coursesRoot = useData(async ({ cms, accessCheck }: ServerAppContext) => {
+  const coursesRoot = useData(async ({ cms, accessCheck }: ServerContextValue) => {
     return cms.getRoot(accessCheck).fetch();
   });
 

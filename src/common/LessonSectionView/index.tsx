@@ -1,7 +1,7 @@
 import { JsmlAttrs, JsmlNode } from 'kodim-cms/esm/jsml';
 import { ReactNode, createElement } from 'react';
 import { useParams } from 'react-router-dom';
-import { ServerAppContext, useData } from '../AppContext';
+import { ServerContextValue, useData } from '../AppContext';
 import ContentAlert from '../ContentAlert';
 import ExerciseError from '../ExerciseError';
 import ExerciseView from '../ExerciseView';
@@ -37,7 +37,7 @@ interface Props {
 }
 
 const fetchSection = async (
-  { cms, accessCheck }: ServerAppContext,
+  { cms, accessCheck }: ServerContextValue,
   courseLink: string,
   chapterLink: string,
   lessonLink: string,
@@ -52,7 +52,7 @@ const fetchSection = async (
 const LessonSectionView = ({ sectionLink }: Props) => {
   const params = useParams();
   const section = useData(
-    (serverContext: ServerAppContext) => fetchSection(
+    (serverContext: ServerContextValue) => fetchSection(
       serverContext,
       params.courseLink!,
       params.chapterLink!,

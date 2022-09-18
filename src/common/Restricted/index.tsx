@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { ServerAppContext, useData } from '../AppContext';
+import { ServerContextValue, useData } from '../AppContext';
 import type { Account } from '../../server/account';
 
 import './style.scss';
@@ -18,7 +18,7 @@ const hasClaim = (
 
 const Restricted = ({ claim, children }: Props): JSX.Element | null => {
   const allowed = useData(
-    (context: ServerAppContext) => hasClaim(context.account, claim),
+    (context: ServerContextValue) => hasClaim(context.account, claim),
   );
 
   // eslint-disable-next-line react/jsx-no-useless-fragment

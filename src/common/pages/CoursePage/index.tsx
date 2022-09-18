@@ -6,11 +6,11 @@ import ForbiddenPage from '../ForbiddenPage';
 import ChapterView from '../../ChapterView';
 import Navbar from '../../Navbar';
 import CourseBanner from '../../CourseBanner';
-import { ServerAppContext, useData } from '../../AppContext';
+import { ServerContextValue, useData } from '../../AppContext';
 import './styles.scss';
 
 const fetchCourse = async (
-  { cms, accessCheck }: ServerAppContext,
+  { cms, accessCheck }: ServerContextValue,
   courseLink: string,
 ) => cms.getRoot(accessCheck).find(courseLink).fetch();
 
@@ -18,7 +18,7 @@ const CoursePage = () => {
   const courseLink = useParams().courseLink!;
 
   const course = useData(
-    (serverContext: ServerAppContext) => fetchCourse(serverContext, courseLink),
+    (serverContext: ServerContextValue) => fetchCourse(serverContext, courseLink),
   );
 
   if (course.status === 'not-found') {

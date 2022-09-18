@@ -20,7 +20,7 @@ export interface Logins {
   githubClientId: string;
 }
 
-export interface BaseAppContext {
+export interface BaseAppContextValue {
   store: Store,
   storeData: (key: string, data: any) => void,
   retrieveData: (key: string) => any,
@@ -29,31 +29,36 @@ export interface BaseAppContext {
   idRef: MutableRefObject<number>,
 }
 
-export interface ServerAppContext extends BaseAppContext {
+export interface ServerContextValue extends BaseAppContextValue {
   env: 'server',
   account: Account | null;
   cms: KodimCms,
   accessCheck: AccessCheck,
   logins: Logins,
+  httpStatusRef: { status: number },
 }
 
-export interface ClientAppContext extends BaseAppContext {
+export interface ClientContextValue extends BaseAppContextValue {
   env: 'client',
 }
 
-type AppContext = ServerAppContext | ClientAppContext;
+type AppContextValue = ServerContextValue | ClientContextValue;
 
-const appContext = createContext<AppContext>({
-  env: 'client',
-  store: {},
-  storeData: () => { },
-  retrieveData: () => { },
-  url: '/',
-  serverUrl: '',
-  idRef: { current: 0 },
-});
+const AppContext = createContext<AppContextValue>(undefined!);
 
-export const useAppContext = () => useContext(appContext);
+export const useAppContext = () => useContext(AppContext);
+
+export const useSetHttpStatus = () => {
+  const appContext = useAppContext();
+
+  if (appContext.env === 'client') {
+    return () => {};
+  }
+
+  return (status: number) => {
+    appContext.httpStatusRef.status = status;
+  };
+};
 
 export const useId = (): string => {
   const { idRef } = useAppContext();
@@ -66,7 +71,7 @@ export const useId = (): string => {
 };
 
 export function useData<T>(
-  fetcher: (serverContext: ServerAppContext) => T | Promise<T>,
+  fetcher: (serverContext: ServerContextValue) => T | Promise<T>,
 ): T {
   const key = useId();
   const context = useAppContext();
@@ -97,7 +102,7 @@ export const ClientContextProvider = ({ children }: ClientProviderProps) => {
 
   const idRef = useRef(0);
 
-  const value = useMemo((): ClientAppContext => ({
+  const value = useMemo((): ClientContextValue => ({
     store,
     env: 'client',
     storeData: (key: string, data: any) => storeData(store, key, data),
@@ -108,9 +113,9 @@ export const ClientContextProvider = ({ children }: ClientProviderProps) => {
   }), [store]);
 
   return (
-    <appContext.Provider value={value}>
+    <AppContext.Provider value={value}>
       {children}
-    </appContext.Provider>
+    </AppContext.Provider>
   );
 };
 
@@ -122,15 +127,16 @@ interface ServerProviderProps {
   store: Store;
   children: React.ReactNode;
   url: string
-  serverUrl: string
+  serverUrl: string,
+  httpStatusRef: { status: number },
 }
 
 export const ServerContextProvider = ({
-  account, cms, accessCheck, store, logins, children, url, serverUrl,
+  account, cms, accessCheck, store, logins, children, url, serverUrl, httpStatusRef,
 }: ServerProviderProps) => {
   const idRef = useRef(0);
 
-  const value = useMemo((): ServerAppContext => ({
+  const value = useMemo((): ServerContextValue => ({
     store,
     env: 'server',
     account,
@@ -142,11 +148,12 @@ export const ServerContextProvider = ({
     url,
     serverUrl,
     idRef,
+    httpStatusRef,
   }), [cms, account, accessCheck, store, logins, url, serverUrl]);
 
   return (
-    <appContext.Provider value={value}>
+    <AppContext.Provider value={value}>
       {children}
-    </appContext.Provider>
+    </AppContext.Provider>
   );
 };
