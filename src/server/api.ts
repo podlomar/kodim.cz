@@ -48,6 +48,103 @@ export const apiController = (config: any): Router => {
     });
   });
 
+  api.post('/groups/:name', async (req, res) => {
+    const group = await GroupModel.findOne({ name: req.params.name });
+    if (group === null) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const validActions = ['grantExcAccess', 'revokeExcAccess'];
+
+    const { action } = req.query;
+
+    if (typeof action !== 'string') {
+      res.status(400);
+      res.send({
+        error: 'Invalid or missing query param "action"',
+      });
+      return;
+    }
+
+    if (!validActions.includes(action)) {
+      res.status(400);
+      res.send({
+        error: `Invalid action "${action}"`,
+      });
+      return;
+    }
+
+    const { lesson, excType } = req.body;
+
+    if (typeof lesson !== 'string') {
+      res.status(400);
+      res.send({
+        error: 'Missing valid "lesson" attribute',
+      });
+      return;
+    }
+
+    if (!/^(\/[a-zA-Z0-9_-]+){4}$/.test(lesson)) {
+      res.status(400);
+      res.send({
+        error: 'The "lesson" attribute is not a well formed lesson path',
+      });
+      return;
+    }
+
+    if (typeof excType !== 'string') {
+      res.status(400);
+      res.send({
+        error: 'Missing valid "excType" attribute',
+      });
+      return;
+    }
+
+    if (!/^[a-zA-Z0-9_-]+$/.test(excType)) {
+      res.status(400);
+      res.send({
+        error: 'The "excType" attribute is not a well formed exercise type',
+      });
+      return;
+    }
+
+    const claim = `${lesson}/*/${excType}>*`;
+
+    if (action === 'grantExcAccess') {
+      if (group.claims.content.includes(claim)) {
+        res.status(400);
+        res.send({
+          error: `This group already grants access to lesson exercises "${claim}"`,
+        });
+        return;
+      }
+
+      group.claims.content.push(claim);
+      await group.save();
+
+      res.send(group.claims);
+      return;
+    }
+
+    if (action === 'revokeExcAccess') {
+      const index = group.claims.content.findIndex((c) => c === claim);
+
+      if (index === -1) {
+        res.status(400);
+        res.send({
+          error: `This group does not grant access to lesson exercises "${claim}"`,
+        });
+        return;
+      }
+
+      group.claims.content.splice(index, 1);
+      await group.save();
+
+      res.send(group.claims);
+    }
+  });
+
   api.get('/users', async (req, res) => {
     const users = await UserModel.find();
     res.json(users.map((user) => ({
