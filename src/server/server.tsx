@@ -11,7 +11,7 @@ import { AccessGrantAll } from 'kodim-cms/esm/content/access-check.js';
 import { expressjwt } from 'express-jwt';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
-import { api } from './api';
+import { apiController } from './api';
 import { GroupModel, UserModel } from './db';
 import { createAppController } from './app';
 import type { Invitation } from '../common/pages/InvitePage/InvitationMessage';
@@ -71,7 +71,7 @@ server.use('/js', express.static('./js', { fallthrough: false }));
 server.use('/changelog', express.static('../changelog', { fallthrough: false }));
 
 server.use('/cms', cmsApp.router);
-server.use('/api', api);
+server.use('/api', apiController(config));
 
 server.use((req, res, next) => {
   req.store = {};
