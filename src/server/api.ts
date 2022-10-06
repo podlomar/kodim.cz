@@ -1,10 +1,12 @@
 import express, { Router } from 'express';
+import cors from 'cors';
 import { GroupModel, UserModel } from './db';
 
 const allowedUsers = ['podlomar', 'FilipChalupa'];
 
 export const apiController = (config: any): Router => {
   const api = express.Router();
+  api.use(cors());
 
   api.use(async (req, res, next) => {
     const login: string | undefined = req.auth?.login;
