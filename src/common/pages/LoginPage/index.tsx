@@ -56,6 +56,7 @@ const LoginPage = () => {
                 type="text"
                 id="loginOrEmail"
                 name="loginOrEmail"
+                autoComplete="username"
               />
             </label>
 
@@ -63,8 +64,9 @@ const LoginPage = () => {
               Heslo:
               <input
                 type="password"
-                id="password"
                 name="password"
+                id="password"
+                autoComplete="password"
               />
             </label>
 
