@@ -50,22 +50,20 @@ const LoginPage = () => {
             action={`/prihlasit?returnUrl=${encodeURIComponent(returnUrl)}`}
             method="POST"
           >
-            <label htmlFor="loginOrEmail">
+            <label>
               Uživatelské jméno nebo e-mail:
               <input
                 type="text"
-                id="loginOrEmail"
                 name="loginOrEmail"
                 autoComplete="username"
               />
             </label>
 
-            <label htmlFor="password">
+            <label>
               Heslo:
               <input
                 type="password"
                 name="password"
-                id="password"
                 autoComplete="password"
               />
             </label>
