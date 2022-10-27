@@ -51,7 +51,7 @@ const LoginPage = () => {
             method="POST"
           >
             <label htmlFor="loginOrEmail">
-              Login or email:
+              Uživatelské jméno nebo e-mail:
               <input
                 type="text"
                 id="loginOrEmail"
@@ -60,7 +60,7 @@ const LoginPage = () => {
             </label>
 
             <label htmlFor="password">
-              Password:
+              Heslo:
               <input
                 type="password"
                 id="password"
@@ -72,7 +72,7 @@ const LoginPage = () => {
               <div className="alert">
                 <div className="alert__icon" />
                 <div className="alert__body">
-                  Nesprávný login, email nebo heslo
+                  Nesprávné uživatelské jméno, e-mail nebo heslo
                 </div>
               </div>
             ) : null}
