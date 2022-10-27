@@ -45,6 +45,7 @@ const LoginPage = () => {
               Přihlásit přes GitHub
             </Button>
           </div>
+          <hr className="login-divider" />
           <form
             className="login-form"
             action={`/prihlasit?returnUrl=${encodeURIComponent(returnUrl)}`}
