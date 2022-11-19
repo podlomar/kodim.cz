@@ -45,26 +45,27 @@ const LoginPage = () => {
               Přihlásit přes GitHub
             </Button>
           </div>
+          <hr className="login-divider" />
           <form
             className="login-form"
             action={`/prihlasit?returnUrl=${encodeURIComponent(returnUrl)}`}
             method="POST"
           >
-            <label htmlFor="loginOrEmail">
-              Login or email:
+            <label>
+              Uživatelské jméno nebo e-mail:
               <input
                 type="text"
-                id="loginOrEmail"
                 name="loginOrEmail"
+                autoComplete="username"
               />
             </label>
 
-            <label htmlFor="password">
-              Password:
+            <label>
+              Heslo:
               <input
                 type="password"
-                id="password"
                 name="password"
+                autoComplete="password"
               />
             </label>
 
@@ -72,7 +73,7 @@ const LoginPage = () => {
               <div className="alert">
                 <div className="alert__icon" />
                 <div className="alert__body">
-                  Nesprávný login, email nebo heslo
+                  Nesprávné uživatelské jméno, e-mail nebo heslo
                 </div>
               </div>
             ) : null}

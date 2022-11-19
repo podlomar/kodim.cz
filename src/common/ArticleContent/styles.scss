@@ -97,6 +97,7 @@ $code-emph-color: #e3e3e3;
       width: 100%;
       margin-top: 2rem;
       margin-bottom: 2rem;
+      border-spacing: 0;
     }
 
     thead {
@@ -109,8 +110,14 @@ $code-emph-color: #e3e3e3;
       padding: 0.5rem 1rem;
     }
 
-    tr:nth-child(even) {
-      background-color: #f0f0f0;
+    tbody {
+      tr:nth-child(even) {
+        background-color: #f0f0f0;
+      }
+
+      tr:nth-child(odd) {
+        background-color: #fff;
+      }
     }
   }
 }
