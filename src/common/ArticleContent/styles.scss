@@ -52,7 +52,7 @@ $code-emph-color: #e3e3e3;
       @include article-element;
     }
 
-    p {
+    p, ul, ol {
       margin-bottom: 1rem;
     }
 
