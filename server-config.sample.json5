@@ -1,5 +1,5 @@
 {
-  serverUrl: 'http://my.domain.org', // full URL of the server
+  serverUrl: 'http://localhost:3000', // full URL of the server
   defaultAccess: 'granted', // granted or denied
   port: 3000, // port on which the app runs
   contentDir: '/var/www/content', // content folder for CMS
