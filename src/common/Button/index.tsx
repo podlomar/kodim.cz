@@ -1,14 +1,18 @@
+import clsx from 'clsx';
 import { ReactNode } from 'react';
 import './style.scss';
 
 interface Props {
   href?: string
   icon?: ReactNode
+  size?: 'small' | 'medium'
   children: ReactNode
 }
 
-const Button = ({ children, href, icon }: Props) => {
-  const baseClassName = 'btn';
+const Button = ({
+  children, href, icon, size = 'medium',
+}: Props) => {
+  const baseClassName = clsx('btn', `btn--size-${size}`);
 
   const content = (
     <>
