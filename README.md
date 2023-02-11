@@ -38,5 +38,5 @@ npm run dev
 
 ```sh
 cd dist
-npx nodemon --watch "../../kodim-kurzy/**/entry.yml" server.js
+npx nodemon server.js
 ```
