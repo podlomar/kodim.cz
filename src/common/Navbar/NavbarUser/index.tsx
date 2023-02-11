@@ -38,12 +38,15 @@ const NavbarUser = () => {
 
   return (
     <div className="navbar-user">
-      <a className="navbar-user__name" href="/ucet">{user.name}</a>
-      <img
-        className="navbar-user__avatar"
-        src={user.avatarUrl}
-        alt={user.name}
-      />
+      <a className="navbar-user__name" href="/ucet">
+        {user.name}
+        {' '}
+        <img
+          className="navbar-user__avatar"
+          src={user.avatarUrl}
+          alt={user.name}
+        />
+      </a>
     </div>
   );
 };
