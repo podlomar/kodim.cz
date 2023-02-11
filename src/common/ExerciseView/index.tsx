@@ -48,8 +48,10 @@ const ExerciseView = ({
           </a>
         </h3>
         <div className="exercise-assign__demand">
-          <div className={`demand demand--${demand}`} />
-          <div className="demand-text">{demandText[demand]}</div>
+          <div className="demand">
+            <div className={`demand__symbol demand__symbol--${demand}`} />
+            <div className="demand__text">{demandText[demand]}</div>
+          </div>
         </div>
       </div>
       <div className="exercise-assign__body">
