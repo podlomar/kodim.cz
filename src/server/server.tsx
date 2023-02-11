@@ -66,6 +66,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 
 server.use(errorHandler);
 
+server.use('/', express.static('./public'));
 server.use('/assets', express.static('./assets', { fallthrough: false }));
 server.use('/js', express.static('./js', { fallthrough: false }));
 server.use('/changelog', express.static('../changelog', { fallthrough: false }));

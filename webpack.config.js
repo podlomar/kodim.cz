@@ -88,6 +88,10 @@ const serverConfig = {
     new CopyPlugin({
       patterns: [
         {
+          from: 'src/server/public',
+          to: 'public',
+        },
+        {
           from: 'src/server/assets',
           to: 'assets',
         },
