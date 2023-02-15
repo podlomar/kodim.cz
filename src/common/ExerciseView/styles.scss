@@ -46,35 +46,43 @@ $assign-code-emph-color: #d8d8d8;
 }
 
 .demand {
-  min-width: 70px;
-  height: 14px;
-  background-size: contain;
-  background-position-x: right;
-  background-repeat: no-repeat;
-  background-size: 70px 14px;
+  text-align: right;
+  display: grid;
+  justify-items: end;
+  row-gap: 0.2em;
 
-  &--1 {
-    background-image: url("./img/demand1.svg");
+  &__symbol {
+    width: 70px;
+    height: 14px;
+    background-size: contain;
+    background-position-x: right;
+    background-repeat: no-repeat;
+
+    &--1 {
+      background-image: url("./img/demand1.svg");
+    }
+
+    &--2 {
+      background-image: url("./img/demand2.svg");
+    }
+
+    &--3 {
+      background-image: url("./img/demand3.svg");
+    }
+
+    &--4 {
+      background-image: url("./img/demand4.svg");
+    }
+
+    &--5 {
+      background-image: url("./img/demand5.svg");
+    }
   }
 
-  &--2 {
-    background-image: url("./img/demand2.svg");
-  }
-
-  &--3 {
-    background-image: url("./img/demand3.svg");
-  }
-
-  &--4 {
-    background-image: url("./img/demand4.svg");
-  }
-
-  &--5 {
-    background-image: url("./img/demand5.svg");
-  }
 }
 
-.demand-text {
+.demand__text {
   font-size: 0.8rem;
   font-weight: 800;
+  line-height: 1.1;
 }
