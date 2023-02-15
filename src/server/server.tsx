@@ -1,7 +1,7 @@
 import express, { ErrorRequestHandler, Request } from 'express';
 import fs from 'fs';
 import json5 from 'json5';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { KodimCms } from 'kodim-cms';
 import { CmsApp } from 'kodim-cms/esm/server.js';
 import mongoose from 'mongoose';

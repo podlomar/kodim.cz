@@ -38,11 +38,12 @@ await ssh.putDirectory('./dist', `${remoteDir}/dist`, {
   },
 });
 await ssh.putFile('./package.json', `${remoteDir}/package.json`);
+await ssh.putFile('./package-lock.json', `${remoteDir}/package-lock.json`);
 console.info('package.json');
 await ssh.execCommand('cp server-config.json5 dist/', { cwd: remoteDir });
 
 console.info(
-  (await ssh.execCommand('npm install --production', { cwd: remoteDir })).stdout,
+  (await ssh.execCommand('npm clean-install --production', { cwd: remoteDir })).stdout,
 );
 console.info(
   (await ssh.execCommand(`supervisorctl start kodim_${instance}`)).stdout,
