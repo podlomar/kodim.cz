@@ -1,10 +1,11 @@
+import { useCallback, useEffect, useState } from 'react';
+import { ServerContextValue, useData } from '../../AppContext';
+import Button from '../../Button';
+import GroupList from '../../GroupList';
+import InfoPanel from '../../InfoPanel';
 import Layout from '../../Layout';
 import Navbar from '../../Navbar';
-import { ServerContextValue, useData } from '../../AppContext';
-import InfoPanel from '../../InfoPanel';
-import Button from '../../Button';
 import NotFoundPage from '../NotFoundPage';
-import GroupList from '../../GroupList';
 
 const getUser = ({ account }: ServerContextValue): null | {
   name: string, groups: Array<{
@@ -29,6 +30,15 @@ const getUser = ({ account }: ServerContextValue): null | {
 
 const AccountPage = () => {
   const user = useData(getUser);
+  const [token, setToken] = useState('');
+  const [showToken, setShowToken] = useState(false);
+  const toggleTokenVisibility = useCallback(() => {
+    setShowToken((current) => !current);
+  }, []);
+
+  useEffect(() => {
+    setToken(document.cookie.split(';').find((cookie) => cookie.startsWith('token='))?.split('=')[1] ?? '');
+  }, []);
 
   if (user === null) {
     return <NotFoundPage />;
@@ -47,6 +57,10 @@ const AccountPage = () => {
             {' '}
             <strong>{user.name}</strong>
           </p>
+          <h3>Přístupový token</h3>
+          <p>Užitečný údaj pro provázání vašeho účtu na Kódím.cz s dalšími aplikacemi.</p>
+          <input type={showToken ? 'text' : 'password'} value={token} readOnly />
+          <Button onClick={toggleTokenVisibility} size="small">{showToken ? 'Skrýt' : 'Zobrazit'}</Button>
           {user.groups.length > 0 && (
             <>
               <h3>Vaše skupiny</h3>
