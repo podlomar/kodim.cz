@@ -1,20 +1,20 @@
+import axios from 'axios';
+import bcrypt from 'bcryptjs';
+import cookieParser from 'cookie-parser';
 import express, { ErrorRequestHandler, Request } from 'express';
+import { expressjwt } from 'express-jwt';
 import fs from 'fs';
 import json5 from 'json5';
-import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { KodimCms } from 'kodim-cms';
+import { AccessGrantAll } from 'kodim-cms/esm/content/access-check.js';
 import { CmsApp } from 'kodim-cms/esm/server.js';
 import mongoose from 'mongoose';
-import axios from 'axios';
 import queryString from 'query-string';
-import { AccessGrantAll } from 'kodim-cms/esm/content/access-check.js';
-import { expressjwt } from 'express-jwt';
-import jwt from 'jsonwebtoken';
-import cookieParser from 'cookie-parser';
-import { apiController } from './api';
-import { GroupModel, UserModel } from './db';
-import { createAppController } from './app';
 import type { Invitation } from '../common/pages/InvitePage/InvitationMessage';
+import { apiController } from './api/api';
+import { createAppController } from './app';
+import { GroupModel, UserModel } from './db';
 
 const config = json5.parse(fs.readFileSync('./server-config.json5', 'utf-8'));
 
