@@ -1,3 +1,4 @@
+import cookie from 'cookie';
 import { useCallback, useEffect, useState } from 'react';
 import { ServerContextValue, useData } from '../../AppContext';
 import Button from '../../Button';
@@ -28,17 +29,45 @@ const getUser = ({ account }: ServerContextValue): null | {
   return { name, groups };
 };
 
+interface TokenState {
+  value: string;
+  visible: boolean;
+  copied: boolean;
+}
+
 const AccountPage = () => {
   const user = useData(getUser);
-  const [token, setToken] = useState('');
-  const [showToken, setShowToken] = useState(false);
-  const toggleTokenVisibility = useCallback(() => {
-    setShowToken((current) => !current);
+  const [token, setToken] = useState<TokenState>({
+    value: '',
+    visible: false,
+    copied: false,
+  });
+
+  const toggleShowToken = useCallback(() => {
+    setToken((current) => ({ ...current, visible: !current.visible }));
+  }, []);
+
+  const copyToken = useCallback(() => {
+    navigator.clipboard.writeText(token.value);
+    setToken({ ...token, copied: true });
+  }, [token]);
+
+  useEffect(() => {
+    setToken({
+      value: cookie.parse(document.cookie).token,
+      visible: false,
+      copied: false,
+    });
   }, []);
 
   useEffect(() => {
-    setToken(document.cookie.split(';').find((cookie) => cookie.startsWith('token='))?.split('=')[1] ?? '');
-  }, []);
+    const handleFocus = () => {
+      setToken({ ...token, copied: false });
+    };
+    window.addEventListener('focus', handleFocus);
+
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [token]);
 
   if (user === null) {
     return <NotFoundPage />;
@@ -59,8 +88,15 @@ const AccountPage = () => {
           </p>
           <h3>Přístupový token</h3>
           <p>Užitečný údaj pro provázání vašeho účtu na Kódím.cz s dalšími aplikacemi.</p>
-          <input type={showToken ? 'text' : 'password'} value={token} readOnly />
-          <Button onClick={toggleTokenVisibility} size="small">{showToken ? 'Skrýt' : 'Zobrazit'}</Button>
+          <input type={token.visible ? 'text' : 'password'} value={token.value} readOnly />
+          <Button
+            onClick={copyToken}
+            size="small"
+          >
+            {token.copied ? 'Zkopírováno' : 'Kopírovat do schránky'}
+          </Button>
+          &nbsp;
+          <Button onClick={toggleShowToken} size="small">{token.visible ? 'Skrýt' : 'Zobrazit'}</Button>
           {user.groups.length > 0 && (
             <>
               <h3>Vaše skupiny</h3>
