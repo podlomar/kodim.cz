@@ -10,6 +10,35 @@ cp server-config.sample.json5 server-config.json5
 
 Don't forget to adjust `contentDir`.
 
+#### contentDir
+
+If `contentDir` is set to `/var/www/content`, then to display the content of repository [daweb-vyuka](https://github.com/Czechitas-podklady-WEB/daweb-vyuka), the `/var/www/content` directory will have the following content:
+
+```
+vyuka/
+  daweb-vyuka/     # contents of the https://github.com/Czechitas-podklady-WEB/daweb-vyuka repository
+    .git/
+    priprava/
+    html-a-css/
+    entry.yml
+    …
+  entry.yml
+```
+
+In the `vyuka/daweb-vyuka` directory, there will be a cloned [repository with materials](https://github.com/Czechitas-podklady-WEB/daweb-vyuka) from GitHub.
+The `entry.yml` file can have the following contents:
+
+```yaml
+divisions:
+  - title: Testovací kurzy
+    lead: Kurzy určené pro testování při vývoji Kódim.cz
+    courses:
+      - repository: https://github.com/Czechitas-podklady-WEB/daweb-vyuka
+        branch: master
+        link: daweb-vyuka
+```
+
+
 #### GitHub OAuth2 authentication
 
 If you want to use GitHub login for local development, create an OAuth application on GitHub.
