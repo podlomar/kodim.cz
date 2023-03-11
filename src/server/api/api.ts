@@ -10,7 +10,7 @@ export const apiController = (config: any): Router => {
   api.use('/admin', adminController(config));
 
   api.get('/me', async (req, res) => {
-    const user = await UserModel.findOne({ login: req.auth?.login });
+    const user = await UserModel.findOne({ login: req.auth?.usr });
     if (user === null) {
       res.status(401);
       res.json({ error: 'Not authorized' });

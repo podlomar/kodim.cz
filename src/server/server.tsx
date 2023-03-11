@@ -46,19 +46,8 @@ server.use(
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {
-    res.status(401).send(`
-      <!DOCTYPE html>
-      <html lang="cs">
-        <head>
-          <meta charset="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>401</title>
-        </head>
-        <body>
-          <pre>Chyba 401: Chybné přihlašovací údaje. Zkuste vymazat cookies</pre>
-        </body>
-      </html>
-    `);
+    res.clearCookie('token');
+    res.redirect('/');
   } else {
     next(err);
   }
@@ -129,6 +118,7 @@ server.get('/prihlasit/github', async (req, res) => {
       login: githubUser.login,
       name: githubUser.name ?? githubUser.login,
       avatarUrl: githubUser.avatar_url,
+      appToken: jwt.sign({ usr: githubUser.login, scp: 'app' }, config.sessionSecret),
       email: githubUser.email ?? undefined,
       groups: [],
     });
@@ -137,7 +127,12 @@ server.get('/prihlasit/github', async (req, res) => {
 
   const user = dbUser.toObject();
 
-  const token = jwt.sign({ login: user.login }, config.sessionSecret);
+  if (user.appToken === undefined) {
+    dbUser.set('appToken', jwt.sign({ usr: githubUser.login, scp: 'app' }, config.sessionSecret));
+    await dbUser.save();
+  }
+
+  const token = jwt.sign({ usr: user.login, scp: 'all' }, config.sessionSecret);
   res.cookie('token', token);
   res.redirect(returnUrl);
 });
@@ -175,7 +170,8 @@ server.post('/prihlasit', async (req, res) => {
 
 server.use('/prihlasit', (req, res, next) => {
   const returnUrl = typeof req.query.returnUrl === 'string' ? req.query.returnUrl : '/';
-  if (req.auth !== undefined) {
+
+  if (req.auth !== undefined && req.auth.scp === 'all') {
     res.redirect(returnUrl);
     return;
   }
@@ -192,7 +188,7 @@ server.get('/pozvanky/skupina/:inviteToken', async (req, res) => {
 
   req.store.invitation = invitation;
 
-  const login: string | undefined = req.auth?.login;
+  const login: string | undefined = req.auth?.usr;
 
   if (login === undefined) {
     invitation.status = 'no-login';
@@ -232,7 +228,7 @@ server.post('/pozvanky/skupina/:inviteToken/:action', async (req, res) => {
 
   req.store.invitation = invitation;
 
-  const login: string | undefined = req.auth?.login;
+  const login: string | undefined = req.auth?.usr;
 
   if (login === undefined) {
     appController(req, res);

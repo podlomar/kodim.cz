@@ -4,8 +4,9 @@ export {};
 
 declare global {
   interface ParsedToken {
-    iat: number
-    login: string
+    iat: number,
+    usr: string,
+    scp: string,
   }
 
   namespace Express {

@@ -7,7 +7,13 @@ export const adminController = (config: any): Router => {
   const admin = express.Router();
 
   admin.use(async (req, res, next) => {
-    const login: string | undefined = req.auth?.login;
+    if (req.auth?.scp === 'app') {
+      res.status(403);
+      res.send();
+      return;
+    }
+
+    const login: string | undefined = req.auth?.usr;
     if (!allowedUsers.includes(login ?? '')) {
       res.status(403);
       res.send();

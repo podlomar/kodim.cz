@@ -5,8 +5,12 @@ export interface Account {
   claims: Claims;
 }
 
-export const getAccount = async (login: string): Promise<Account | null> => {
-  const dbUser = await UserModel.findOne({ login });
+export const getAccount = async (token: ParsedToken): Promise<Account | null> => {
+  if (token.scp !== 'all') {
+    return null;
+  }
+
+  const dbUser = await UserModel.findOne({ login: token.usr });
   if (dbUser === null) {
     return null;
   }

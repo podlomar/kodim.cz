@@ -1,4 +1,3 @@
-import cookie from 'cookie';
 import { useCallback, useEffect, useState } from 'react';
 import { ServerContextValue, useData } from '../../AppContext';
 import Button from '../../Button';
@@ -9,27 +8,29 @@ import Navbar from '../../Navbar';
 import NotFoundPage from '../NotFoundPage';
 
 const getUser = ({ account }: ServerContextValue): null | {
-  name: string, groups: Array<{
+  name: string,
+  groups: Array<{
     name: string,
     title: string,
     inviteToken: string | undefined,
   }>,
+  appToken: string,
 } => {
   if (account === null) {
     return null;
   }
 
-  const { name } = account.user;
+  const { name, appToken } = account.user;
   const groups = account.user.groups.map((group) => ({
     name: group.name,
     title: group.title,
     inviteToken: group.inviteToken,
   }));
 
-  return { name, groups };
+  return { name, groups, appToken };
 };
 
-interface TokenState {
+interface AppsTokenState {
   value: string;
   visible: boolean;
   copied: boolean;
@@ -37,37 +38,29 @@ interface TokenState {
 
 const AccountPage = () => {
   const user = useData(getUser);
-  const [token, setToken] = useState<TokenState>({
-    value: '',
+  const [appToken, setAppToken] = useState<AppsTokenState>({
+    value: user?.appToken ?? '',
     visible: false,
     copied: false,
   });
 
-  const toggleShowToken = useCallback(() => {
-    setToken((current) => ({ ...current, visible: !current.visible }));
-  }, []);
-
-  const copyToken = useCallback(() => {
-    navigator.clipboard.writeText(token.value);
-    setToken({ ...token, copied: true });
-  }, [token]);
-
-  useEffect(() => {
-    setToken({
-      value: cookie.parse(document.cookie).token,
-      visible: false,
-      copied: false,
-    });
-  }, []);
-
   useEffect(() => {
     const handleFocus = () => {
-      setToken({ ...token, copied: false });
+      setAppToken({ ...appToken, copied: false });
     };
     window.addEventListener('focus', handleFocus);
 
     return () => window.removeEventListener('focus', handleFocus);
-  }, [token]);
+  }, [appToken]);
+
+  const toggleShowToken = useCallback(() => {
+    setAppToken((current) => ({ ...current, visible: !current.visible }));
+  }, []);
+
+  const copyToken = useCallback(() => {
+    navigator.clipboard.writeText(appToken.value);
+    setAppToken({ ...appToken, copied: true });
+  }, [appToken]);
 
   if (user === null) {
     return <NotFoundPage />;
@@ -86,17 +79,17 @@ const AccountPage = () => {
             {' '}
             <strong>{user.name}</strong>
           </p>
-          <h3>Přístupový token</h3>
+          <h3>Přístupový token pro aplikace</h3>
           <p>Užitečný údaj pro provázání vašeho účtu na Kódím.cz s dalšími aplikacemi.</p>
-          <input type={token.visible ? 'text' : 'password'} value={token.value} readOnly />
+          <input type={appToken.visible ? 'text' : 'password'} value={appToken.value} readOnly />
+          <Button onClick={toggleShowToken} size="small">{appToken.visible ? 'Skrýt' : 'Zobrazit'}</Button>
+          &nbsp;
           <Button
             onClick={copyToken}
             size="small"
           >
-            {token.copied ? 'Zkopírováno' : 'Kopírovat do schránky'}
+            {appToken.copied ? 'Zkopírováno' : 'Kopírovat do schránky'}
           </Button>
-          &nbsp;
-          <Button onClick={toggleShowToken} size="small">{token.visible ? 'Skrýt' : 'Zobrazit'}</Button>
           {user.groups.length > 0 && (
             <>
               <h3>Vaše skupiny</h3>
