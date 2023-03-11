@@ -1,8 +1,6 @@
 import express, { Router } from 'express';
 import { GroupModel, UserModel } from '../db';
 
-const allowedUsers = ['podlomar', 'FilipChalupa'];
-
 export const adminController = (config: any): Router => {
   const admin = express.Router();
 
@@ -14,7 +12,7 @@ export const adminController = (config: any): Router => {
     }
 
     const login: string | undefined = req.auth?.usr;
-    if (!allowedUsers.includes(login ?? '')) {
+    if (!config.admins.includes(login ?? '')) {
       res.status(403);
       res.send();
       return;
