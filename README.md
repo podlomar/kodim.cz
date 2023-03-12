@@ -53,7 +53,7 @@ After clicking on *Register application*, a page will appear where the `ClientID
 Copy ClientID into `server-config.json5` file.
 Then click *Generate a new client secret* and paste the generated client secret into the `server-config.json5` configuration file.
 
-```json
+```javascript
 githubApp: {
     clientId: 'xxxxxxx',
     clientSecret: 'xxxxxxxxxxxxx',
