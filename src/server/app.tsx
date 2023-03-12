@@ -27,9 +27,6 @@ export const createAppController = (
   res: Response,
 ) => {
   const account = req.auth === undefined ? null : (await getAccount(req.auth));
-
-  console.log(req.auth);
-  console.log(account);
   const accessUser: User = {
     login: account?.user.login ?? '',
     access: account === undefined ? 'public' : 'registered',

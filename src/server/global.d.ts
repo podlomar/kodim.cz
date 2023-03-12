@@ -6,7 +6,7 @@ declare global {
   interface ParsedToken {
     iat: number,
     usr: string,
-    scp: string,
+    scp: 'all' | 'app',
   }
 
   namespace Express {
