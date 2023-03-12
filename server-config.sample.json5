@@ -8,5 +8,10 @@
   githubApp: {
     clientId: 'xxxxxxxxx',
     clientSecret: 'xxxxxxxxxxxxxxxxxx',
-  }
+  },
+  admins: [
+    'podlomar',
+    'FilipChalupa',
+    'FilipJirsak'
+  ]
 }
