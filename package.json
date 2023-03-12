@@ -1,6 +1,6 @@
 {
   "name": "kodim.cz",
-  "version": "1.5.15",
+  "version": "1.5.16",
   "description": "",
   "main": "dist/server.js",
   "type": "module",
