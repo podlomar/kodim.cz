@@ -1,18 +1,24 @@
 .figure {
-  text-align: center;
-  cursor: zoom-in;
-  margin: 2rem 0;
-  padding: 0;
-  width: 100%;
-  border: none;
-  background-color: transparent;
-  display: block;
-  pointer-events: none;
-
   &__preview {
+    text-align: center;
+    cursor: zoom-in;
+    margin: 2rem 0;
+    padding: 0;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    display: block;
+    pointer-events: none;
+  }
+
+  &__preview-image {
     max-width: 100%;
     height: auto;
     pointer-events: auto;
+  }
+
+  &--beforeChange &__preview-image {
+    view-transition-name: figure-image;
   }
 
   &__fullscreen {
@@ -22,23 +28,12 @@
     background-color: rgba(#ffffff, 0.9);
     border: none;
     cursor: zoom-out;
-    opacity: 0;
-    visibility: hidden;
-
-    @media (prefers-reduced-motion: no-preference) {
-      transition-property: opacity, visibility;
-      transition-duration: 0.3s;
-    }
-
-    &--open {
-      opacity: 1;
-      visibility: visible;
-    }
   }
 
-  &__full {
+  &__fullscreen-image {
     max-width: 100%;
     height: auto;
     max-height: 100%;
+    view-transition-name: figure-image;
   }
 }
