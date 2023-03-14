@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { useCallback, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { startViewTransition } from '../utilities/startViewTransition';
+import { useOnEscapeKey } from '../utilities/useOnEscapeKey';
 import './styles.scss';
 
 interface Props {
@@ -13,20 +14,28 @@ interface Props {
 const Figure = ({ src, alt, size }: Props) => {
   const [state, setState] = useState<'preview' | 'beforeChange' | 'open'>('preview');
   const open = useCallback(() => {
+    if (state !== 'preview') {
+      return;
+    }
     flushSync(() => {
       setState('beforeChange');
     });
     startViewTransition(() => {
       setState('open');
     });
-  }, []);
+  }, [state]);
   const close = useCallback(() => {
+    if (state !== 'open') {
+      return;
+    }
     startViewTransition(() => {
       setState('beforeChange');
     }, () => {
       setState('preview');
     });
-  }, []);
+  }, [state]);
+
+  useOnEscapeKey(close);
 
   return (
     <div className={clsx('figure', `figure--${state}`)}>
