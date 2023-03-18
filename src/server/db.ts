@@ -21,14 +21,17 @@ export const groupSchema = new mongoose.Schema<Group>({
 
 export const GroupModel = mongoose.model<Group>('Group', groupSchema);
 
-export interface User {
-  login: string,
+export interface GeneralUser {
   name: string,
+  avatarUrl: string,
+  groups: Group[],
+}
+
+export interface User extends GeneralUser {
+  login: string,
   email?: string,
   password?: string,
   appToken: string,
-  avatarUrl: string,
-  groups: Group[],
 }
 
 export const userSchema = new mongoose.Schema<User>({
@@ -43,16 +46,39 @@ export const userSchema = new mongoose.Schema<User>({
 
 export const UserModel = mongoose.model<User>('User', userSchema);
 
-export const getAccount = async (login: string): Promise<null | {
-  user: User,
+const appendGroup = async (user: GeneralUser, groupName: string): Promise<void> => {
+  const group = await GroupModel.findOne({ name: groupName });
+  if (group !== null) {
+    user.groups.push(group.toObject());
+  }
+};
+
+export const getAccount = async (login: string | null): Promise<{
+  user: GeneralUser,
   claims: Claims,
 }> => {
-  const dbUser = await UserModel.findOne({ login });
-  if (dbUser === null) {
-    return null;
+  let user: GeneralUser | null = null;
+  if (login !== null) {
+    const dbUser = await UserModel.findOne({ login });
+    if (dbUser !== null) {
+      await dbUser.populate('groups');
+      user = dbUser.toObject();
+      //TODO remove hardcoded name
+      await appendGroup(user, 'Everyone');
+    }
   }
-  await dbUser.populate('groups');
-  const user = dbUser.toObject();
+  if (user === null) {
+    //TODO remove hardcoded values
+    user = {
+      name: 'Nepřihlášený uživatel',
+      avatarUrl: 'https://www.gravatar.com/avata',
+      groups: [],
+    };
+  }
+
+  //TODO remove hardcoded name
+  await appendGroup(user, 'Public');
+
   const claims: Claims = user.groups.reduce(
     (acc: Claims, group): Claims => ({
       content: [...acc.content, ...group.claims.content],

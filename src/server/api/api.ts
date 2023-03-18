@@ -2,10 +2,12 @@ import cors from 'cors';
 import express, { Router } from 'express';
 import { UserModel } from '../db';
 import { adminController } from './admin';
+import { auth } from './auth';
 
 export const apiController = (config: any): Router => {
   const api = express.Router();
   api.use(cors());
+  api.use(auth(config));
 
   api.use('/admin', adminController(config));
 

@@ -4,23 +4,6 @@ import { GroupModel, UserModel } from '../db';
 export const adminController = (config: any): Router => {
   const admin = express.Router();
 
-  admin.use(async (req, res, next) => {
-    if (req.auth?.scp === 'app') {
-      res.status(403);
-      res.send();
-      return;
-    }
-
-    const login: string | undefined = req.auth?.usr;
-    if (!config.admins.includes(login ?? '')) {
-      res.status(403);
-      res.send();
-      return;
-    }
-
-    next();
-  });
-
   admin.get('/groups', async (req, res) => {
     const groups = await GroupModel.find();
     res.json(
