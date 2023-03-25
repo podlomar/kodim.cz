@@ -90,6 +90,37 @@ $code-emph-color: #e3e3e3;
       padding: 0rem 0.5rem;
     }
 
+    blockquote {
+      background-color: #555;
+      color: white;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      color-scheme: dark;
+      position: relative;
+
+      &::before, &::after {
+        font-size: 6rem;
+        color: $color-palette-5;
+        opacity: 0.5;
+        position: absolute;
+      }
+
+      &::before {
+        content: '„';
+        bottom: 2.5rem;
+        left: 0;
+      }
+
+      &::after {
+        content: '“';
+        right: 0;
+        top: 2rem;
+      }
+    }
+
     li {
       margin-left: 2rem;
     }
