@@ -1,7 +1,5 @@
 import clsx from 'clsx';
 import { useCallback, useState } from 'react';
-import { flushSync } from 'react-dom';
-import { startViewTransition } from '../utilities/startViewTransition';
 import { useOnEscapeKey } from '../utilities/useOnEscapeKey';
 import './styles.scss';
 
@@ -12,34 +10,19 @@ interface Props {
 }
 
 const Figure = ({ src, alt, size }: Props) => {
-  const [state, setState] = useState<'preview' | 'beforeChange' | 'open'>('preview');
+  const [isOpen, setIsOpen] = useState(false);
   const open = useCallback(() => {
-    if (state !== 'preview') {
-      return;
-    }
-    flushSync(() => {
-      setState('beforeChange');
-    });
-    startViewTransition(() => {
-      setState('open');
-    });
-  }, [state]);
+    setIsOpen(true);
+  }, []);
   const close = useCallback(() => {
-    if (state !== 'open') {
-      return;
-    }
-    startViewTransition(() => {
-      setState('beforeChange');
-    }, () => {
-      setState('preview');
-    });
-  }, [state]);
+    setIsOpen(false);
+  }, []);
 
-  useOnEscapeKey(close);
+  useOnEscapeKey(isOpen ? close : null);
 
   return (
-    <div className={clsx('figure', `figure--${state}`)}>
-      <button type="button" className="figure__preview" onClick={open}>
+    <div className={clsx('figure', isOpen && 'figure--is-open')}>
+      <button type="button" className="figure__preview" onClick={open} aria-label="zvětšit obrázet">
         <img
           style={size ? { width: `${size}%` } : undefined}
           src={src}
@@ -47,11 +30,9 @@ const Figure = ({ src, alt, size }: Props) => {
           className="figure__preview-image"
         />
       </button>
-      {state === 'open' && (
-        <button type="button" className="figure__fullscreen" onClick={close}>
-          <img src={src} alt={alt} className="figure__fullscreen-image" />
-        </button>
-      )}
+      <button type="button" className="figure__fullscreen" onClick={close} aria-label="zavřít obrázek">
+        <img src={src} alt={alt} className="figure__fullscreen-image" />
+      </button>
     </div>
   );
 };
