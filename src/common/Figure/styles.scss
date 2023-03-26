@@ -22,19 +22,18 @@
     position: fixed;
     inset: 0;
     padding: 2rem;
-    background-color: rgba(#ffffff, 0.9);
+    background-color: transparent;
     border: none;
     cursor: zoom-out;
-    opacity: 0;
     visibility: hidden;
 
     @media (prefers-reduced-motion: no-preference) {
-      transition-property: opacity, visibility;
-      transition-duration: 0.3s;
+      transition-property: background-color, visibility;
+      transition-duration: 200ms; // Same in JavaScript
     }
 
     .figure--is-open & {
-      opacity: 1;
+      background-color: rgba(#ffffff, 0.95);
       visibility: inherit;
     }
   }
