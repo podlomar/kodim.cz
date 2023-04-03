@@ -24,8 +24,8 @@ export const apiController = (config: any): Router => {
   api.get('/me', async (req, res) => {
     const user = req.account?.user;
     if (user === undefined) {
-      res.status(500);
-      res.json({ error: 'unexpected auth error' });
+      res.status(403);
+      res.json({ error: 'Not authenticated' });
       return;
     }
 

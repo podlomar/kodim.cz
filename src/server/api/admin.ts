@@ -4,17 +4,17 @@ import { GroupModel, UserModel } from '../db';
 export const adminController = (config: any): Router => {
   const admin = express.Router();
 
-  admin.use(async (req, res, next) => {
-    if (req.auth?.scp === 'app') {
+  admin.use((req, res, next) => {
+    if (req.auth?.scp !== 'all') {
       res.status(403);
-      res.send();
+      res.send({ error: 'Invalid token scope' });
       return;
     }
 
-    const login: string | undefined = req.auth?.usr;
+    const login = req.account?.user.login;
     if (!config.admins.includes(login ?? '')) {
       res.status(403);
-      res.send();
+      res.send({ error: 'You are not an admin' });
       return;
     }
 
