@@ -1,23 +1,35 @@
 import cors from 'cors';
-import express, { Router } from 'express';
-import { UserModel } from '../db';
+import express, { ErrorRequestHandler, Router } from 'express';
+import { authController } from '../authController';
 import { adminController } from './admin';
 
 export const apiController = (config: any): Router => {
-  const api = express.Router();
+  const api = authController(config);
   api.use(cors());
+  api.use(express.json());
+
+  const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+    if (err.name === 'UnauthorizedError') {
+      res.status(401);
+      res.json({ error: 'Invalid credentials' });
+    } else {
+      next(err);
+    }
+  };
+
+  api.use(errorHandler);
 
   api.use('/admin', adminController(config));
 
   api.get('/me', async (req, res) => {
-    const user = await UserModel.findOne({ login: req.auth?.usr });
-    if (user === null) {
-      res.status(401);
-      res.json({ error: 'Not authorized' });
+    const user = req.account?.user;
+    if (user === undefined) {
+      res.status(500);
+      res.json({ error: 'unexpected auth error' });
       return;
     }
+
     res.json({
-      id: user.id,
       name: user.name,
       email: user.email,
       avatarUrl: user.avatarUrl,
