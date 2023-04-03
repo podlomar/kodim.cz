@@ -1,6 +1,6 @@
 import express, { Request, Router } from 'express';
 import { expressjwt } from 'express-jwt';
-import { Claims, User, UserModel } from './db';
+import { Claims, User, UserModel } from '../db';
 
 export type TokenScope = 'all' | 'app';
 

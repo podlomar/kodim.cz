@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express, { ErrorRequestHandler, Router } from 'express';
-import { authController } from '../authController';
+import { authController } from './auth';
 import { adminController } from './admin';
 
 export const apiController = (config: any): Router => {

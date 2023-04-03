@@ -17,12 +17,12 @@ import {
 } from 'kodim-cms/esm/content/access-check.js';
 import { KodimCms } from 'kodim-cms';
 import { ErrorRequestHandler } from 'express';
-import type { Store } from '../common/AppContext';
-import { GroupModel, UserModel } from './db';
-import type { Invitation } from '../common/pages/InvitePage/InvitationMessage';
-import { authController } from './authController';
-import { ServerContextProvider } from '../common/AppContext';
-import App from '../common/App';
+import type { Store } from '../../common/AppContext';
+import { GroupModel, UserModel } from '../db';
+import type { Invitation } from '../../common/pages/InvitePage/InvitationMessage';
+import { authController } from './auth';
+import { ServerContextProvider } from '../../common/AppContext';
+import App from '../../common/App';
 
 declare global {
   namespace Express {
@@ -34,7 +34,7 @@ declare global {
 
 const stats = json5.parse(fs.readFileSync('./stats.json5', 'utf-8'));
 
-export const appController = (
+export const webappController = (
   config: any,
   cms: KodimCms,
 ) => {

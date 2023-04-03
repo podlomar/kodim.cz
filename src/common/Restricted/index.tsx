@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { ServerContextValue, useData } from '../AppContext';
-import type { Account } from '../../server/authController';
+import type { Account } from '../../server/controllers/auth';
 
 import './style.scss';
 

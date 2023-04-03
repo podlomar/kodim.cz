@@ -3,7 +3,7 @@ import {
 } from 'react';
 import type { KodimCms } from 'kodim-cms';
 import type { AccessCheck } from 'kodim-cms/esm/content/access-check.js';
-import type { Account } from '../../server/authController';
+import type { Account } from '../../server/controllers/auth';
 
 export type Store = Record<string, any>;
 
@@ -76,7 +76,6 @@ export function useData<T>(
   const key = useId();
   const context = useAppContext();
 
-  // console.log('appContext', context);
   const data = context.retrieveData(key);
   if (data === undefined) {
     if (context.env === 'client') {

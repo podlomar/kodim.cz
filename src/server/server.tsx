@@ -6,8 +6,8 @@ import { KodimCms } from 'kodim-cms';
 import { AccessGrantAll } from 'kodim-cms/esm/content/access-check.js';
 import { CmsApp } from 'kodim-cms/esm/server.js';
 import mongoose from 'mongoose';
-import { apiController } from './api/api';
-import { appController } from './app';
+import { apiController } from './controllers/api';
+import { webappController } from './controllers/webapp';
 
 const config = json5.parse(fs.readFileSync('./server-config.json5', 'utf-8'));
 
@@ -28,7 +28,7 @@ server.use('/changelog', express.static('../changelog', { fallthrough: false }))
 
 server.use('/cms', cmsApp.router);
 server.use('/api', apiController(config));
-server.use(appController(config, cms));
+server.use(webappController(config, cms));
 
 server.listen(config.port, () => {
   console.info(`Serving on localhost:${config.port}`);
