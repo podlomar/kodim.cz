@@ -149,7 +149,7 @@ export const ServerContextProvider = ({
     serverUrl,
     idRef,
     httpStatusRef,
-  }), [cms, account, accessCheck, store, logins, url, serverUrl]);
+  }), [cms, account, accessCheck, store, logins, url, serverUrl, httpStatusRef]);
 
   return (
     <AppContext.Provider value={value}>

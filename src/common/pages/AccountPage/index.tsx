@@ -20,14 +20,14 @@ const getUser = ({ account }: ServerContextValue): null | {
     return null;
   }
 
-  const { name, appToken } = account.user;
+  const { name } = account.user;
   const groups = account.user.groups.map((group) => ({
     name: group.name,
     title: group.title,
     inviteToken: group.inviteToken,
   }));
 
-  return { name, groups, appToken };
+  return { name, groups, appToken: account.appToken };
 };
 
 interface AppsTokenState {
@@ -82,7 +82,12 @@ const AccountPage = () => {
           <h3>Přístupový token pro aplikace</h3>
           <p>Užitečný údaj pro provázání vašeho účtu na Kódím.cz s dalšími aplikacemi.</p>
           <input type={appToken.visible ? 'text' : 'password'} value={appToken.value} readOnly />
-          <Button onClick={toggleShowToken} size="small">{appToken.visible ? 'Skrýt' : 'Zobrazit'}</Button>
+          <Button
+            onClick={toggleShowToken}
+            size="small"
+          >
+            {appToken.visible ? 'Skrýt' : 'Zobrazit'}
+          </Button>
           &nbsp;
           <Button
             onClick={copyToken}

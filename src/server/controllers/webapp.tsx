@@ -116,7 +116,6 @@ export const webappController = (
         login: githubUser.login,
         name: githubUser.name ?? githubUser.login,
         avatarUrl: githubUser.avatar_url,
-        appToken: jwt.sign({ usr: githubUser.login, scp: 'app' }, config.sessionSecret),
         email: githubUser.email ?? undefined,
         groups: [],
       });
@@ -124,12 +123,6 @@ export const webappController = (
     }
 
     const user = dbUser.toObject();
-
-    if (user.appToken === undefined) {
-      dbUser.set('appToken', jwt.sign({ usr: githubUser.login, scp: 'app' }, config.sessionSecret));
-      await dbUser.save();
-    }
-
     const token = jwt.sign({ usr: user.login, scp: 'all' }, config.sessionSecret);
     res.cookie('token', token);
     res.redirect(returnUrl);

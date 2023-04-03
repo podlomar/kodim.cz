@@ -26,7 +26,6 @@ export interface User {
   name: string,
   email?: string,
   password?: string,
-  appToken: string,
   avatarUrl: string,
   groups: Group[],
 }
@@ -36,7 +35,6 @@ export const userSchema = new mongoose.Schema<User>({
   name: { type: String, required: true },
   email: { type: String },
   password: { type: String },
-  appToken: { type: String, required: true },
   avatarUrl: { type: String, required: true },
   groups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
 });

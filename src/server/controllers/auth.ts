@@ -1,5 +1,6 @@
 import express, { Request, Router } from 'express';
 import { expressjwt } from 'express-jwt';
+import jwt from 'jsonwebtoken';
 import { Claims, User, UserModel } from '../db';
 
 export type TokenScope = 'all' | 'app';
@@ -13,6 +14,7 @@ export interface ParsedToken {
 export interface Account {
   user: User;
   claims: Claims;
+  appToken: string;
 }
 
 declare global {
@@ -69,8 +71,9 @@ export const authController = (config: any, scope?: TokenScope): Router => {
       }),
       { content: [], web: [] },
     );
+    const appToken = jwt.sign({ usr: user.login, scp: 'app' }, config.sessionSecret);
 
-    req.account = { user, claims };
+    req.account = { user, claims, appToken };
     next();
   });
 
