@@ -1,5 +1,18 @@
-server-config.json5
-dist
-node_modules
-.idea
-http-test
+# Server configuration for local development
+/server-config.json5
+
+# Build and output dirs
+/dist/
+/node_modules/
+
+# Editor/IDE project files
+# VSCode
+/.vscode/
+# IntelliJ Idea and other JetBrains IDE
+/.idea/
+
+# Operating system cache files
+# MacOS
+.DS_Store
+# Windows
+Thumbs.db
