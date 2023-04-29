@@ -52,7 +52,9 @@ $code-emph-color: #e3e3e3;
       @include article-element;
     }
 
-    p, ul, ol {
+    p,
+    ul,
+    ol {
       margin-bottom: 1rem;
     }
 
@@ -101,21 +103,22 @@ $code-emph-color: #e3e3e3;
       color-scheme: dark;
       position: relative;
 
-      &::before, &::after {
+      &::before,
+      &::after {
         font-size: 6rem;
         color: $color-palette-5;
-        opacity: 0.5;
+        opacity: 0.1;
         position: absolute;
       }
 
       &::before {
-        content: '„';
-        bottom: 2.5rem;
+        content: "„";
+        bottom: 2.8rem;
         left: 0;
       }
 
       &::after {
-        content: '“';
+        content: "“";
         right: 0;
         top: 2rem;
       }
