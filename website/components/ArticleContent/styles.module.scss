@@ -1,0 +1,158 @@
+@import "/styles/variables.scss";
+@import "/styles/mixins.scss";
+
+.articleContent {
+  display: grid;
+  grid-template-columns: 20rem 1fr;
+  background-color: white;
+}
+
+.articleNav {
+  display: none;
+  padding: 2rem;
+
+  a {
+    display: block;
+    text-decoration: none;
+    color: $color-text;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+      font-weight: 800;
+    }
+  }
+
+  @include breakpoint-lg {
+    display: block;
+  }
+}
+
+.navActive {
+  font-weight: 800;
+}
+
+@mixin article-element {
+  padding-left: 1rem;
+  padding-right: 1rem;
+      
+  @include breakpoint-sm {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @include breakpoint-lg {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+.articleBody {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+
+  & > * {
+    @include article-element;
+  }
+
+  p,
+  ul,
+  ol {
+    margin-bottom: 1rem;
+  }
+
+  pre {
+    background-color: #555;
+    color: white;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    color-scheme: dark;
+
+    code {
+      background-color: transparent;
+      padding: 0;
+    }
+  }
+
+  li pre {
+    padding: 0.5rem 1rem;
+  }
+
+  code {
+    font-family: "Roboto Mono";
+    background-color: #e3e3e3;
+    padding: 3px 5px;
+    border-radius: 3px;
+  }
+
+  kbd {
+    background-color: #fff;
+    box-shadow: 0 0 3px #555;
+    border-radius: 3px;
+    padding: 0rem 0.5rem;
+  }
+
+  blockquote {
+    background-color: #555;
+    color: white;
+    padding: 1.5rem 4rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    color-scheme: dark;
+    position: relative;
+
+    &::before,
+    &::after {
+      font-size: 6rem;
+      color: $palette-4;
+      opacity: 0.1;
+      position: absolute;
+    }
+
+    &::before {
+      content: "„";
+      bottom: 2.8rem;
+      left: 0;
+    }
+
+    &::after {
+      content: "“";
+      right: 0;
+      top: 2rem;
+    }
+  }
+
+  li {
+    margin-left: 2rem;
+  }
+
+  table {
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-spacing: 0;
+  }
+
+  thead {
+    text-align: left;
+    background-color: #e0e0e0;
+  }
+
+  td,
+  th {
+    padding: 0.5rem 1rem;
+  }
+
+  tbody {
+    tr:nth-child(even) {
+      background-color: #f0f0f0;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #fff;
+    }
+  }
+}

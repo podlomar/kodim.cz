@@ -1,0 +1,21 @@
+@import "/styles/mixins.scss";
+
+.chapterOverview {
+  @include padded;
+}
+
+.lessons {
+  margin-top: 2rem;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+
+  @include breakpoint-md {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include breakpoint-lg {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

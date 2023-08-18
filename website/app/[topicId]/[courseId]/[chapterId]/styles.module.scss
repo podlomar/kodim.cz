@@ -1,0 +1,42 @@
+@import "/styles/variables.scss";
+@import "/styles/mixins.scss";
+
+.header {
+  @include padded;
+
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.courseBanner {
+  @include padded;
+
+  display: flex;
+  background-color: $palette-2;
+  background-size: 14rem 14rem;
+  background-repeat: no-repeat;
+  background-position-x: 105%;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+
+  @include breakpoint-md {
+    border-radius: 0.5rem;
+  }
+}
+
+.icon {
+  width: 4rem;
+  height: 4rem;
+
+  margin-right: 1.5rem;
+}
+
+.title {
+  margin: 0 0 1rem 0;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.lead {
+  margin: 0;
+}

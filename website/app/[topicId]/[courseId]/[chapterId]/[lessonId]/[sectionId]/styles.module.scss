@@ -1,0 +1,32 @@
+@import "/styles/variables.scss";
+@import "/styles/mixins.scss";
+
+.lessonContent {
+  display: grid;
+  grid-template-columns: 20rem 1fr;
+  background-color: white;
+}
+
+.sectionsNav {
+  display: none;
+  padding: 2rem;
+
+  a {
+    display: block;
+    text-decoration: none;
+    color: $color-text;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+      font-weight: 800;
+    }
+  }
+
+  @include breakpoint-lg {
+    display: block;
+  }
+}
+
+.navActive {
+  font-weight: 800;
+}

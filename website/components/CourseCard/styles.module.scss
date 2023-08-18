@@ -1,0 +1,35 @@
+@import "/styles/variables.scss";
+
+a.banner {
+  display: flex;
+  text-decoration: none;
+  color: $color-text;;
+  background-color: $palette-2;
+  background-size: 10rem 10rem;
+  background-repeat: no-repeat;
+  background-position-x: 120%;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition: 400ms;
+  
+  &:hover {
+    transform: scale(1.03);
+    transition: transform 400ms;
+    background-color: $palette-2-darker;
+  }
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.title {
+  margin: 0 0 0 1rem;
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+.body {
+  margin: 1rem 0.5rem 0 0.5rem;
+}

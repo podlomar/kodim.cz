@@ -1,0 +1,40 @@
+@import "./variables.scss";
+
+@mixin breakpoint-xs {
+  @media only screen and (min-width: $display-xs) {
+    @content;
+  }
+}
+
+@mixin breakpoint-sm {
+  @media only screen and (min-width: $display-sm) {
+    @content;
+  }
+}
+
+@mixin breakpoint-md {
+  @media only screen and (min-width: $display-md) {
+    @content;
+  }
+}
+
+@mixin breakpoint-lg {
+  @media only screen and (min-width: $display-lg) {
+    @content;
+  }
+}
+
+@mixin padded {
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  @include breakpoint-sm {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @include breakpoint-lg {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
