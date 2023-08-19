@@ -31,23 +31,7 @@
   font-weight: 800;
 }
 
-@mixin article-element {
-  padding-left: 1rem;
-  padding-right: 1rem;
-      
-  @include breakpoint-sm {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  @include breakpoint-lg {
-    padding-left: 4rem;
-    padding-right: 4rem;
-  }
-}
-
 .articleBody {
-  padding-top: 1rem;
   padding-bottom: 2rem;
 
   & > * {

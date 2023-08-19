@@ -5,7 +5,7 @@ import { ExerciseContentType } from 'kodim-cms/esm/content/exercise';
 import LessonBanner from 'components/LessonBanner';
 import ReactHast from 'components/ReactHast';
 import ArticleContent from 'components/ArticleContent/intex';
-import styles from './styles.module.scss';
+import ExerciseHead from 'components/ExerciseHead';
 
 interface Props {
   params: {
@@ -43,14 +43,11 @@ const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
   return (
     <div className="container">
       <LessonBanner lesson={lesson} />
-      <ArticleContent navItems={navItems} activeNavKey={sectionId}>
-        <div className={styles.excBanner}>
-          <div className={styles.num}>{exercise.num}</div>
-          <div>
-            <div className={styles.title}>{exercise.title}</div>
-            <p>{exercise.lead}</p>
-          </div>
-        </div>
+      <ArticleContent 
+        navItems={navItems}
+        activeNavKey={sectionId}
+        head={<ExerciseHead exercise={exercise} link={false} />}
+      >
         <ReactHast root={exercise.assign} />
         { exercise.solution && (
           <>

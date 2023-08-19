@@ -8,9 +8,10 @@ interface Props {
   navItems: MenuItem[];
   activeNavKey: string;
   children: ReactNode;
+  head?: ReactNode;
 }
 
-const ArticleContent = ({ navItems, activeNavKey, children }: Props): JSX.Element => {
+const ArticleContent = ({ navItems, activeNavKey, head, children }: Props): JSX.Element => {
   return (
     <div className={styles.articleContent}>
       <div className={styles.articleNav}>
@@ -25,8 +26,11 @@ const ArticleContent = ({ navItems, activeNavKey, children }: Props): JSX.Elemen
           ))
         }
       </div>
-      <div className={styles.articleBody}>
-        {children}
+      <div className={styles.articleMain}>
+        { head && <div className={styles.articleHead}>{head}</div> }
+        <div className={styles.articleBody}>
+          {children}
+        </div>
       </div>
     </div>
   )
