@@ -31,7 +31,17 @@
   font-weight: 800;
 }
 
+.articleMain {
+  grid-column: 1 / span 2;
+  padding-bottom: 2rem;
+
+  @include breakpoint-lg {
+    grid-column: 2 / span 1;
+  }
+}
+
 .articleBody {
+  padding-top: 1rem;
   padding-bottom: 2rem;
 
   & > * {
