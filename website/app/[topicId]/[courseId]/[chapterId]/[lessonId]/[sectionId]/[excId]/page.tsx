@@ -20,14 +20,9 @@ interface Props {
 
 const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId, sectionId, excId } = params;
-  const lesson = await cms.loadContent(
-    cms.rootCursor().navigate(topicId, courseId, chapterId, lessonId),
-    LessonContentType
-  );
-
-  const exercise = await cms.loadContent(
-    cms.rootCursor().navigate(topicId, courseId, chapterId, lessonId, sectionId, excId),
-    ExerciseContentType
+  const lesson = await cms.loadLesson(topicId, courseId, chapterId, lessonId);
+  const exercise = await cms.loadExercise(
+    topicId, courseId, chapterId, lessonId, sectionId, excId
   );
 
   if (exercise === null || lesson === null) {

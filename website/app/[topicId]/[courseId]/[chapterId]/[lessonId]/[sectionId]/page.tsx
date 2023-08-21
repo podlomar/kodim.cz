@@ -21,16 +21,12 @@ interface Props {
 
 const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId, sectionId } = params;
-  const lessonCursor = cms.rootCursor().navigate(topicId, courseId, chapterId, lessonId);
-  const lesson = await cms.loadContent(lessonCursor, LessonContentType);
-
+  const lesson = await cms.loadLesson(topicId, courseId, chapterId, lessonId);
   if (lesson === null) {
     return <div>Failed to load lesson</div>;
   }
 
-  const sectionCursor = lessonCursor.navigate(sectionId);
-  const section = await cms.loadContent(sectionCursor, SectionContentType);
-
+  const section = await cms.loadSection(topicId, courseId, chapterId, lessonId, sectionId);
   if (section === null) {
     return <div>Failed to load section</div>;
   }

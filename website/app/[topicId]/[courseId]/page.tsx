@@ -1,5 +1,4 @@
 import { cms } from 'lib/cms';
-import { CourseContentType } from 'kodim-cms/esm/content/course';
 import { redirect } from 'next/navigation';
 
 interface Props {
@@ -11,10 +10,7 @@ interface Props {
 
 const CoursePage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId } = params;
-  const course = await cms.loadContent(
-    cms.rootCursor().navigate(topicId, courseId),
-    CourseContentType
-  );
+  const course = await cms.loadCourse(topicId, courseId);
 
   if (course === null) {
     return <div>Failed to load content</div>;

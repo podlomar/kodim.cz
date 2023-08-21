@@ -1,14 +1,10 @@
-import clsx from 'clsx';
-import Link from 'next/link';
 import heroImg from './img/hero.svg';
 import { cms } from 'lib/cms';
-import { RootContentType } from 'kodim-cms/esm/content/root';
 import TopicBanner from 'components/TopicBanner';
 import CourseCard from 'components/CourseCard';
 import Brand from 'components/Brand';
-import styles from './styles.module.scss';
 import Menu from 'components/Menu';
-
+import styles from './styles.module.scss';
 
 interface Props {
   params: {
@@ -17,7 +13,7 @@ interface Props {
 }
 
 const HomePage = async ({ params }: Props): Promise<JSX.Element> => {
-  const root = await cms.loadContent(cms.rootCursor(), RootContentType);
+  const root = await cms.loadRoot();
 
   if (root === null) {
     return <div>Failed to load root</div>;

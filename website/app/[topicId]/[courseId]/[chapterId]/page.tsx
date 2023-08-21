@@ -1,9 +1,7 @@
 import { cms } from 'lib/cms';
-import { CourseContentType } from 'kodim-cms/esm/content/course';
 import ChapterOverview from 'components/ChapterOverview';
 import Menu from 'components/Menu';
 import styles from './styles.module.scss';
-import { ChapterContentType } from 'kodim-cms/esm/content/chapter';
 
 interface Props {
   params: {
@@ -15,23 +13,12 @@ interface Props {
 
 const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId } = params;
-  const courseCursor = cms.rootCursor().navigate(topicId, courseId);
-
-  if (!courseCursor.isOk) {
-    return <div>Failed to load content</div>;
-  }
-
-  const course = await cms.loadContent(courseCursor, CourseContentType);
+  const course = await cms.loadCourse(topicId, courseId);
   if (course === null) {
     return <div>Failed to load content</div>;
   }
 
-  const chapterCursor = courseCursor.navigate(chapterId);
-  if (!chapterCursor.isOk) {
-    return <div>Failed to load content</div>;
-  }
-
-  const chapter = await cms.loadContent(chapterCursor, ChapterContentType);
+  const chapter = await cms.loadChapter(topicId, courseId, chapterId);
   if (chapter === null) {
     return <div>Failed to load content</div>;
   }
@@ -77,16 +64,6 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
       }
     </div>      
   );
-
-  // const lesson = course.lessons.find((chapter) => chapter.name === segment1);
-
-  // const section = sectionCursor.entry();
-  
-  // if (section === null) {
-  //   return <div>Failed to load content</div>;
-  // }
-
-  // redirect(`${segment1}/${section.name}`);
 };
 
 export default ChapterPage
