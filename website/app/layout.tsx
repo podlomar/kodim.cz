@@ -14,11 +14,10 @@ const RootLayout = ({ children }: Props): JSX.Element => {
         <meta charSet="utf-8" />
         <title>Kódím.cz</title>
         
-        {/* <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
         <link rel="icon" href="/icon-512.png" type="image/png" sizes="512x512" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" /> */}
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

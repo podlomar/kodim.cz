@@ -11,12 +11,9 @@ const Brand = ({ size = 'small' }: Props) => {
     <a className={clsx(styles.brand, styles[`brand${titleCase(size)}`])} href="/">
       <div className={styles.logo} />
       <div className={styles.name}>
-        <span className={styles.site}>
-          Kódím
-        </span>
-        <span className={styles.tld}>
-          .cz
-        </span>
+        <span className={styles.site}>Kódím</span>
+        <span className={styles.dot}>.</span>
+        <span className={styles.tld}>cz</span>
       </div>
     </a>
   );

@@ -1,5 +1,4 @@
 import React from "react"
-import Link from "next/link";
 import { ShallowLesson } from "kodim-cms/esm/content/lesson";
 import styles from "./styles.module.scss";
 

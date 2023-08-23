@@ -3,7 +3,7 @@ import prompt from 'prompt';
 
 const instance = process.argv[2] ?? 'dev';
 
-const remoteDir = `/var/www/${instance}.kodim.cz`;
+const remoteDir = `/var/www/${instance}.kodim.cz/website`;
 console.info(`Deploying to ${remoteDir}`);
 
 prompt.start();

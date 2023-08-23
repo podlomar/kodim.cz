@@ -7,15 +7,15 @@ $container-sm: 480px; // 720 - 48
 $container-md: 792px; // 840 - 48
 $container-lg: 1152px; // 1200 - 48
 
-$palette-1: #01575c; // Midnight green
-$palette-2: #ffea7d; // Jasmine
-$palette-3: #85f2db; // Aquamarine
-$palette-4: #e1e9f4; // Alice blue
-$palette-5: #e0525b; // Indian red
+$palette-1: #2c3e66; // Delft blue
+$palette-2: #ffe24a; // Mustard
+$palette-3: #e1e9f4; // Alice blue
+$palette-4: #e0525b; // Indian red
 
-$palette-2-darker: darken($palette-2, 20%);
+$palette-2-darker: darken($palette-2, 15%);
 
 $font-family: 'Montserrat', sans-serif;
 $font-size: 16px;
 
+$color-title: #374151; 
 $color-text: #222;
