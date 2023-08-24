@@ -1,11 +1,11 @@
 import { cms } from 'lib/cms';
 import { MenuItem } from 'components/Menu';
-import { LessonContentType } from 'kodim-cms/esm/content/lesson';
-import { ExerciseContentType } from 'kodim-cms/esm/content/exercise';
 import LessonBanner from 'components/LessonBanner';
 import ReactHast from 'components/ReactHast';
 import ArticleContent from 'components/ArticleContent/intex';
 import ExerciseHead from 'components/ExerciseHead';
+
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: {

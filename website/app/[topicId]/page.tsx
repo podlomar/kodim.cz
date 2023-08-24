@@ -6,6 +6,8 @@ import Brand from 'components/Brand';
 import Menu from 'components/Menu';
 import styles from './styles.module.scss';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
   params: {
     topicId?: string;

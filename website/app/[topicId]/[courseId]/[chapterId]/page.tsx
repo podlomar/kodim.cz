@@ -3,6 +3,8 @@ import ChapterOverview from 'components/ChapterOverview';
 import Menu from 'components/Menu';
 import styles from './styles.module.scss';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
   params: {
     topicId: string;

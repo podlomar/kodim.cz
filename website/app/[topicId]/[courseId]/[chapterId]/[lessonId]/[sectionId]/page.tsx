@@ -1,13 +1,11 @@
 import { cms } from 'lib/cms';
-import Link from 'next/link';
 import LessonBanner from 'components/LessonBanner';
-import { LessonContentType } from 'kodim-cms/esm/content/lesson';
-import { SectionContentType } from 'kodim-cms/esm/content/section';
 import styles from './styles.module.scss';
 import SectionContent from 'components/SectionContent';
-import clsx from 'clsx';
 import ArticleContent from 'components/ArticleContent/intex';
 import { MenuItem } from 'components/Menu';
+
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: {
