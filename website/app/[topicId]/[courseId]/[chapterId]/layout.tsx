@@ -2,6 +2,8 @@ import clsx from 'clsx';
 import Brand from 'components/Brand';
 import styles from './styles.module.scss';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
   children: React.ReactNode;
 }

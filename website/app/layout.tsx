@@ -3,6 +3,8 @@ import { version } from '../package.json';
 import styles from './styles.module.scss';
 import '../styles/global.scss';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
   children: React.ReactNode;
 }
