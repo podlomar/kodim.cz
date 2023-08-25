@@ -1,4 +1,5 @@
 import { cms } from 'lib/cms';
+import Link from 'next/link';
 import LessonBanner from 'components/LessonBanner';
 import styles from './styles.module.scss';
 import SectionContent from 'components/SectionContent';
@@ -40,6 +41,11 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
       <LessonBanner lesson={lesson} />
       <ArticleContent navItems={navItems} activeNavKey={section.name}>
         <SectionContent section={section} />
+        <div className={styles.links}>
+          { section.prev === null ? <span /> : <Link href={section.prev.path}>&lt; Předchozí</Link>
+          { section.next === null ? <span /> : <Link href={section.next.path}>Následujicí &gt;</Link>
+        </div>
+        </div>
       </ArticleContent>
     </div>
   );
