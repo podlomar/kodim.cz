@@ -45,7 +45,6 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
           { section.prev === null ? <span /> : <Link href={section.prev.path}>&lt; Předchozí</Link> }
           { section.next === null ? <span /> : <Link href={section.next.path}>Následujicí &gt;</Link> }
         </div>
-        </div>
       </ArticleContent>
     </div>
   );
