@@ -42,8 +42,8 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
       <ArticleContent navItems={navItems} activeNavKey={section.name}>
         <SectionContent section={section} />
         <div className={styles.links}>
-          { section.prev === null ? <span /> : <Link href={section.prev.path}>&lt; Předchozí</Link>
-          { section.next === null ? <span /> : <Link href={section.next.path}>Následujicí &gt;</Link>
+          { section.prev === null ? <span /> : <Link href={section.prev.path}>&lt; Předchozí</Link> }
+          { section.next === null ? <span /> : <Link href={section.next.path}>Následujicí &gt;</Link> }
         </div>
         </div>
       </ArticleContent>
