@@ -20,4 +20,8 @@ Web for publishing materials from programming courses
      daweb-vyuka
    ```
 6. Clone the repo `daweb-vyuka` to your topic folder.
-7. Run the web from inside the `website` directory with `npm run start`.
+7. Run the web from inside the `website` directory with:
+   ```
+   npm install
+   npm run dev
+   ```
