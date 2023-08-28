@@ -27,12 +27,12 @@ const Menu = ({ items, activeKey }: Props) => {
   return (
     <div className={styles.menu}>
       <button
-        onClick={toggleMenu}
         className={styles.menuBtn}
-      />
-      {!menuOpen && (
+        onClick={toggleMenu}
+      >
+        <div className={styles.menuIcon} />
         <div className={styles.selectedItem}>{activeItem?.label}</div>
-      )}
+      </button>
       <div className={clsx(styles.items, { [styles.hideItems]: !menuOpen })}>
         {
           items.map((item) => (
