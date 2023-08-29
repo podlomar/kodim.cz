@@ -9,8 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "next build && node scripts/deploy.js",
-    "deployOnly": "node scripts/deploy.js"
+    "deploy": "node scripts/deploy.js"
   },
   "author": "",
   "license": "ISC",

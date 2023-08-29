@@ -29,19 +29,12 @@ await ssh.connect({
 console.info(
   (await ssh.execCommand(`supervisorctl stop kodim_${instance}`)).stdout,
 );
-await ssh.execCommand('rm -rf .next/* .next node_modules package*', { cwd: remoteDir });
-await ssh.putDirectory('./.next', `${remoteDir}/.next`, {
-  recursive: true,
-  tick: (localFile) => {
-    console.info(localFile);
-  },
-});
-await ssh.putFile('./package.json', `${remoteDir}/package.json`);
-await ssh.putFile('./package-lock.json', `${remoteDir}/package-lock.json`);
-console.info('package.json');
-
+await ssh.execCommand('rm -rf .next/* .next node_modules', { cwd: remoteDir });
 console.info(
   (await ssh.execCommand('npm clean-install --production', { cwd: remoteDir })).stdout,
+);
+console.info(
+  (await ssh.execCommand('npm run build', { cwd: remoteDir })).stdout,
 );
 console.info(
   (await ssh.execCommand(`supervisorctl start kodim_${instance}`)).stdout,
