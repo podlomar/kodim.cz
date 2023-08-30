@@ -1,5 +1,5 @@
 import { cms } from 'lib/cms';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +16,7 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId } = params;
   const lesson = await cms.loadLesson(topicId, courseId, chapterId, lessonId);
   if (lesson === null) {
-    return <div>Failed to load content</div>;
+    notFound();
   }
   
   redirect(`${lessonId}/${lesson.sections[0].name}`);

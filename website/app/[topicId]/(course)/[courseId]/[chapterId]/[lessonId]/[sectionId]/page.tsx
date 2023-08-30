@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { cms } from 'lib/cms';
 import LessonBanner from 'components/LessonBanner';
 import styles from './styles.module.scss';
@@ -22,12 +23,12 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId, sectionId } = params;
   const lesson = await cms.loadLesson(topicId, courseId, chapterId, lessonId);
   if (lesson === null) {
-    return <div>Failed to load lesson</div>;
+    notFound();
   }
 
   const section = await cms.loadSection(topicId, courseId, chapterId, lessonId, sectionId);
   if (section === null) {
-    return <div>Failed to load section</div>;
+    notFound();
   }
 
   const navItems = lesson.sections.map((sec): MenuItem => ({

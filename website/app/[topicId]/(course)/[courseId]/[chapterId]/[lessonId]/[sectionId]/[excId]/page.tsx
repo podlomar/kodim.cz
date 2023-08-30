@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { cms } from 'lib/cms';
 import { MenuItem } from 'components/Menu';
 import LessonBanner from 'components/LessonBanner';
@@ -27,7 +28,7 @@ const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
   );
 
   if (exercise === null || lesson === null) {
-    return <div>Failed to load content</div>;
+    notFound();
   }
 
   const navItems = lesson.sections.map((sec): MenuItem => ({

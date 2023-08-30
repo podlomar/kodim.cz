@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { cms } from 'lib/cms';
 import ChapterOverview from 'components/ChapterOverview';
 import Menu from 'components/Menu';
@@ -17,12 +18,12 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId } = params;
   const course = await cms.loadCourse(topicId, courseId);
   if (course === null) {
-    return <div>Failed to load content</div>;
+    notFound();
   }
 
   const chapter = await cms.loadChapter(topicId, courseId, chapterId);
   if (chapter === null) {
-    return <div>Failed to load content</div>;
+    notFound();
   }
 
   return (
