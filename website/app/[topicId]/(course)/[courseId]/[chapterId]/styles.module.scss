@@ -1,13 +1,6 @@
 @import "/styles/variables.scss";
 @import "/styles/mixins.scss";
 
-.header {
-  @include padded;
-
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
 .courseBanner {
   @include padded;
 

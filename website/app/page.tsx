@@ -1,4 +1,4 @@
-import HomePage from "./[topicId]/page";
+import HomePage from "./[topicId]/(home)/page";
 
 export const dynamic = 'force-dynamic';
 

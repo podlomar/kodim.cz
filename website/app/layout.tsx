@@ -1,7 +1,4 @@
-import clsx from 'clsx';
-import { version } from '../package.json';
-import styles from './styles.module.scss';
-import '../styles/global.scss';
+import 'styles/global.scss';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,7 +8,7 @@ interface Props {
 
 const RootLayout = ({ children }: Props): JSX.Element => {
   return (
-    <html lang="en">
+    <html lang="cs">
       <head>
         <meta charSet="utf-8" />
         <title>Kódím.cz</title>
@@ -29,23 +26,18 @@ const RootLayout = ({ children }: Props): JSX.Element => {
         />
 
         <meta name="robots" content="index, follow" />
-        {/* <meta 
+        <meta 
           name="description"
-          content="Svérázné zprávy z domova i obskurních zemí, na které se v tuzemských médiích zapomnělo. Shrnutí a komentáře s jasným názorem a dávkou sarkasmu, jež vás postaví na nohy lépe než ranní kafe."
-        /> */}
+          content="Programování hravě i vážně pro nováčky i pokročilé. Kurzy vývoje webových aplikací, programování v JavaScriptu, Pythonu, Reactu, Next.js, Node.js a dalších technologiích."
+        />
 
-        {/* <meta name="keywords" content="Cynické hyeny, ironické zprávy, sarkastické komentáře, blog, newsletter" /> */}
+        <meta 
+          name="keywords"
+          content="Kurzy programování, tvorba webových stránek, JavaScript, React, Python, datová analýza."
+        />
       </head>
       <body>
-        <main>
-          {children}
-        </main>
-        <footer>
-          <div className={clsx('container', styles.footerContent)}>
-            <p className={styles.footerTitle}>Kódím.cz</p>
-            <p className={styles.version}>Verze {version}</p>
-          </div>
-        </footer>
+        {children}
       </body>
     </html>
   )

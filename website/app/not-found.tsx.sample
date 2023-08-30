@@ -1,0 +1,11 @@
+import MainLayout from "components/MainLayout";
+
+const NotFound = (): JSX.Element => {
+  return (
+    <MainLayout showBrand>
+      <p>Not found</p>
+    </MainLayout>
+  )
+}
+
+export default NotFound;
