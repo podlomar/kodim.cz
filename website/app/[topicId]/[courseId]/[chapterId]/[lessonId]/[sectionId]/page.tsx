@@ -1,10 +1,10 @@
 import { cms } from 'lib/cms';
-import Link from 'next/link';
 import LessonBanner from 'components/LessonBanner';
 import styles from './styles.module.scss';
 import SectionContent from 'components/SectionContent';
 import ArticleContent from 'components/ArticleContent/intex';
 import { MenuItem } from 'components/Menu';
+import StepLink from 'components/StepLink';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,15 +36,34 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
     label: sec.title,
   }));
 
+  const links = (
+    <div className={styles.stepLinks}>
+      {
+        section.prev === null
+          ? <span />
+          : <StepLink
+              direction="prev"
+              href={section.prev.path}
+              label={section.prev.title}
+            />
+      }
+      { 
+        section.next === null
+          ? <span />
+          : <StepLink
+              direction="next"
+              href={section.next.path}
+              label={section.next.title}
+            />
+      }
+    </div>
+  )
+
   return (
     <div className="container">
       <LessonBanner lesson={lesson} />
-      <ArticleContent navItems={navItems} activeNavKey={section.name}>
+      <ArticleContent navItems={navItems} activeNavKey={section.name} foot={links}>
         <SectionContent section={section} />
-        <div className={styles.links}>
-          { section.prev === null ? <span /> : <Link href={section.prev.path}>&lt; Předchozí</Link> }
-          { section.next === null ? <span /> : <Link href={section.next.path}>Následujicí &gt;</Link> }
-        </div>
       </ArticleContent>
     </div>
   );

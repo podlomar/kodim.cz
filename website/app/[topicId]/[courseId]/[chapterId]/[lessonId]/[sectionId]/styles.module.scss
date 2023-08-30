@@ -31,8 +31,13 @@
   font-weight: 800;
 }
 
-.links {
-  margin: 2rem;
+.stepLinks {
+  @include article-element;
   display: flex;
+  gap: 0.5rem;
   justify-content: space-between;
+
+  & > * {
+    flex: 1;
+  }
 }
