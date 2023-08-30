@@ -73,10 +73,6 @@
     }
   }
 
-  li pre {
-    padding: 0.5rem 1rem;
-  }
-
   code {
     font-family: "Roboto Mono";
     background-color: #e3e3e3;
@@ -124,6 +120,15 @@
 
   li {
     margin-left: 2rem;
+    margin-bottom: 0.5rem;
+
+    p {
+      margin: 0;
+    }
+
+    pre {
+      padding: 0.5rem 1rem;
+    }
   }
 
   table {
