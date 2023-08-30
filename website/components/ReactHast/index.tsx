@@ -22,10 +22,16 @@ const processElementContent = (elementContent: ElementContent): ReactNode => {
   const { tagName, properties, children } = elementContent;
   if (tagName in componentMap) {
     const Component = componentMap[tagName];
-    return createElement(Component, properties, children.map(processElementContent));
+    return createElement(
+      Component, properties, ...children.map(processElementContent)
+    );
   }
 
-  return createElement(tagName, properties, children.map(processElementContent));
+  return createElement(
+    tagName,
+    properties,
+    ...children.map(processElementContent),
+  );
 };
 
 interface Props {
@@ -33,7 +39,7 @@ interface Props {
 }
 
 const ReactHast = ({ root }: Props): JSX.Element => createElement(
-  Fragment, {}, root.children.map((child) => 
+  Fragment, {}, ...root.children.map((child) => 
     child.type === 'doctype' ? null : processElementContent(child)
   ));
 
