@@ -12,6 +12,7 @@ $palette-2: #ffe24a; // Mustard
 $palette-3: #e1e9f4; // Alice blue
 $palette-4: #e0525b; // Indian red
 
+$palette-1-darker: darken($palette-1, 15%);
 $palette-2-darker: darken($palette-2, 15%);
 
 $font-family: 'Montserrat', sans-serif;

@@ -4,6 +4,7 @@ import LessonBanner from 'components/LessonBanner';
 import ReactHast from 'components/ReactHast';
 import ArticleContent from 'components/ArticleContent/intex';
 import ExerciseHead from 'components/ExerciseHead';
+import Solution from 'components/Solution';
 
 export const dynamic = 'force-dynamic';
 
@@ -44,12 +45,7 @@ const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
         head={<ExerciseHead exercise={exercise} link={false} />}
       >
         <ReactHast root={exercise.assign} />
-        { exercise.solution && (
-          <>
-            <h2>Řešení</h2>
-            <ReactHast root={exercise.solution} />
-          </>
-        )}
+        {exercise.solution !== 'none' && <Solution root={exercise.solution} />}
       </ArticleContent>
     </div>
   );
