@@ -1,12 +1,12 @@
 @import "/styles/variables.scss";
 @import "/styles/mixins.scss";
 
-a.link {
+.link {
   display: flex;
   align-items: flex-start;
   border-radius: 0.5rem;
   padding: 0.5rem;
-  font-size: small;
+  font-size: 14px;
   text-decoration: none;
   color: $color-text;
 
@@ -30,6 +30,14 @@ a.link {
   }
 }
 
+.disabled {
+  opacity: 0.4;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
 .arrow {
   width: 1.5rem;
   height: 1.5rem;
@@ -50,4 +58,8 @@ a.link {
 
 .label {
   font-weight: 800;
+
+  .disabled > & {
+    font-weight: normal;
+  }
 }

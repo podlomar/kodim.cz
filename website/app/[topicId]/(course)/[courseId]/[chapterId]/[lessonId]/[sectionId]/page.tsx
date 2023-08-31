@@ -79,17 +79,23 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
           ? <span />
           : <StepLink
               direction="prev"
-              href={section.prev.path}
-              label={section.prev.title}
+              content={{
+                enabled: true,
+                href: section.prev.path,
+                label: section.prev.title,
+              }}
             />
       }
-      { 
+      {
         section.next === null
           ? <span />
           : <StepLink
               direction="next"
-              href={section.next.path}
-              label={section.next.title}
+              content={{
+                enabled: true,
+                href: section.next.path,
+                label: section.next.title,
+              }}
             />
       }
     </div>

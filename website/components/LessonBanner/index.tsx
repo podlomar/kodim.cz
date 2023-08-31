@@ -18,14 +18,34 @@ const LessonBanner = ({ lesson }: Props): JSX.Element => {
         </div>
       </div>
       <div className={styles.bannerLinks}>
-        { lesson.prev === null
-          ? <span />
-          : <StepLink direction="prev-responsive" href={lesson.prev.path} label={lesson.prev.title} />
-        }
-        { lesson.next === null
-          ? <span />
-          : <StepLink direction="next" href={lesson.next.path} label={lesson.next.title} />
-        }
+        <StepLink 
+          direction="prev-responsive"
+          content={lesson.prev === null
+            ? {
+              enabled: false,
+              text: <div>Nemá předchozí <br /> lekci</div>,
+            }
+            : {
+              enabled: true,
+              href: lesson.prev.path,
+              label: lesson.prev.title,
+            }
+          }
+        />
+        <StepLink 
+          direction="next"
+          content={lesson.next === null
+            ? {
+              enabled: false,
+              text: <div>Nemá následující <br /> lekci</div>,
+            }
+            : {
+              enabled: true,
+              href: lesson.next.path,
+              label: lesson.next.title,
+            }
+          }
+        />
       </div>
     </div>
   );
