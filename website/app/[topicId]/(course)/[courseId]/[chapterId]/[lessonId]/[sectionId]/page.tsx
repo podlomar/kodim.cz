@@ -6,6 +6,7 @@ import SectionContent from 'components/SectionContent';
 import ArticleContent from 'components/ArticleContent/intex';
 import { MenuItem } from 'components/Menu';
 import StepLink from 'components/StepLink';
+import Breadcrumbs from 'components/Breadcrumbs';
 
 export const dynamic = 'force-dynamic';
 
@@ -62,6 +63,7 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
 
   return (
     <div className="container">
+      <Breadcrumbs crumbs={section.crumbs.slice(0, -1)} />
       <LessonBanner lesson={lesson} />
       <ArticleContent navItems={navItems} activeNavKey={section.name} foot={links}>
         <SectionContent section={section} />

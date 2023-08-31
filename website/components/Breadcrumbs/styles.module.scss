@@ -1,0 +1,14 @@
+@import '/styles/variables.scss';
+@import '/styles/mixins.scss';
+
+.breadcrumbs {
+  @include padded;
+  
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

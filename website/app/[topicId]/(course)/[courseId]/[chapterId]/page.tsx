@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { cms } from 'lib/cms';
+import Breadcrumbs from 'components/Breadcrumbs';
 import ChapterOverview from 'components/ChapterOverview';
 import Menu from 'components/Menu';
 import styles from './styles.module.scss';
@@ -28,6 +29,7 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
 
   return (
     <div className="container">
+      <Breadcrumbs crumbs={course.crumbs} />
       <div 
         className={styles.courseBanner}
         style={{ backgroundImage: `url(${course.topicMask})` }}

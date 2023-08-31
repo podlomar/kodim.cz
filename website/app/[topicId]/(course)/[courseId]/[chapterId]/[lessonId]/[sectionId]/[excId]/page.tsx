@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { cms } from 'lib/cms';
 import { MenuItem } from 'components/Menu';
+import Breadcrumbs from 'components/Breadcrumbs';
 import LessonBanner from 'components/LessonBanner';
 import ReactHast from 'components/ReactHast';
 import ArticleContent from 'components/ArticleContent/intex';
@@ -39,6 +40,7 @@ const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
 
   return (
     <div className="container">
+      <Breadcrumbs crumbs={exercise.crumbs} />
       <LessonBanner lesson={lesson} />
       <ArticleContent 
         navItems={navItems}
