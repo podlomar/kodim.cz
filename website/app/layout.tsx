@@ -1,4 +1,5 @@
 import 'styles/global.scss';
+import styles from './styles.module.scss';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,7 +38,9 @@ const RootLayout = ({ children }: Props): JSX.Element => {
         />
       </head>
       <body>
-        {children}
+        <div className={styles.rootLayout}>  
+          {children}
+        </div>
       </body>
     </html>
   )

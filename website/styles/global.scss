@@ -13,9 +13,6 @@ html {
 }
 
 body {
-  display: grid;
-  min-height: 100vh;
-  grid-template-rows: 1fr auto;
   margin: 0;
   background-color: $palette-3;
   color: $color-text;
