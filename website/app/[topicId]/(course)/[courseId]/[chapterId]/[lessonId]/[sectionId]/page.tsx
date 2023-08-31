@@ -1,12 +1,16 @@
+import { cache } from 'react';
 import { notFound } from 'next/navigation';
+import { Metadata, ResolvingMetadata } from 'next'
 import { cms } from 'lib/cms';
+import { Lesson } from 'kodim-cms/esm/content/lesson';
+import { pageTitle } from 'lib/page-title';
 import LessonBanner from 'components/LessonBanner';
-import styles from './styles.module.scss';
 import SectionContent from 'components/SectionContent';
 import ArticleContent from 'components/ArticleContent/intex';
 import { MenuItem } from 'components/Menu';
 import StepLink from 'components/StepLink';
 import Breadcrumbs from 'components/Breadcrumbs';
+import styles from './styles.module.scss';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,9 +24,39 @@ interface Props {
   }
 }
 
+const getLesson = cache(
+  async (
+    topicId: string,
+    courseId: string,
+    chapterId: string,
+    lessonId: string,
+  ): Promise<Lesson | null> => (
+    cms.loadLesson(topicId, courseId, chapterId, lessonId)
+  )
+);
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { topicId, courseId, chapterId, lessonId } = params;
+  const lesson = await getLesson(topicId, courseId, chapterId, lessonId);
+ 
+  if (lesson === null) {
+    notFound();
+  }
+
+  return {
+    title: pageTitle(lesson.title),
+    description: lesson.lead,
+    openGraph: {
+      title: pageTitle(lesson.title),
+      description: lesson.lead,
+      type: 'article',
+    },
+  }
+}
+
 const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId, sectionId } = params;
-  const lesson = await cms.loadLesson(topicId, courseId, chapterId, lessonId);
+  const lesson = await getLesson(topicId, courseId, chapterId, lessonId);
   if (lesson === null) {
     notFound();
   }

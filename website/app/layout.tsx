@@ -27,15 +27,32 @@ const RootLayout = ({ children }: Props): JSX.Element => {
         />
 
         <meta name="robots" content="index, follow" />
-        <meta 
+        <meta name="application-name" content="Kódím.cz" />
+        <meta
           name="description"
           content="Programování hravě i vážně pro nováčky i pokročilé. Kurzy vývoje webových aplikací, programování v JavaScriptu, Pythonu, Reactu, Next.js, Node.js a dalších technologiích."
         />
-
         <meta 
           name="keywords"
           content="Kurzy programování, tvorba webových stránek, JavaScript, React, Python, datová analýza."
         />
+        <meta
+          property="og:title"
+          content="Kódím.cz - kurzy programování"
+        />
+        <meta
+          property="og:image"
+          content="https://kodim.cz/og-63ae7b.png"
+        />
+        <meta
+          property="og:type" content="website"
+        />
+        <meta
+          property="og:description"
+          content="Programování hravě i vážně pro nováčky i pokročilé. Kurzy vývoje webových aplikací, programování v JavaScriptu, Pythonu, Reactu, Next.js, Node.js a dalších technologiích."
+        />
+        <meta property="og:locale" content="cs_CZ" />
+        
       </head>
       <body>
         <div className={styles.rootLayout}>  

@@ -1,5 +1,9 @@
+import { cache } from 'react';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next'
 import { cms } from 'lib/cms';
+import { pageTitle } from 'lib/page-title';
+import { Exercise } from 'kodim-cms/esm/content/exercise';
 import { MenuItem } from 'components/Menu';
 import Breadcrumbs from 'components/Breadcrumbs';
 import LessonBanner from 'components/LessonBanner';
@@ -21,10 +25,46 @@ interface Props {
   }
 }
 
+const getExercise = cache(
+  async (
+    topicId: string,
+    courseId: string,
+    chapterId: string,
+    lessonId: string,
+    sectionId: string,
+    excId: string,
+  ): Promise<Exercise | null> => (
+    cms.loadExercise(topicId, courseId, chapterId, lessonId, sectionId, excId)
+  )
+);
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { topicId, courseId, chapterId, lessonId, sectionId, excId } = params;
+  const exercise = await getExercise(
+    topicId, courseId, chapterId, lessonId, sectionId, excId
+  );
+ 
+  if (exercise === null) {
+    notFound();
+  }
+
+  const title = pageTitle(`Cvičení: ${exercise.title}`);
+
+  return {
+    title,
+    description: exercise.lead,
+    openGraph: {
+      title,
+      description: exercise.lead,
+      type: 'article',
+    },
+  }
+}
+
 const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId, sectionId, excId } = params;
   const lesson = await cms.loadLesson(topicId, courseId, chapterId, lessonId);
-  const exercise = await cms.loadExercise(
+  const exercise = await getExercise(
     topicId, courseId, chapterId, lessonId, sectionId, excId
   );
 
