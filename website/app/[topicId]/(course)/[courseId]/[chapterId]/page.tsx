@@ -40,6 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: pageTitle(course.title),
       description: course.lead,
       type: 'article',
+      url: course.path,
     },
   }
 }

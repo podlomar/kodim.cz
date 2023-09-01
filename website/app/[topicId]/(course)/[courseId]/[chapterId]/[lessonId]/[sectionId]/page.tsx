@@ -47,9 +47,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: pageTitle(lesson.title),
     description: lesson.lead,
     openGraph: {
-      title: pageTitle(lesson.title),
+      title: lesson.title,
       description: lesson.lead,
-      type: 'article',
+      url: lesson.path,
     },
   }
 }
