@@ -1,8 +1,8 @@
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next'
+import { Metadata, ResolvingMetadata } from 'next'
+import { openGraph } from 'app/open-graph';
 import { cms } from 'lib/cms';
-import { pageTitle } from 'lib/page-title';
 import { Exercise } from 'kodim-cms/esm/content/exercise';
 import { MenuItem } from 'components/Menu';
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -48,12 +48,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     notFound();
   }
 
-  const title = pageTitle(`Cvičení: ${exercise.title}`);
+  const title = `Cvičení: ${exercise.title}`;
 
   return {
     title,
     description: exercise.lead,
     openGraph: {
+      ...openGraph,
+      type: 'article',
       title,
       description: exercise.lead,
       url: exercise.path,

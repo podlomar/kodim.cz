@@ -1,6 +1,4 @@
-import { Metadata} from "next";
-
-export const openGraph: NonNullable<Metadata['openGraph']> = {
+export const openGraph = {
   type: 'website',
   siteName: 'Kódím.cz',
   title: 'Kódím.cz - kurzy programování',
@@ -8,10 +6,10 @@ export const openGraph: NonNullable<Metadata['openGraph']> = {
   locale: 'cs_CZ',
   images: [
     {
-      url: '/og-63ae7b.png',
+      url: '/og-image-5de71c.png',
       width: 1200,
       height: 630,
       alt: 'Kódím.cz - kurzy programování',
-    }
+    },
   ],
 };

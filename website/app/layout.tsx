@@ -7,7 +7,10 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://kodim.cz'),
-  title: openGraph.title,
+  title: {
+    template: `%s | ${openGraph.siteName}`,
+    default: openGraph.title,
+  },
   applicationName: openGraph.siteName,
   description: openGraph.description,
   robots: 'index, follow',
@@ -31,8 +34,6 @@ const RootLayout = ({ children }: Props): JSX.Element => {
   return (
     <html lang="cs">
       <head>
-        <meta charSet="utf-8" />
-        
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
         <link rel="icon" href="/icon-512.png" type="image/png" sizes="512x512" />

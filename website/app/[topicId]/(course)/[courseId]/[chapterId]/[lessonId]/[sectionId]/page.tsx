@@ -1,9 +1,9 @@
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
+import { openGraph } from 'app/open-graph';
 import { cms } from 'lib/cms';
 import { Lesson } from 'kodim-cms/esm/content/lesson';
-import { pageTitle } from 'lib/page-title';
 import LessonBanner from 'components/LessonBanner';
 import SectionContent from 'components/SectionContent';
 import ArticleContent from 'components/ArticleContent/intex';
@@ -44,9 +44,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: pageTitle(lesson.title),
+    title: lesson.title,
     description: lesson.lead,
     openGraph: {
+      ...openGraph,
+      type: 'article',
       title: lesson.title,
       description: lesson.lead,
       url: lesson.path,

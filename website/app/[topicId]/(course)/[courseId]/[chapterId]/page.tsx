@@ -1,8 +1,8 @@
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next'
+import { Metadata, ResolvingMetadata } from 'next'
+import { openGraph } from 'app/open-graph';
 import { cms } from 'lib/cms';
-import { pageTitle } from 'lib/page-title';
 import Breadcrumbs from 'components/Breadcrumbs';
 import ChapterOverview from 'components/ChapterOverview';
 import Menu from 'components/Menu';
@@ -34,12 +34,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: pageTitle(course.title),
+    title: course.title,
     description: course.lead,
     openGraph: {
-      title: pageTitle(course.title),
-      description: course.lead,
+      ...openGraph,
       type: 'article',
+      title: course.title,
+      description: course.lead,
       url: course.path,
     },
   }
