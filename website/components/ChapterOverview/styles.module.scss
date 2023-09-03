@@ -1,7 +1,12 @@
+@import "/styles/variables.scss";
 @import "/styles/mixins.scss";
 
 .chapterOverview {
   @include padded;
+}
+
+.title {
+  color: $color-title;
 }
 
 .lessons {
