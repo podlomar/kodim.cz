@@ -61,10 +61,10 @@
   a {
     text-decoration: none;
     color: $color-text;
-    border-bottom: 1px solid transparent;
+    border-bottom: 0.1rem solid transparent;
 
     &:hover, &.active {
-      border-bottom: 1px solid black;
+      border-bottom: 0.1rem solid black;
     }
   }
 }

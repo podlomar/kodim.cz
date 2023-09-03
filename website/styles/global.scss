@@ -4,14 +4,17 @@
 
 * {
   box-sizing: border-box;
+
+  // Crazy hack to fix a bug in Android Chrome called font boosting
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    max-height: 16777216px;
+  }
 }
 
 html {
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
 }
 
 body {
