@@ -1,0 +1,18 @@
+.warning {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #F75314;
+  color: white;
+}
+
+.icon {
+  width: 4rem;
+  height: 4rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  background-image: url(./img/exclamation.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
