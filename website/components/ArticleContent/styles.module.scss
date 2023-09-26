@@ -5,43 +5,22 @@
   display: grid;
   // NOTE: minmax(0, 1fr) is a bit hacky to prevent pre tags from overflowing
   // SEE: https://css-tricks.com/preventing-a-grid-blowout/
-  grid-template-columns: 20rem minmax(0, 1fr);
+  
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  align-items: start;
+
   background-color: white;
-}
-
-.articleNav {
-  display: none;
-  padding: 2rem;
-
-  a {
-    display: block;
-    text-decoration: none;
-    color: $color-text;
-    margin-bottom: 0.5rem;
-
-    &:hover {
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-  }
+  padding-top: 0.5rem;
 
   @include breakpoint-lg {
-    display: block;
+    grid-template-columns: 20rem minmax(0, 1fr);
+    grid-template-rows: auto;
   }
-}
-
-.navActive {
-  font-weight: 800;
-  letter-spacing: -0.5px;
 }
 
 .articleMain {
-  grid-column: 1 / span 2;
   padding-bottom: 2rem;
-
-  @include breakpoint-lg {
-    grid-column: 2 / span 1;
-  }
 }
 
 .articleBody {
@@ -56,6 +35,15 @@
   ul,
   ol {
     margin-bottom: 1rem;
+  }
+
+  ul,
+  ol {
+    padding-left: 0;
+  }
+
+  & > ul, & > ol {
+    @include article-element;
   }
 
   pre {

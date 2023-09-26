@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "node scripts/deploy.js"
+    "deploy": "node scripts/deploy.js",
+    "ngrok": "ngrok http 3000 --domain=gopher-needed-swine.ngrok-free.app"
   },
   "author": "",
   "license": "ISC",
@@ -17,8 +18,8 @@
     "clsx": "^2.0.0",
     "hast": "^1.0.0",
     "highlight.js": "^11.8.0",
-    "kodim-cms": "^1.0.0-beta.7",
-    "next": "^13.4.10",
+    "kodim-cms": "file:../../kodim/kodim-cms",
+    "next": "^13.5.2",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

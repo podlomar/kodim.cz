@@ -8,7 +8,7 @@
 a.banner {
   display: flex;
   text-decoration: none;
-  color: $color-text;;
+  color: $color-text;
   background-color: $palette-2;
   background-size: 10rem 10rem;
   background-repeat: no-repeat;
@@ -38,7 +38,6 @@ a.banner {
   margin: 0 0 0 1rem;
   font-size: 1.2rem;
   line-height: 1.25;
-  color: $color-title;
 }
 
 .body {

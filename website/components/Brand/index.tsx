@@ -12,8 +12,7 @@ const Brand = ({ size = 'small' }: Props) => {
       <div className={styles.logo} />
       <div className={styles.name}>
         <span className={styles.site}>Kódím</span>
-        <span className={styles.dot}>.</span>
-        <span className={styles.tld}>cz</span>
+        <span className={styles.tld}>.cz</span>
       </div>
     </a>
   );

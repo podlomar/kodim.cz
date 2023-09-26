@@ -10,7 +10,6 @@ interface Params {
 export const GET = async (req: Request, { params }: Params) => {
   const { path } = params;
   const asset = await cms.loadAsset(path);
-
   if (asset === null) {
     return new NextResponse(null, {
       status: 404,

@@ -66,11 +66,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId, sectionId, excId } = params;
   const lesson = await cms.loadLesson(topicId, courseId, chapterId, lessonId);
+  const section = await cms.loadSection(topicId, courseId, chapterId, lessonId, sectionId);
   const exercise = await getExercise(
     topicId, courseId, chapterId, lessonId, sectionId, excId
   );
 
-  if (exercise === null || lesson === null) {
+  if (exercise === null || section === null || lesson === null) {
     notFound();
   }
 
@@ -88,6 +89,8 @@ const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
         navItems={navItems}
         activeNavKey={sectionId}
         head={<ExerciseHead exercise={exercise} link={false} />}
+        prev={section.prev?.path ?? null}
+        next={section.next?.path ?? null}
       >
         <ReactHast root={exercise.assign} />
         {exercise.solution !== 'none' && <Solution root={exercise.solution} />}

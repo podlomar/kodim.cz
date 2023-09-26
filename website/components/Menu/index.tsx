@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
+import MenuIcon from 'icons/MenuIcon';
 import styles from './styles.module.scss';
 
 export interface MenuItem {
@@ -30,7 +31,7 @@ const Menu = ({ items, activeKey }: Props) => {
         className={styles.menuBtn}
         onClick={toggleMenu}
       >
-        <div className={styles.menuIcon} />
+        <MenuIcon />
         <div className={styles.selectedItem}>{activeItem?.label}</div>
       </button>
       <div className={clsx(styles.items, { [styles.hideItems]: !menuOpen })}>

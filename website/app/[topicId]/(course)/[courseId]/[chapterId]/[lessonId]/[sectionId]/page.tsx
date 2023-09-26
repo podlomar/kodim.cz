@@ -74,40 +74,18 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
     label: sec.title,
   }));
 
-  const links = (
-    <div className={styles.stepLinks}>
-      {
-        section.prev === null
-          ? <span />
-          : <StepLink
-              direction="prev"
-              content={{
-                enabled: true,
-                href: section.prev.path,
-                label: section.prev.title,
-              }}
-            />
-      }
-      {
-        section.next === null
-          ? <span />
-          : <StepLink
-              direction="next"
-              content={{
-                enabled: true,
-                href: section.next.path,
-                label: section.next.title,
-              }}
-            />
-      }
-    </div>
-  )
+  console.log('links', section.next?.path, section.prev?.path);
 
   return (
     <div className="container">
       <Breadcrumbs crumbs={section.crumbs.slice(0, -1)} />
       <LessonBanner lesson={lesson} />
-      <ArticleContent navItems={navItems} activeNavKey={section.name} foot={links}>
+      <ArticleContent
+        navItems={navItems}
+        activeNavKey={section.name}
+        next={section.next?.path ?? null}
+        prev={section.prev?.path ?? null}
+      >
         <SectionContent section={section} />
       </ArticleContent>
     </div>

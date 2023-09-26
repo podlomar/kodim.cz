@@ -7,7 +7,7 @@ export const POST = async (req: Request) => {
 
   const repoUrl = body.repository.clone_url;
 
-  const result = await cms.reindexCourseFromRepo(repoUrl, branch);
+  const result = await cms.reindexFromRepo(repoUrl, branch);
 
   if (result === 'not-found') {
     return new NextResponse('Not found', { status: 404 });

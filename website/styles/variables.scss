@@ -8,7 +8,7 @@ $container-md: 792px; // 840 - 48
 $container-lg: 1152px; // 1200 - 48
 
 $palette-1: #2c3e66; // Delft blue
-$palette-2: #ffe24a; // Mustard
+$palette-2: #ffe563; // Naples yellow
 $palette-3: #e1e9f4; // Alice blue
 $palette-4: #e0525b; // Indian red
 
@@ -18,5 +18,5 @@ $palette-2-darker: darken($palette-2, 15%);
 $font-family: 'Montserrat', sans-serif;
 $font-size: 16px;
 
-$color-title: #374151; 
-$color-text: #222;
+$color-title: #333;
+$color-text: #111;
