@@ -6,7 +6,7 @@
   // NOTE: minmax(0, 1fr) is a bit hacky to prevent pre tags from overflowing
   // SEE: https://css-tricks.com/preventing-a-grid-blowout/
   
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto;
   align-items: start;
 

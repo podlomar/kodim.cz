@@ -9,11 +9,7 @@ interface Props {
 
 const SkipLink = ({ href, children }: Props): JSX.Element => {  
   if (href === null) {
-    return (
-      <div className={styles.skipLink}>
-        {children}
-      </div>
-    );
+    return <div className={styles.skipLink} />;
   }
   
   return (
