@@ -1,0 +1,76 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.landingBanner {
+  @include padded;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  @include breakpoint-md {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.heroIntro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+
+  @include breakpoint-md {
+    align-items: stretch;
+    padding-top: 2rem;
+    padding-left: 1rem;
+  }
+
+  @include breakpoint-lg {
+    padding-top: 3rem;
+    padding-left: 2rem;
+  }
+}
+
+.heroLead {
+  text-align: center;
+
+  @include breakpoint-md {
+    margin-top: 2rem;
+    text-align: left;
+  }
+}
+
+.heroImage {
+  width: 90vw;
+  height: 55vw;
+
+  @include breakpoint-md {
+    width: 446px;
+    height: 273px;
+  }
+
+  @include breakpoint-lg {
+    width: 653px;
+    height: 400px;
+  }
+}
+
+.courses {
+  @include padded;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+
+  @include breakpoint-md {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include breakpoint-lg {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

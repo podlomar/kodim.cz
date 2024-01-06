@@ -1,0 +1,21 @@
+version: "3"
+services:
+  frontend-dev:
+    container_name: frontend-dev
+    build:
+      context: ../website
+      dockerfile: ../docker/dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ../website:/app
+      - /home/podlomar/work/kodim/content:/content
+      - /home/podlomar/work/kodim/kodim-cms:/home/podlomar/work/kodim/kodim-cms
+      - /home/podlomar/work/projects/filefish:/home/podlomar/work/projects/filefish
+    networks:
+      - directus
+    depends_on:
+      - directus
+
+networks:
+  directus:

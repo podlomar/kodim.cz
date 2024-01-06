@@ -1,0 +1,60 @@
+@import "normalize.css/normalize.css";
+@import "./variables.scss";
+@import "./mixins.scss";
+
+* {
+  box-sizing: border-box;
+
+  // Crazy hack to fix a bug in Android Chrome called font boosting
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    max-height: 16777216px;
+  }
+}
+
+html {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+  background-color: $palette-3;
+  color: $color-text;
+}
+
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include breakpoint-md {
+    width: $container-md;
+  }
+
+  @include breakpoint-lg {
+    width: $container-lg;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.25;
+}
+
+button {
+  outline: none;
+  border: none;
+  background-color: $palette-1;
+  color: white;
+  border-radius: 5px;
+  padding: 0.25rem;
+  
+  &:hover {
+    background-color: $palette-1-darker;
+  }
+  
+  &:disabled {
+    background-color: #ddd;
+    color: #444;
+  }
+}

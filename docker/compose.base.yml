@@ -1,0 +1,69 @@
+version: '3'
+services:
+  database:
+    container_name: database
+    image: postgis/postgis:13-master
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+      - ./data/backups:/backups
+    networks:
+      - directus
+    environment:
+      POSTGRES_USER: 'directus'
+      POSTGRES_PASSWORD: 'directus'
+      POSTGRES_DB: 'directus'
+
+  directus:
+    container_name: directus
+    image: directus/directus:10.8.3
+    ports:
+      - 8055:8055
+    volumes:
+      - ./data/uploads:/directus/uploads
+      # - ./data/extensions:/directus/extensions
+    networks:
+      - directus
+    depends_on:
+      - database
+    environment:
+      KEY: '${DIRECTUS_KEY}'
+      SECRET: '${DIRECTUS_SECRET}'
+
+      DB_CLIENT: 'pg'
+      DB_HOST: 'database'
+      DB_PORT: '5432'
+      DB_DATABASE: 'directus'
+      DB_USER: 'directus'
+      DB_PASSWORD: 'directus'
+
+      ADMIN_EMAIL: '${ADMIN_EMAIL}'
+      ADMIN_PASSWORD: '${ADMIN_PASSWORD}'
+      PUBLIC_URL: '${DIRECTUS_URL}'
+
+      EMAIL_FROM: 'noreply@kodim.cz'
+      EMAIL_TRANSPORT: 'smtp'
+      EMAIL_SMTP_HOST: 'smtp.forpsi.com'
+      EMAIL_SMTP_PORT: 587
+      EMAIL_SMTP_USER: '${ADMIN_EMAIL}'
+      EMAIL_SMTP_PASSWORD: '${ADMIN_SMTP_PASSWORD}}'
+      EMAIL_SMTP_SECURE: 'false'
+
+      AUTH_PROVIDERS: 'github'
+      AUTH_GITHUB_DRIVER: 'oauth2'
+      AUTH_GITHUB_CLIENT_ID: '${GITHUB_CLIENT_ID}'
+      AUTH_GITHUB_CLIENT_SECRET: '${GITHUB_CLIENT_SECRET}'
+      AUTH_GITHUB_AUTHORIZE_URL: 'https://github.com/login/oauth/authorize'
+      AUTH_GITHUB_ACCESS_URL: 'https://github.com/login/oauth/access_token'
+      AUTH_GITHUB_PROFILE_URL: 'https://api.github.com/user'
+      AUTH_GITHUB_ALLOW_PUBLIC_REGISTRATION: 'true'
+      AUTH_GITHUB_IDENTIFIER_KEY: 'login'
+      AUTH_GITHUB_FIRST_NAME_KEY: 'name'
+      AUTH_GITHUB_ICON: 'github'
+      AUTH_GITHUB_SCOPE: 'read:user'
+      AUTH_GITHUB_DEFAULT_ROLE_ID: '${GITHUB_DEFAULT_ROLE}'
+
+      REFRESH_TOKEN_COOKIE_SECURE: 'false'
+      REFRESH_TOKEN_COOKIE_SAME_SITE: 'lax'
+
+networks:
+  directus:

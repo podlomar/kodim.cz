@@ -1,0 +1,65 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.link {
+  display: flex;
+  align-items: flex-start;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 14px;
+  text-decoration: none;
+  color: $color-text;
+
+  &:hover {
+    background-color: $palette-2;
+  }
+
+  &PrevResponsive {
+    text-align: left;
+    flex-direction: row;
+
+    @include breakpoint-lg {
+      text-align: right;
+      flex-direction: row-reverse;
+    }
+  }
+
+  &Next {
+    text-align: right;
+    flex-direction: row-reverse;
+  }
+}
+
+.disabled {
+  opacity: 0.4;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.arrow {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-top: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+
+  &Prev {    
+    background-image: url(./img/left-arrow.svg);
+  }
+
+  &Next {
+    background-image: url(./img/right-arrow.svg);
+  }
+}
+
+.label {
+  font-weight: 800;
+
+  .disabled > & {
+    font-weight: normal;
+  }
+}

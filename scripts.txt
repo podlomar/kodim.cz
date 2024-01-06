@@ -1,0 +1,5 @@
+docker exec -i database /bin/bash -c "PGPASSWORD=directus pg_dump --clean -Fc -U directus directus" > db.dump
+
+docker exec -i database /bin/bash -c "PGPASSWORD=directus pg_restore --verbose --clean --no-acl --no-owner -U directus -d directus /backups/db.dump"
+
+docker exec -i kodimcz_database_1 /bin/bash -c "PGPASSWORD=directus psql -U directus -c \"DROP DATABASE directus;\""

@@ -1,0 +1,17 @@
+version: '3'
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./website
+      dockerfile: dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./website:/app
+      - '${CONTENT_DIR}:/content'
+    networks:
+      - directus
+    depends_on:
+      - directus
+

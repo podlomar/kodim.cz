@@ -1,0 +1,77 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.articleNav {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.navHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid lightgray;
+
+  @include breakpoint-lg {
+    display: none;
+  }
+}
+
+.navButton {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: flex-start;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  margin-top: 0.12rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.navButtonIcon {
+  flex: 0;
+}
+
+.navButtonLabel {
+  text-align: left;
+  margin-left: 0.5rem;
+}
+
+.navItems {
+  display: none;
+  padding: 1.5rem;
+
+  @include breakpoint-lg {
+    padding: 2rem;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    color: $color-text;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  @include breakpoint-lg {
+    display: block;
+  }
+}
+
+.menuOpen {
+  display: block;
+}
+
+.navActive {
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+

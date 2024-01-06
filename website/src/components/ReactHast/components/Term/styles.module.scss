@@ -1,0 +1,56 @@
+@import 'styles/variables.scss';
+
+.term {
+  background-color: $palette-2;
+  padding: 0.25rem 0.65rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  position: relative;
+
+  &:hover .tooltip {
+    opacity: 1;
+    visibility: inherit;
+  }
+}
+
+.flag {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  top: -2px;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-left: 0.5rem;
+  background-size: contain;
+  background-image: url('./img/cz-flag.svg');
+  background-repeat: no-repeat;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 120%;
+
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+
+  background-color: black;
+  color: #fff;
+  text-align: center;
+
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+  transition-property: opacity, visibility;
+  transition-duration: 400ms;
+
+  &::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+  }
+}
