@@ -1,6 +1,8 @@
 {
   "scripts": {
     "dev:up": "docker-compose -f compose.base.yml -f compose.frontend-dev.yml up --build",
-    "dev:down": "docker-compose -f compose.base.yml -f compose.frontend-dev.yml down"
+    "dev:down": "docker-compose -f compose.base.yml -f compose.frontend-dev.yml down",
+    "prod:up": "docker-compose -f compose.base.yml -f compose.frontend.yml up --build",
+    "prod:down": "docker-compose -f compose.base.yml -f compose.frontend.yml down"
   }
 }

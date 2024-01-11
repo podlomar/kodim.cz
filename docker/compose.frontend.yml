@@ -3,15 +3,17 @@ services:
   frontend:
     container_name: frontend
     build:
-      context: ./website
-      dockerfile: dockerfile
+      context: ../website
+      dockerfile: ../docker/dockerfile
     ports:
       - 3000:3000
     volumes:
-      - ./website:/app
       - '${CONTENT_DIR}:/content'
     networks:
       - directus
     depends_on:
-      - directus
+      directus:
+        condition: service_healthy
 
+networks:
+  directus:

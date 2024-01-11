@@ -3,7 +3,7 @@ import sessionStore, { SessionData } from 'lib/session';
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export const client = createDirectus('http://directus2:8055')
+export const client = createDirectus('http://directus:8055')
   .with(rest());
 
 const fetchAuthData = async (refreshToken: string): Promise<AuthenticationData | null> => {

@@ -9,7 +9,7 @@ services:
       - 3000:3000
     volumes:
       - ../website:/app
-      - /home/podlomar/work/kodim/content:/content
+      - '${CONTENT_DIR}:/content'
       - /home/podlomar/work/kodim/kodim-cms:/home/podlomar/work/kodim/kodim-cms
       - /home/podlomar/work/projects/filefish:/home/podlomar/work/projects/filefish
     networks:
