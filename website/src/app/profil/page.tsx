@@ -1,4 +1,4 @@
-import { session } from 'app/layout';
+import { session } from 'app/session';
 import MainLayout from 'components/MainLayout';
 import Panel from 'components/Panel';
 import { notFound } from 'next/navigation';

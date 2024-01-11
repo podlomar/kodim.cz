@@ -15,7 +15,8 @@ services:
     networks:
       - directus
     depends_on:
-      - directus
+      directus:
+        condition: service_healthy
 
 networks:
   directus:

@@ -7,7 +7,7 @@ a.courseCard {
   transition: 200ms;
 
   &:hover {
-    transform: scale(1.1);
+    transform: translate(0, -0.5rem);
     transition: transform 200ms;
     background-color: $palette-2-darker;
   }

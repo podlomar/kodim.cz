@@ -22,10 +22,10 @@ const CourseCard = ({ course }: Props): JSX.Element => {
         <div>
           {course.lead}
         </div>
-        { course.org === 'czechitas' && (
+        { course.organization === 'czechitas' && (
           <div className={styles.company}>
-            <Icon type="czechitas" size="1.5rem" />
-            <span>Pouze pro účastníky Czechitas</span>
+            <Icon name="czechitas" size="1.5rem" />
+            <span>Czechitas kurz</span>
           </div>
         )}
       </div>

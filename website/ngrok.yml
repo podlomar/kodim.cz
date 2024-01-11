@@ -1,0 +1,10 @@
+version: "2"
+authtoken: 1wGZX8rnUlaJuLJv4Y82DnIuvmN_2NdaP18x8xC5tdniurntu
+tunnels:
+  frontend:
+    addr: 3000
+    proto: http
+    domain: gopher-needed-swine.ngrok-free.app
+  backoffice:
+    addr: 8055
+    proto: http

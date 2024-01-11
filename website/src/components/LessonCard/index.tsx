@@ -14,7 +14,7 @@ const LessonCard = ({ lesson }: Props): JSX.Element => {
       <div>
         {lesson.locked ? (
           <div className={styles.lock}>
-            <Icon type="lock" size="1.2rem" />
+            <Icon name="lock" size="1.2rem" />
           </div>
         ) : (
           <div className={styles.num}>

@@ -12,7 +12,7 @@ interface Props {
 
 const CoursePage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId } = params;
-  const course = await cms.loadCourse(agnosticAgent, topicId, courseId);
+  const course = await cms().loadCourse(agnosticAgent, topicId, courseId);
 
   if (course === null) {
     notFound();

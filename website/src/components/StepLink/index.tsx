@@ -2,21 +2,27 @@ import React, { ReactNode } from "react"
 import Link from "next/link";
 import styles from "./styles.module.scss";
 import clsx from "clsx";
+import Icon from "components/Icon";
 
 interface EnabledContent {
-  enabled: true;
+  status: 'enabled';
   href: string;
   label: string;
 }
 
+interface LockedContent {
+  status: 'locked';
+  label: string;
+}
+
 interface DisabledContent {
-  enabled: false;
+  status: 'disabled';
   text: ReactNode;
 }
 
 interface Props {
   direction: 'prev' | 'prev-responsive' | 'next';
-  content: EnabledContent | DisabledContent;
+  content: EnabledContent | DisabledContent | LockedContent;
 }
 
 const StepLink = ({ direction, content }: Props): JSX.Element => {
@@ -31,7 +37,7 @@ const StepLink = ({ direction, content }: Props): JSX.Element => {
 
   const linkClass = clsx(
     styles.link,
-    content.enabled === false && styles.disabled,
+    (content.status === 'disabled' || content.status === 'locked') && styles.disabled,
     direction === 'prev'
       ? styles.linkPrev
       : direction === 'prev-responsive'
@@ -39,11 +45,28 @@ const StepLink = ({ direction, content }: Props): JSX.Element => {
         : styles.linkNext
   );
 
-  if (content.enabled === false) {
+  if (content.status === 'disabled') {
     return (
       <div className={linkClass}>
         {arrow}
         <div className={styles.label}>{content.text}</div>
+      </div>
+    );
+  }
+
+  if (content.status === 'locked') {
+    return (
+      <div className={linkClass}>
+        {arrow}
+        <div>
+          {
+            direction === 'next'
+              ? <div>Následujicí</div>
+              : <div>Předchozí</div>
+          }
+          <div className={styles.label}>{content.label}</div>
+        </div>
+        <Icon name="lock" size="1.2rem" />
       </div>
     );
   }

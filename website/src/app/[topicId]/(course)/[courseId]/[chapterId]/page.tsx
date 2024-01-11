@@ -8,7 +8,7 @@ import ChapterOverview from 'components/ChapterOverview';
 import Menu from 'components/Menu';
 import { Course } from 'kodim-cms/esm/content/course';
 import styles from './styles.module.scss';
-import { session } from 'app/layout';
+import { session } from 'app/session';
 import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 
 export const dynamic = 'force-dynamic';
@@ -23,13 +23,15 @@ interface Props {
 
 const getCourse = cache(
   async (agent: CmsAgent, topicId: string, courseId: string): Promise<Course | null> => (
-    cms.loadCourse(agent, topicId, courseId)
+    cms().loadCourse(agent, topicId, courseId)
   )
 );
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { topicId, courseId } = params;
   const { cmsAgent } = await session();
+
+  console.log('agent', cmsAgent);
   const course = await getCourse(cmsAgent, topicId, courseId);
  
   if (course === null) {
@@ -57,7 +59,7 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
     notFound();
   }
 
-  const chapter = await cms.loadChapter(cmsAgent, topicId, courseId, chapterId);
+  const chapter = await cms().loadChapter(cmsAgent, topicId, courseId, chapterId);
   if (chapter === null) {
     notFound();
   }

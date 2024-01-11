@@ -1,11 +1,11 @@
 import React from "react"
 import clsx from "clsx";
 import Link from "next/link";
-import { ShallowExercise } from "kodim-cms/esm/content/exercise";
+import { ExerciseNavItem } from "kodim-cms/esm/content/exercise";
 import styles from "./styles.module.scss";
 
 interface Props {
-  exercise: ShallowExercise,
+  exercise: ExerciseNavItem,
   link: boolean,
 }
 

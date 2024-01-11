@@ -8,9 +8,9 @@ import LessonBanner from 'components/LessonBanner';
 import SectionContent from 'components/SectionContent';
 import ArticleContent from 'components/ArticleContent/intex';
 import { MenuItem } from 'components/Menu';
-import StepLink from 'components/StepLink';
 import Breadcrumbs from 'components/Breadcrumbs';
-import styles from './styles.module.scss';
+import { session } from 'app/session';
+import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,20 +26,26 @@ interface Props {
 
 const getLesson = cache(
   async (
+    cmsAgent: CmsAgent,
     topicId: string,
     courseId: string,
     chapterId: string,
     lessonId: string,
   ): Promise<Lesson | null> => (
-    cms.loadLesson(agnosticAgent, topicId, courseId, chapterId, lessonId)
+    cms().loadLesson(cmsAgent, topicId, courseId, chapterId, lessonId)
   )
 );
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { topicId, courseId, chapterId, lessonId } = params;
-  const lesson = await getLesson(topicId, courseId, chapterId, lessonId);
+  const { cmsAgent } = await session();
+  const lesson = await getLesson(cmsAgent, topicId, courseId, chapterId, lessonId);
  
   if (lesson === null) {
+    notFound();
+  }
+
+  if (lesson.locked) {
     notFound();
   }
 
@@ -58,12 +64,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId, sectionId } = params;
-  const lesson = await getLesson(topicId, courseId, chapterId, lessonId);
+  const { cmsAgent } = await session();
+  const lesson = await getLesson(cmsAgent, topicId, courseId, chapterId, lessonId);
   if (lesson === null) {
     notFound();
   }
 
-  const section = await cms.loadSection(agnosticAgent, topicId, courseId, chapterId, lessonId, sectionId);
+  const section = await cms().loadSection(agnosticAgent, topicId, courseId, chapterId, lessonId, sectionId);
   if (section === null) {
     notFound();
   }

@@ -1,10 +1,10 @@
 import React from "react"
-import { ShallowExercise } from "kodim-cms/esm/content/exercise";
+import { ExerciseNavItem } from "kodim-cms/esm/content/exercise";
 import ExerciseHead from "components/ExerciseHead";
 import styles from "./styles.module.scss";
 
 interface Props {
-  excs: ShallowExercise[],
+  excs: ExerciseNavItem[],
 }
 
 const Exercises = ({ excs }: Props): JSX.Element => {

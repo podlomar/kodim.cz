@@ -26,18 +26,18 @@ const ArticleNavigation = ({ navItems, activeNavKey, next, prev }: Props): JSX.E
     <div className={styles.articleNav}>
       <div className={styles.navHead}>
         <SkipLink href={prev}>
-          <Icon type="arrowLeft" size="1.5rem" />
+          <Icon name="arrowLeft" size="1.5rem" />
         </SkipLink>
         <button className={styles.navButton} onClick={handleToggleOpen}>
           <div className={styles.navButtonIcon}>
-            <Icon type="menu" />
+            <Icon name="menu" />
           </div>
           <div className={styles.navButtonLabel}>
             {navItems.find((item) => item.key === activeNavKey)?.label}
           </div>  
         </button>
         <SkipLink href={next}>
-          <Icon type="arrowRight" size="1.5rem" />
+          <Icon name="arrowRight" size="1.5rem" />
         </SkipLink>
       </div>
       <div className={clsx(styles.navItems, isOpen && styles.menuOpen)}>

@@ -1,11 +1,6 @@
 import 'styles/global.scss';
-import { cache } from 'react';
-import { headers } from 'next/headers';
 import { Metadata } from 'next';
 import { openGraph } from './open-graph';
-import { fetchUser } from '../lib/directus';
-import { ClaimsAgent, PublicAgent } from 'kodim-cms/esm/access-control/claim-agent';
-import { Session } from 'lib/session';
 import styles from './styles.module.scss';
 
 export const dynamic = 'force-dynamic';
@@ -34,17 +29,6 @@ export const metadata: Metadata = {
 interface Props {
   children: React.ReactNode;
 }
-
-export const session = cache(async (): Promise<Session> => {
-  const userId = headers().get('x-user-id');
-  if (userId === null) {
-    return { user: null, cmsAgent: new PublicAgent() };
-  }
-
-  const user = await fetchUser(userId);
-  const cmsAgent = new ClaimsAgent(user.accessRules);
-  return { user, cmsAgent };
-});
 
 const RootLayout = ({ children }: Props): JSX.Element => {
   return (

@@ -2,7 +2,7 @@ import pkg from '../../../package.json';
 import clsx from 'clsx';
 import Brand from 'components/Brand';
 import styles from './styles.module.scss';
-import { session } from 'app/layout';
+import { session } from 'app/session';
 
 interface Props {
   showBrand?: boolean;

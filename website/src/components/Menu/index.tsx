@@ -31,7 +31,7 @@ const Menu = ({ items, activeKey }: Props) => {
         className={styles.menuBtn}
         onClick={toggleMenu}
       >
-        <Icon type="menu" />
+        <Icon name="menu" />
         <div className={styles.selectedItem}>{activeItem?.label}</div>
       </button>
       <div className={clsx(styles.items, { [styles.hideItems]: !menuOpen })}>

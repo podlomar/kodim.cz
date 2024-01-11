@@ -22,28 +22,38 @@ const LessonBanner = ({ lesson }: Props): JSX.Element => {
           direction="prev-responsive"
           content={lesson.prev === null
             ? {
-              enabled: false,
+              status: 'disabled',
               text: <div>Nemá předchozí <br /> lekci</div>,
             }
-            : {
-              enabled: true,
-              href: lesson.prev.path,
-              label: lesson.prev.title,
-            }
+            : lesson.prev.locked
+              ? {
+                status: 'locked',
+                label: lesson.prev.title,
+              }
+              : {
+                status: 'enabled',
+                href: lesson.prev.path,
+                label: lesson.prev.title,
+              }
           }
         />
         <StepLink 
           direction="next"
           content={lesson.next === null
             ? {
-              enabled: false,
+              status: 'disabled',
               text: <div>Nemá následující <br /> lekci</div>,
             }
-            : {
-              enabled: true,
-              href: lesson.next.path,
-              label: lesson.next.title,
-            }
+            : lesson.next.locked
+              ? {
+                status: 'locked',
+                label: lesson.next.title,
+              }
+              : {
+                status: 'enabled',
+                href: lesson.next.path,
+                label: lesson.next.title,
+              }
           }
         />
       </div>

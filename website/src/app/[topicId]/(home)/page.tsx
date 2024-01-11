@@ -7,7 +7,7 @@ import Brand from 'components/Brand';
 import Menu from 'components/Menu';
 import MainLayout from 'components/MainLayout';
 import styles from './styles.module.scss';
-import { session } from  '../../layout';
+import { session } from  'app/session';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +19,7 @@ interface Props {
 
 const HomePage = async ({ params }: Props): Promise<JSX.Element> => {
   const { user, cmsAgent } = await session();
-  const root = await cms.loadRoot(cmsAgent);
+  const root = await cms().loadRoot(cmsAgent);
   if (root === null) {
     notFound();
   }

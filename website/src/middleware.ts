@@ -1,32 +1,19 @@
-import { AuthenticationData } from '@directus/sdk';
+import { AuthenticationData, createDirectus, rest, refresh, readMe, staticToken } from '@directus/sdk';
 import sessionStore, { SessionData } from 'lib/session';
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const fetchAuthData = async (refreshToken: string): Promise<AuthenticationData | null> => {
-  const response = await fetch('http://directus:8055/auth/refresh', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ refresh_token: refreshToken, mode: 'json' }),
-  });
-  const json = await response.json();
-  if (json.data === undefined) {
-    return null;
-  }
+export const client = createDirectus('http://directus2:8055')
+  .with(rest());
 
-  return json.data;
+const fetchAuthData = async (refreshToken: string): Promise<AuthenticationData | null> => {
+  return client.request(refresh('json', refreshToken));
 };
 
 const fetchCurrentUserId = async (accessToken: string): Promise<string | null> => {
-  const response = await fetch('http://directus:8055/users/me', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const json = await response.json();
-  return json.data.id;
+  const authClient = client.with(staticToken(accessToken));
+  const user = await authClient.request(readMe({ fields: ['id'] }));
+  return user.id;
 };
 
 const setupSession = async (request: NextRequest): Promise<SessionData | null> => {
@@ -56,33 +43,38 @@ export const middleware = async (request: NextRequest): Promise<NextResponse> =>
   const storedSessionId = request.cookies.get('session_id')?.value;
   const sessionData = storedSessionId !== undefined ? sessionStore.get(storedSessionId) : null;
   
-  if (sessionData === null) {
-    const session = await setupSession(request);
-    if (session === null) {
-      const response = NextResponse.next();
-      response.cookies.delete('session_id');
-      return NextResponse.next();
+  try {
+    if (sessionData === null) {
+      const session = await setupSession(request);
+      if (session === null) {
+        const response = NextResponse.next();
+        response.cookies.delete('session_id');
+        return NextResponse.next();
+      }
+
+      const headers = new Headers(request.headers);
+      headers.set('x-user-id', session.userId);
+      const response = NextResponse.next({
+        request: {
+          headers,
+        },
+      });
+      response.cookies.set('session_id', session.sessionId);
+      response.cookies.set('directus_refresh_token', session.refreshToken);
+      return response;
     }
 
     const headers = new Headers(request.headers);
-    headers.set('x-user-id', session.userId);
-    const response = NextResponse.next({
+    headers.set('x-user-id', sessionData.userId);
+    return NextResponse.next({
       request: {
         headers,
       },
     });
-    response.cookies.set('session_id', session.sessionId);
-    response.cookies.set('directus_refresh_token', session.refreshToken);
-    return response;
+  } catch (error) {
+    console.error(error);
+    return NextResponse.next();
   }
-  
-  const headers = new Headers(request.headers);
-  headers.set('x-user-id', sessionData.userId);
-  return NextResponse.next({
-    request: {
-      headers,
-    },
-  });
 };
 
 export const config = {

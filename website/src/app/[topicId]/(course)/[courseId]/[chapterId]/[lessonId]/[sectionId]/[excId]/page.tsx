@@ -34,7 +34,7 @@ const getExercise = cache(
     sectionId: string,
     excId: string,
   ): Promise<Exercise | null> => (
-    cms.loadExercise(agnosticAgent, topicId, courseId, chapterId, lessonId, sectionId, excId)
+    cms().loadExercise(agnosticAgent, topicId, courseId, chapterId, lessonId, sectionId, excId)
   )
 );
 
@@ -65,8 +65,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId, sectionId, excId } = params;
-  const lesson = await cms.loadLesson(agnosticAgent, topicId, courseId, chapterId, lessonId);
-  const section = await cms.loadSection(agnosticAgent, topicId, courseId, chapterId, lessonId, sectionId);
+  const lesson = await cms().loadLesson(agnosticAgent, topicId, courseId, chapterId, lessonId);
+  const section = await cms().loadSection(agnosticAgent, topicId, courseId, chapterId, lessonId, sectionId);
   const exercise = await getExercise(
     topicId, courseId, chapterId, lessonId, sectionId, excId
   );

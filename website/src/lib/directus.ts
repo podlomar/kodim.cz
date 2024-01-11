@@ -41,20 +41,21 @@ export const fetchUser = async (id: string): Promise<User> => {
     readUser(
       id,
       { 
-        fields: ['id', 'email', 'first_name', 'Groups.*.*']
+        fields: ['id', 'email', 'first_name', 'groups.*.*']
       },
     ),
   );
 
-  const accessRules = apiUser.Groups.reduce((acc: string[], group: any) => {
-    const ruleObjects = group.Groups_id.AccessRules;
+  const accessRules = apiUser.groups.reduce((acc: string[], group: any) => {
+    const ruleObjects = group.Groups_id.accessRules;
+    
     if (ruleObjects === null) {
       return acc;
     }
 
     return [
       ...acc,
-      ...ruleObjects.map((ruleObject: any) => ruleObject.Rule),
+      ...ruleObjects.map((ruleObject: any) => ruleObject.rule),
     ];
   }, []);
 
@@ -71,16 +72,25 @@ export const fetchCourses = async (): Promise<CourseDef[]> => {
     readItems(
       'Courses',
       {
-        fields: ['id', 'contentFolder', 'topic'],
+        fields: [
+          'id',
+          'topic',
+          'organization',
+          'contentFolder',
+          'repoUrl',
+          'repoFolder',
+        ],
       },
     ),
   );
 
   return result.map((course: Record<string, any>) => ({
+    name: course.id,
     folder: `/content${course.contentFolder}`,
     topic: course.topic,
-    repoFolder: '',
-    repoUrl: '',
+    organization: course.organization,
+    repoFolder: course.repoFolder,
+    repoUrl: course.repoUrl,
   }));
 };
 
@@ -88,13 +98,13 @@ const groupFromApi = (group: Record<string, any>): Group => ({
   id: group.id,
   name: group.Name,
   invite: group.invite,
-  accessRules: group.AccessRules?.map((ruleObject: any) => ruleObject.Rule) ?? [],
+  accessRules: group.accessRules?.map((ruleObject: any) => ruleObject.rule) ?? [],
 });
 
 export const fetchGroup = async (id: string): Promise<Group | null> => {
   try {
     const result = await client.request(
-      readItem('Groups', id, { fields: ['id', 'Name', 'invite', 'AccessRules.*.*'] }),
+      readItem('Groups', id, { fields: ['id', 'name', 'invite', 'accessRules.*.*'] }),
     );
     
     return groupFromApi(result);

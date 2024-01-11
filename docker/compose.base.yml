@@ -25,6 +25,11 @@ services:
       - directus
     depends_on:
       - database
+    healthcheck:
+      test: ["CMD-SHELL", "netstat -at | grep -q 8055"]
+      interval: 5s
+      timeout: 5s
+      retries: 6
     environment:
       KEY: '${DIRECTUS_KEY}'
       SECRET: '${DIRECTUS_SECRET}'
