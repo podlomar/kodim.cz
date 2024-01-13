@@ -1,6 +1,11 @@
 @import "styles/variables.scss";
 @import "styles/mixins.scss";
 
+.direction {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .link {
   display: flex;
   align-items: flex-start;
@@ -21,6 +26,10 @@
     @include breakpoint-lg {
       text-align: right;
       flex-direction: row-reverse;
+
+      .direction {
+        flex-direction: row-reverse;
+      }
     }
   }
 

@@ -61,12 +61,17 @@ const StepLink = ({ direction, content }: Props): JSX.Element => {
         <div>
           {
             direction === 'next'
-              ? <div>Následujicí</div>
-              : <div>Předchozí</div>
+              ? <div className={styles.direction}>
+                  <span>Následujicí</span>
+                  <Icon name="lock" size="1rem" />
+                </div>
+              : <div className={styles.direction}>
+                  <span>Předchozí</span>
+                  <Icon name="lock" size="1rem" />
+                </div>
           }
           <div className={styles.label}>{content.label}</div>
         </div>
-        <Icon name="lock" size="1.2rem" />
       </div>
     );
   }

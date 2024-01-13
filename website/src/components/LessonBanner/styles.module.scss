@@ -54,6 +54,7 @@
   font-weight: 800;
   border-radius: 0.5rem;
   background-color: $palette-2;
+  background-image: linear-gradient(to bottom right, lighten($palette-2, 10%), darken($palette-2, 10%));
   color: $palette-1;
   text-align: center;
   margin-right: 1rem;

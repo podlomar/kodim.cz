@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "dev:up": "docker-compose -f compose.base.yml -f compose.frontend-dev.yml up --build",
+    "dev:up": "docker-compose --env-file .env.development -f compose.base.yml -f compose.frontend-dev.yml up --build",
     "dev:down": "docker-compose -f compose.base.yml -f compose.frontend-dev.yml down",
-    "prod:up": "docker-compose -f compose.base.yml -f compose.frontend.yml up --build",
+    "prod:up": "docker-compose --env-file .env.development -f compose.base.yml -f compose.frontend.yml up --build",
     "prod:down": "docker-compose -f compose.base.yml -f compose.frontend.yml down"
   }
 }
