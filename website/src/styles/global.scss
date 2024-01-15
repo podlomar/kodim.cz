@@ -40,21 +40,3 @@ body {
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.25;
 }
-
-button {
-  outline: none;
-  border: none;
-  background-color: $palette-1;
-  color: white;
-  border-radius: 5px;
-  padding: 0.25rem;
-  
-  &:hover {
-    background-color: $palette-1-darker;
-  }
-  
-  &:disabled {
-    background-color: #ddd;
-    color: #444;
-  }
-}
