@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { cms } from '../../../../lib/cms';
+import { cms } from 'lib/cms';
 
 export const dynamic = 'force-dynamic';
 

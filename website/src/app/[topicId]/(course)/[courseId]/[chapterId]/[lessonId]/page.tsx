@@ -17,7 +17,7 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId } = params;
   const { cmsAgent } = await session();
   const lesson = await cms().loadLesson(cmsAgent, topicId, courseId, chapterId, lessonId);
-  console.log('lesson', lesson);
+
   if (lesson === null) {
     notFound();
   }

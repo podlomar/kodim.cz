@@ -11,7 +11,6 @@ export const session = cache(async (): Promise<Session> => {
   }
 
   const user = await fetchUser(userId);
-  console.log('userAccessRules', user.accessRules);
   const cmsAgent = new ClaimsAgent(user.accessRules);
   return { user, cmsAgent };
 });

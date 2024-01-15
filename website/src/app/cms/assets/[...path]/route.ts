@@ -8,7 +8,6 @@ interface Params {
 }
 
 export const GET = async (req: Request, { params }: Params) => {
-  console.log('GET', params);
   const { path } = params;
   const asset = await cms().loadAsset(agnosticAgent, path);
   if (asset === null) {

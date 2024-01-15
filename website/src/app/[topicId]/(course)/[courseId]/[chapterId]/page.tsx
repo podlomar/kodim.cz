@@ -30,8 +30,6 @@ const getCourse = cache(
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { topicId, courseId } = params;
   const { cmsAgent } = await session();
-
-  console.log('agent', cmsAgent);
   const course = await getCourse(cmsAgent, topicId, courseId);
  
   if (course === null) {
