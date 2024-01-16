@@ -84,13 +84,15 @@ export const fetchCourses = async (): Promise<CourseDef[]> => {
     ),
   );
 
-  return result.map((course: Record<string, any>) => ({
+  return result.map((course: Record<string, any>): CourseDef => ({
     name: course.id,
     folder: `/content${course.contentFolder}`,
     topic: course.topic,
     organization: course.organization,
-    repoFolder: course.repoFolder,
-    repoUrl: course.repoUrl,
+    repo: course.repoUrl === null ? null : {
+      url: course.repoUrl,
+      folder: course.repoFolder ?? `/content${course.contentFolder}`,
+    },
   }));
 };
 
