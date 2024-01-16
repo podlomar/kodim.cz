@@ -91,7 +91,9 @@ export const fetchCourses = async (): Promise<CourseDef[]> => {
     organization: course.organization,
     repo: course.repoUrl === null ? null : {
       url: course.repoUrl,
-      folder: course.repoFolder ?? `/content${course.contentFolder}`,
+      folder: course.repoFolder === null
+        ? `/content${course.contentFolder}`
+        : `/content${course.repoFolder}`,
     },
   }));
 };
