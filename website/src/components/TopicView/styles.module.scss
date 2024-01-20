@@ -1,0 +1,49 @@
+@import "styles/mixins.scss";
+
+.topicBanner {
+  @include padded;
+  
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0 2rem 1rem;
+
+  @include breakpoint-md {
+    margin-left: 1.5rem;
+  }
+}
+
+.title {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.2rem;
+  color: $color-title;
+  line-height: 1.25;
+}
+
+.image {
+  width: 3rem;
+  height: 3rem;
+}
+
+.lead {
+  margin: 0;
+  max-width: 28rem;
+}
+
+.courses {
+  @include padded;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+
+  margin-bottom: 4rem;
+
+  @include breakpoint-md {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include breakpoint-lg {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+

@@ -1,7 +1,7 @@
 import { cms } from 'lib/cms';
 import { notFound } from 'next/navigation';
 import heroImg from './img/hero.svg';
-import TopicBanner from 'components/TopicBanner';
+import TopicView from 'components/TopicView';
 import CourseCard from 'components/CourseCard';
 import Brand from 'components/Brand';
 import Menu from 'components/Menu';
@@ -11,26 +11,10 @@ import { session } from  'app/session';
 
 export const dynamic = 'force-dynamic';
 
-interface Props {
-  params: {
-    topicId?: string;
-  }
-}
-
-const HomePage = async ({ params }: Props): Promise<JSX.Element> => {
+const HomePage = async (): Promise<JSX.Element> => {
   const { user, cmsAgent } = await session();
   const root = await cms().loadRoot(cmsAgent);
   if (root === null) {
-    notFound();
-  }
-
-  const { topicId: topicName } = params;
-
-  const activeTopic = topicName === undefined
-    ? root.topics[0]
-    : root.topics.find((topic) => topic.name === topicName);
-
-  if (activeTopic === undefined) {
     notFound();
   }
 
@@ -47,25 +31,9 @@ const HomePage = async ({ params }: Props): Promise<JSX.Element> => {
           <img src={heroImg.src} alt="Hero image" className={styles.heroImage} />
         </div>
 
-        <Menu 
-          items={root.topics.map((topic) => ({
-            label: topic.title,
-            href: `/${topic.name}`,
-            key: topic.name,
-          }))}
-          activeKey={activeTopic.name}
-        />
-
-        <TopicBanner topic={activeTopic} />
-
-        <div className={styles.courses}>
-          { activeTopic.courses.map((course) => (
-            <CourseCard
-              key={course.name}
-              course={course}
-            />
-          ))}
-        </div>
+        {root.topics.map((topic) => (
+          <TopicView key={topic.name} topic={topic} />
+        ))}
       </div>
     </MainLayout>
   );

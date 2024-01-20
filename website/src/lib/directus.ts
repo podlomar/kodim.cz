@@ -7,7 +7,7 @@ import {
   readItems,
   readItem,
 } from '@directus/sdk';
-import { CourseDef } from 'kodim-cms/esm/content/topic';
+import { CourseDef, TopicSource } from 'kodim-cms/esm/content/topic';
 
 export interface User {
   id: string;
@@ -67,34 +67,44 @@ export const fetchUser = async (id: string): Promise<User> => {
   };
 };
 
-export const fetchCourses = async (): Promise<CourseDef[]> => {
+export const fetchTopics = async (): Promise<TopicSource[]> => {
   const result = await client.request(
     readItems(
-      'Courses',
+      'Topics',
       {
         fields: [
           'id',
-          'topic',
-          'organization',
-          'contentFolder',
-          'repoUrl',
-          'repoFolder',
+          'title',
+          'lead',
+          'courses.id',
+          'courses.organization',
+          'courses.contentFolder',
+          'courses.repoUrl',
+          'courses.repoFolder',
+          'courses.topic.id'
         ],
+        sort: 'order',
       },
     ),
   );
 
-  return result.map((course: Record<string, any>): CourseDef => ({
-    name: course.id,
-    folder: `/content${course.contentFolder}`,
-    topic: course.topic,
-    organization: course.organization,
-    repo: course.repoUrl === null ? null : {
-      url: course.repoUrl,
-      folder: course.repoFolder === null
-        ? `/content${course.contentFolder}`
-        : `/content${course.repoFolder}`,
-    },
+  return result.map((topic: Record<string, any>): TopicSource => ({
+    name: topic.id,
+    title: topic.title,
+    heading: topic.title,
+    lead: topic.lead,
+    courses: topic.courses.map((course: Record<string, any>): CourseDef => ({
+      name: course.id,
+      folder: `/content${course.contentFolder}`,
+      topic: course.topic.id,
+      organization: course.organization,
+      repo: course.repoUrl === null ? null : {
+        url: course.repoUrl,
+        folder: course.repoFolder === null
+          ? `/content${course.contentFolder}`
+          : `/content${course.repoFolder}`,
+      },
+    })),
   }));
 };
 

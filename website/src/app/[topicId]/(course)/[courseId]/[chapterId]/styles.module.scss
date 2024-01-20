@@ -48,3 +48,37 @@
 .lead {
   margin: 0;
 }
+
+.courseInfo {
+  @include padded;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0rem 2rem;
+
+  @include breakpoint-md {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+a.register {
+  display: block;
+  margin-top: 2rem;
+  background-color: $palette-1;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: 300ms;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: 300ms;
+  }
+}
+
+.lessonsHeading {
+  @include padded;
+}

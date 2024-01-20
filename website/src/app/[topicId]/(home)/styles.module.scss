@@ -58,19 +58,3 @@
     height: 400px;
   }
 }
-
-.courses {
-  @include padded;
-
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 1rem;
-
-  @include breakpoint-md {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @include breakpoint-lg {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
