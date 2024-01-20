@@ -40,3 +40,42 @@ body {
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.25;
 }
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+textarea {
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid $palette-1;
+  background-color: white;
+  color: $color-text;
+  transition: border-color 0.2s ease-in-out;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 0.5rem;
+}
+
+
+.btn {
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 0.5rem 1rem;
+  border: none;
+  outline: none;
+  border-radius: 0.25rem;
+  background-color: $palette-1;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
