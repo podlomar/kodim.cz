@@ -16,7 +16,7 @@ const ProfilPage = async (): Promise<JSX.Element> => {
     <MainLayout>
       <div className="container">
         <Panel title="Profil">
-          <p>Přihlášen jako: <strong>{user.firstName}</strong></p>
+          <p>Přihlášen jako: <strong>{user.name}</strong></p>
           <a href="/odhlasit">Odhlásit</a>
         </Panel>
       </div>

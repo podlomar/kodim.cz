@@ -2,7 +2,6 @@ import {
   createDirectus,
   staticToken,
   rest,
-  readMe,
   readUser,
   readItems,
   readItem,
@@ -12,7 +11,7 @@ import { CourseDef, TopicSource } from 'kodim-cms/esm/content/topic';
 export interface User {
   id: string;
   email: string;
-  firstName: string;
+  name: string;
   accessRules: string[];
 };
 
@@ -29,19 +28,28 @@ export const client = createDirectus('http://directus:8055')
   .with(staticToken(process.env.DIRECTUS_API_TOKEN ?? ''))
   .with(rest());
 
-export const fetchCurrentUserId = async () => {
-  const result = await client.request(
-    readMe({ fields: ['id'] }),
-  );
-  return result.id;
-};
+const deduceName = (apiUser: Record<string, any>): string => {
+  if (apiUser.first_name !== null && apiUser.first_name !== '') {
+    return apiUser.first_name;
+  }
+
+  if (apiUser.external_identifier !== null && apiUser.external_identifier !== '') {
+    return apiUser.external_identifier;
+  }
+
+  if (apiUser.email !== null && apiUser.email !== '') {
+    return apiUser.email;
+  }
+
+  return 'Neznámý uživatel';
+}
 
 export const fetchUser = async (id: string): Promise<User> => {
   const apiUser = await client.request(
     readUser(
       id,
       { 
-        fields: ['id', 'email', 'first_name', 'groups.*.*']
+        fields: ['id', 'email', 'first_name', 'groups.*.*', 'external_identifier']
       },
     ),
   );
@@ -59,10 +67,12 @@ export const fetchUser = async (id: string): Promise<User> => {
     ];
   }, []);
 
+  const name = deduceName(apiUser);
+
   return {
     id: apiUser.id,
     email: apiUser.email,
-    firstName: apiUser.first_name,
+    name,
     accessRules,
   };
 };
@@ -91,7 +101,6 @@ export const fetchTopics = async (): Promise<TopicSource[]> => {
   return result.map((topic: Record<string, any>): TopicSource => ({
     name: topic.id,
     title: topic.title,
-    heading: topic.title,
     lead: topic.lead,
     courses: topic.courses.map((course: Record<string, any>): CourseDef => ({
       name: course.id,

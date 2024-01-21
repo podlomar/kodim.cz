@@ -1,62 +1,48 @@
-import { v4 as uuid } from 'uuid';
-import { User } from './directus';
-import { ClaimsAgent, PublicAgent } from 'kodim-cms/esm/access-control/claim-agent';
-
 export interface SessionData {
-  sessionId: string;
   refreshToken: string;
   userId: string;
 };
 
-export interface Session {
-  user: User | null;
-  cmsAgent: PublicAgent | ClaimsAgent;
-}
+// const cipher = crypto.createCipheriv(
+//   'aes-256-gcm',
+//   process.env.SESSION_SECRET ?? '',
+//   process.env.SESSION_IV ?? '',
+// );
 
-class SessionStore {
-  private static instanceCount = 0;
-  private sessions: {
-    [Key: string]: SessionData;
-  } = {};
-  
-  public constructor() {
-    SessionStore.instanceCount++;
-  }
+// const decipher = crypto.createDecipheriv(
+//   'aes-256-gcm',
+//   process.env.SESSION_SECRET ?? '',
+//   process.env.SESSION_IV ?? '',
+// );
 
-  public get(sessionId: string): SessionData | null {
-    return this.sessions[sessionId] ?? null;
-  }
 
-  public init(userId: string, refreshToken: string): SessionData {
-    const sessionId = uuid();
-    const data = {
-      sessionId,
-      userId,
-      refreshToken,
-    };
-    this.sessions[sessionId] = data;
-    return data;
-  }
+export const encryptSessionData = (data: SessionData): string => {
+  // const encrypted = Buffer.concat([
+  //   cipher.update(`${data.userId}:${data.refreshToken}`, 'utf8'),
+  //   cipher.final(),
+  // ]);
 
-  public current(headers: Headers): SessionData | null {
-    const sessionId = headers.get('x-session-id');
-    if (sessionId === null) {
-      return null;
-    }
+  // return encrypted.toString('base64');
 
-    return this.get(sessionId);
-  }
+  return `${data.userId}:${data.refreshToken}`;
 };
 
-let sessionStore: SessionStore;
+export const decryptSessionData = (encrypted: string): SessionData => {
+  // const decrypted = Buffer.concat([
+  //   decipher.update(encrypted, 'base64'),
+  //   decipher.final(),
+  // ]);
 
-if (process.env.NODE_ENV === 'development') {
-  if ((global as any).sessionStore === undefined) {
-    (global as any).sessionStore = new SessionStore();
-  }
-  sessionStore = (global as any).sessionStore;
-} else {
-  sessionStore = new SessionStore();
-}
+  // const [userId, refreshToken] = decrypted.toString('utf8').split(':');
 
-export default sessionStore;
+  // return {
+  //   userId,
+  //   refreshToken,
+  // };
+
+  const [userId, refreshToken] = encrypted.split(':');
+  return {
+    userId,
+    refreshToken,
+  };
+};

@@ -1,5 +1,5 @@
 import { AuthenticationData, createDirectus, rest, refresh, readMe, staticToken } from '@directus/sdk';
-import sessionStore, { SessionData } from 'lib/session';
+import { SessionData, decryptSessionData, encryptSessionData } from 'lib/session';
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -16,61 +16,95 @@ const fetchCurrentUserId = async (accessToken: string): Promise<string | null> =
   return user.id;
 };
 
-const setupSession = async (request: NextRequest): Promise<SessionData | null> => {
+const noneSession = {
+  status: 'none',
+} as const;
+
+const invalidSession = {
+  status: 'invalid',
+} as const;
+
+type NoneSession = typeof noneSession;
+
+type InvalidSession = typeof invalidSession;
+
+interface ValidSession {
+  status: 'valid';
+  data: SessionData;
+}
+
+interface StaleSession {
+  status: 'stale';
+  data: SessionData;
+}
+
+type StoredSession = NoneSession | InvalidSession | ValidSession | StaleSession;
+
+const loadSession = async (request: NextRequest): Promise<StoredSession> => {
+  const sessionCookie = request.cookies.get('session')?.value;
   const refreshToken = request.cookies.get('directus_refresh_token')?.value;
+  
   if (refreshToken === undefined) {
-    return null;
+    if (sessionCookie !== undefined) {
+      console.log('SESSION:', 'missing refresh token, cancelling');
+      return invalidSession;
+    }
+
+    console.log('SESSION:', 'missing refresh token, no session found');
+    return noneSession;
+  }
+  
+  const sessionData = sessionCookie === undefined ? null : decryptSessionData(sessionCookie);
+  console.log('sesionData', sessionData);
+  if (sessionData === null || sessionData.refreshToken !== refreshToken) {
+    const authenticationData = await fetchAuthData(refreshToken);  
+    if (authenticationData === null) {
+      console.log('SESSION:', 'invalid refresh token, cancelling');
+      return invalidSession;
+    }
+
+    if (authenticationData.access_token === null || authenticationData.refresh_token === null) {
+      console.log('SESSION:', 'invalid refresh token auth, cancelling');
+      return invalidSession;
+    }
+
+    const userId = await fetchCurrentUserId(authenticationData.access_token);  
+    if (userId === null) {
+      console.log('SESSION:', 'invalid access token, cancelling');
+      return invalidSession;
+    }
+
+    console.log('SESSION:', 'refreshing session');
+
+    return {
+      status: 'stale',
+      data: {
+        userId,
+        refreshToken: authenticationData.refresh_token,
+      }
+    };
   }
 
-  const authenticationData = await fetchAuthData(refreshToken);  
-  if (authenticationData === null) {
-    return null;
-  }
-
-  if (authenticationData.access_token === null || authenticationData.refresh_token === null) {
-    return null;
-  }
-
-  const userId = await fetchCurrentUserId(authenticationData.access_token);  
-  if (userId === null) {
-    return null;
-  }
-
-  return sessionStore.init(userId, authenticationData.refresh_token);
+  console.log('SESSION:', 'continuing session');
+  return {
+    status: 'valid',
+    data: sessionData,
+  };
 };
 
 export const middleware = async (request: NextRequest): Promise<NextResponse> => {
-  const storedSessionId = request.cookies.get('session_id')?.value;
-  const sessionData = storedSessionId !== undefined ? sessionStore.get(storedSessionId) : null;
-  
   try {
-    if (sessionData === null) {
-      const session = await setupSession(request);
-      if (session === null) {
-        const response = NextResponse.next();
-        response.cookies.delete('session_id');
-        return NextResponse.next();
-      }
+    const session = await loadSession(request);
+    const response = NextResponse.next();
 
-      const headers = new Headers(request.headers);
-      headers.set('x-user-id', session.userId);
-      const response = NextResponse.next({
-        request: {
-          headers,
-        },
-      });
-      response.cookies.set('session_id', session.sessionId);
-      response.cookies.set('directus_refresh_token', session.refreshToken);
-      return response;
+    if (session.status === 'invalid') {
+      response.cookies.delete('session');
+    } else if (session.status === 'stale') {
+      response.cookies.set('session', encryptSessionData(session.data));
+      response.cookies.set('directus_refresh_token', session.data.refreshToken);
     }
-
-    const headers = new Headers(request.headers);
-    headers.set('x-user-id', sessionData.userId);
-    return NextResponse.next({
-      request: {
-        headers,
-      },
-    });
+      
+    return response;
   } catch (error) {
     console.error(error);
     return NextResponse.next();

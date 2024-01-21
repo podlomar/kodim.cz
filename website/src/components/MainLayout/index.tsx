@@ -20,7 +20,7 @@ const MainLayout = async ({ showBrand = true, children }: Props): Promise<JSX.El
           {user === null ? (
             <a href="/prihlasit">Přihlásit</a>
           ) : (
-            <a href="/profil">{user.firstName}</a>
+            <a href="/profil">{user.name}</a>
           )}
         </div>
       </header>

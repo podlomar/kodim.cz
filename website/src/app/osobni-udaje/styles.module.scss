@@ -1,0 +1,30 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.providers {
+  margin-bottom: 1rem;
+}
+
+.providerLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 1rem;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
+  align-items: baseline;
+  margin-bottom: 1rem;
+
+  @include breakpoint-md {
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+  }
+}
+
+.controls {
+  text-align: right;
+}

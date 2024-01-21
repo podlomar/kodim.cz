@@ -18,7 +18,7 @@
     "clsx": "^2.0.0",
     "hast": "^1.0.0",
     "highlight.js": "^11.8.0",
-    "kodim-cms": "^1.1.0-beta.6",
+    "kodim-cms": "^1.1.0-beta.7",
     "next": "^14.0.4",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
