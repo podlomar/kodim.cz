@@ -1,5 +1,5 @@
-import MainLayout from 'components/MainLayout';
-import Panel from 'components/Panel';
+import MainLayout from 'app/components/MainLayout';
+import Panel from 'app/components/Panel';
 
 const GdprPage = (): JSX.Element => {
   return (

@@ -1,11 +1,11 @@
 import { cms } from 'lib/cms';
 import { notFound } from 'next/navigation';
 import heroImg from './img/hero.svg';
-import TopicView from 'components/TopicView';
-import CourseCard from 'components/CourseCard';
-import Brand from 'components/Brand';
-import Menu from 'components/Menu';
-import MainLayout from 'components/MainLayout';
+import TopicView from 'app/components/TopicView';
+import CourseCard from 'app/components/CourseCard';
+import Brand from 'app/components/Brand';
+import Menu from 'app/components/Menu';
+import MainLayout from 'app/components/MainLayout';
 import styles from './styles.module.scss';
 import { session } from  'app/session';
 

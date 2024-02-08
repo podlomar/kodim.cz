@@ -46,35 +46,27 @@ const loadSession = async (request: NextRequest): Promise<StoredSession> => {
   
   if (refreshToken === undefined) {
     if (sessionCookie !== undefined) {
-      console.log('SESSION:', 'missing refresh token, cancelling');
       return invalidSession;
     }
 
-    console.log('SESSION:', 'missing refresh token, no session found');
     return noneSession;
   }
   
   const sessionData = sessionCookie === undefined ? null : decryptSessionData(sessionCookie);
-  console.log('sesionData', sessionData);
   if (sessionData === null || sessionData.refreshToken !== refreshToken) {
     const authenticationData = await fetchAuthData(refreshToken);  
     if (authenticationData === null) {
-      console.log('SESSION:', 'invalid refresh token, cancelling');
       return invalidSession;
     }
 
     if (authenticationData.access_token === null || authenticationData.refresh_token === null) {
-      console.log('SESSION:', 'invalid refresh token auth, cancelling');
       return invalidSession;
     }
 
     const userId = await fetchCurrentUserId(authenticationData.access_token);  
     if (userId === null) {
-      console.log('SESSION:', 'invalid access token, cancelling');
       return invalidSession;
     }
-
-    console.log('SESSION:', 'refreshing session');
 
     return {
       status: 'stale',
@@ -85,7 +77,6 @@ const loadSession = async (request: NextRequest): Promise<StoredSession> => {
     };
   }
 
-  console.log('SESSION:', 'continuing session');
   return {
     status: 'valid',
     data: sessionData,
@@ -99,11 +90,14 @@ export const middleware = async (request: NextRequest): Promise<NextResponse> =>
 
     if (session.status === 'invalid') {
       response.cookies.delete('session');
+      response.headers.set('x-session', 'invalid');
     } else if (session.status === 'stale') {
-      response.cookies.set('session', encryptSessionData(session.data));
+      const encryptedSession = encryptSessionData(session.data);
+      response.cookies.set('session', encryptedSession);
       response.cookies.set('directus_refresh_token', session.data.refreshToken);
+      response.headers.set('x-session', encryptedSession);
     }
-      
+
     return response;
   } catch (error) {
     console.error(error);

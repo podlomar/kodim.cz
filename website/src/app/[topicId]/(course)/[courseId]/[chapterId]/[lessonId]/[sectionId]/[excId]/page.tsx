@@ -4,13 +4,13 @@ import { Metadata, ResolvingMetadata } from 'next'
 import { openGraph } from 'app/open-graph';
 import { agnosticAgent, cms } from 'lib/cms';
 import { Exercise } from 'kodim-cms/esm/content/exercise';
-import { MenuItem } from 'components/Menu';
-import Breadcrumbs from 'components/Breadcrumbs';
-import LessonBanner from 'components/LessonBanner';
-import ReactHast from 'components/ReactHast';
-import ArticleContent from 'components/ArticleContent/intex';
-import ExerciseHead from 'components/ExerciseHead';
-import Solution from 'components/Solution';
+import { MenuItem } from 'app/components/Menu';
+import Breadcrumbs from 'app/components/Breadcrumbs';
+import LessonBanner from 'app/components/LessonBanner';
+import ReactHast from 'app/components/ReactHast';
+import ArticleContent from 'app/components/ArticleContent/intex';
+import ExerciseHead from 'app/components/ExerciseHead';
+import Solution from 'app/components/Solution';
 
 export const dynamic = 'force-dynamic';
 

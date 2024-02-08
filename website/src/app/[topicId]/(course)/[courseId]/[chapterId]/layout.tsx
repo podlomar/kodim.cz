@@ -1,4 +1,4 @@
-import MainLayout from 'components/MainLayout';
+import MainLayout from 'app/components/MainLayout';
 
 export const dynamic = 'force-dynamic';
 

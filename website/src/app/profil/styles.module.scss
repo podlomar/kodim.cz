@@ -1,0 +1,29 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.profile {
+  display: flex;
+  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+
+  @include breakpoint-sm {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.avatar {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 0.5rem;
+}
+
+.info {
+  flex: 1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+}

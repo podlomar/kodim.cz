@@ -67,6 +67,8 @@ input[type="checkbox"] {
 .btn {
   font-size: 1rem;
   line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
   padding: 0.5rem 1rem;
   border: none;
   outline: none;
@@ -74,8 +76,16 @@ input[type="checkbox"] {
   background-color: $palette-1;
   color: white;
   cursor: pointer;
+  transition: 300ms;
 
-  &:hover {
-    transform: scale(1.1);
+  &:hover:not(:disabled) {
+    transform: scale(1.05);
+    transition: 300ms;
+  }
+
+  &:disabled {
+    color: gray;
+    background-color: #ddd;
+    cursor: not-allowed;
   }
 }

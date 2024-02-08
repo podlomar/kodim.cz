@@ -3,3 +3,7 @@ docker exec -i database /bin/bash -c "PGPASSWORD=directus pg_dump --clean -Fc -U
 docker exec -i database /bin/bash -c "PGPASSWORD=directus pg_restore --verbose --clean --no-acl --no-owner -U directus -d directus /backups/db.dump"
 
 docker exec -i kodimcz_database_1 /bin/bash -c "PGPASSWORD=directus psql -U directus -c \"DROP DATABASE directus;\""
+
+docker build ../website -f ./dockerfile
+docker tag d00e86b63076 ghcr.io/kodim-cz/kodim-frontoffice:0.0.4
+docker push ghcr.io/kodim-cz/kodim-frontoffice:0.0.4

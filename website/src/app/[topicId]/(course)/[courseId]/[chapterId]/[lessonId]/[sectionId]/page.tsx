@@ -4,11 +4,11 @@ import { Metadata } from 'next'
 import { openGraph } from 'app/open-graph';
 import { agnosticAgent, cms } from 'lib/cms';
 import { Lesson } from 'kodim-cms/esm/content/lesson';
-import LessonBanner from 'components/LessonBanner';
-import SectionContent from 'components/SectionContent';
-import ArticleContent from 'components/ArticleContent/intex';
-import { MenuItem } from 'components/Menu';
-import Breadcrumbs from 'components/Breadcrumbs';
+import LessonBanner from 'app/components/LessonBanner';
+import SectionContent from 'app/components/SectionContent';
+import ArticleContent from 'app/components/ArticleContent/intex';
+import { MenuItem } from 'app/components/Menu';
+import Breadcrumbs from 'app/components/Breadcrumbs';
 import { session } from 'app/session';
 import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 

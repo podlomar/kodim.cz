@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next'
 import { openGraph } from 'app/open-graph';
 import { cms } from 'lib/cms';
-import Breadcrumbs from 'components/Breadcrumbs';
-import ChapterOverview from 'components/ChapterOverview';
-import Menu from 'components/Menu';
+import Breadcrumbs from 'app/components/Breadcrumbs';
+import ChapterOverview from 'app/components/ChapterOverview';
+import Menu from 'app/components/Menu';
 import { Course } from 'kodim-cms/esm/content/course';
 import styles from './styles.module.scss';
 import { session } from 'app/session';

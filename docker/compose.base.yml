@@ -20,7 +20,7 @@ services:
       - 8055:8055
     volumes:
       - ./data/uploads:/directus/uploads
-      # - ./data/extensions:/directus/extensions
+      - ./data/extensions:/directus/extensions
     networks:
       - directus
     depends_on:
@@ -64,7 +64,7 @@ services:
       AUTH_GITHUB_IDENTIFIER_KEY: 'login'
       AUTH_GITHUB_FIRST_NAME_KEY: 'name'
       AUTH_GITHUB_ICON: 'github'
-      AUTH_GITHUB_SCOPE: 'read:user'
+      AUTH_GITHUB_SCOPE: 'user:email'
       AUTH_GITHUB_DEFAULT_ROLE_ID: '${GITHUB_DEFAULT_ROLE}'
 
       REFRESH_TOKEN_COOKIE_SECURE: 'false'

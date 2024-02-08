@@ -5,14 +5,20 @@ import {
   readUser,
   readItems,
   readItem,
+  createItem,
 } from '@directus/sdk';
 import { CourseDef, TopicSource } from 'kodim-cms/esm/content/topic';
 
 export interface User {
   id: string;
   email: string;
-  name: string;
+  name: string | null;
   accessRules: string[];
+  groups: {
+    id: string;
+    name: string;
+  }[];
+  avatarUrl: string | null;
 };
 
 type GroupInvite = 'open' | 'closed' | 'none';
@@ -28,35 +34,9 @@ export const client = createDirectus('http://directus:8055')
   .with(staticToken(process.env.DIRECTUS_API_TOKEN ?? ''))
   .with(rest());
 
-const deduceName = (apiUser: Record<string, any>): string => {
-  if (apiUser.first_name !== null && apiUser.first_name !== '') {
-    return apiUser.first_name;
-  }
-
-  if (apiUser.external_identifier !== null && apiUser.external_identifier !== '') {
-    return apiUser.external_identifier;
-  }
-
-  if (apiUser.email !== null && apiUser.email !== '') {
-    return apiUser.email;
-  }
-
-  return 'Neznámý uživatel';
-}
-
-export const fetchUser = async (id: string): Promise<User> => {
-  const apiUser = await client.request(
-    readUser(
-      id,
-      { 
-        fields: ['id', 'email', 'first_name', 'groups.*.*', 'external_identifier']
-      },
-    ),
-  );
-
+export const userFromApi = (apiUser: Record<string, any>): User => {
   const accessRules = apiUser.groups.reduce((acc: string[], group: any) => {
     const ruleObjects = group.Groups_id.accessRules;
-    
     if (ruleObjects === null) {
       return acc;
     }
@@ -67,14 +47,35 @@ export const fetchUser = async (id: string): Promise<User> => {
     ];
   }, []);
 
-  const name = deduceName(apiUser);
-
   return {
     id: apiUser.id,
     email: apiUser.email,
-    name,
+    name: apiUser.first_name,
+    avatarUrl: apiUser.avatar === null
+      ? null
+      : `${process.env.DIRECTUS_URL}/assets/${apiUser.avatar}`,
     accessRules,
+    groups: apiUser.groups.map((group: any) => ({
+      id: group.Groups_id.id,
+      name: group.Groups_id.name,
+    })),
   };
+}
+
+export const fetchUser = async (id: string): Promise<User | null> => {
+  try {
+    const apiUser = await client.request(
+      readUser(
+        id,
+        { 
+          fields: ['id', 'email', 'first_name', 'avatar', 'groups.*.*'],
+        }
+      ),
+    );
+    return userFromApi(apiUser);
+  } catch (error) {
+    return null;
+  }
 };
 
 export const fetchTopics = async (): Promise<TopicSource[]> => {
@@ -119,7 +120,7 @@ export const fetchTopics = async (): Promise<TopicSource[]> => {
 
 const groupFromApi = (group: Record<string, any>): Group => ({
   id: group.id,
-  name: group.Name,
+  name: group.name,
   invite: group.invite,
   accessRules: group.accessRules?.map((ruleObject: any) => ruleObject.rule) ?? [],
 });
@@ -135,3 +136,10 @@ export const fetchGroup = async (id: string): Promise<Group | null> => {
     return null;
   }
 };
+
+export const addToGroup = async (userId: string, groupId: string): Promise<void> => {
+  client.request(createItem('Groups_directus_users', {
+    Groups_id: groupId,
+    directus_users_id: userId,
+  }));
+}

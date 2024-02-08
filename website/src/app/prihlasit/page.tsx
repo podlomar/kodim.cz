@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation';
 import { session } from 'app/session';
-import MainLayout from 'components/MainLayout';
-import Panel from 'components/Panel';
-import Icon from 'components/Icon';
+import MainLayout from 'app/components/MainLayout';
+import Panel from 'app/components/Panel';
+import Icon from 'app/components/Icon';
 import css from './styles.module.scss';
 
 export const dynamic = 'force-dynamic';
