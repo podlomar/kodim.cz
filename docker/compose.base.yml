@@ -53,7 +53,8 @@ services:
       EMAIL_SMTP_PASSWORD: '${ADMIN_SMTP_PASSWORD}}'
       EMAIL_SMTP_SECURE: 'false'
 
-      AUTH_PROVIDERS: 'github'
+      AUTH_PROVIDERS: 'github,discord'
+      
       AUTH_GITHUB_DRIVER: 'oauth2'
       AUTH_GITHUB_CLIENT_ID: '${GITHUB_CLIENT_ID}'
       AUTH_GITHUB_CLIENT_SECRET: '${GITHUB_CLIENT_SECRET}'
@@ -65,7 +66,17 @@ services:
       AUTH_GITHUB_FIRST_NAME_KEY: 'name'
       AUTH_GITHUB_ICON: 'github'
       AUTH_GITHUB_SCOPE: 'user:email'
-      AUTH_GITHUB_DEFAULT_ROLE_ID: '${GITHUB_DEFAULT_ROLE}'
+      AUTH_GITHUB_DEFAULT_ROLE_ID: '${STUDENT_ROLE}'
+
+      AUTH_DISCORD_DRIVER: 'oauth2'
+      AUTH_DISCORD_CLIENT_ID: "..."
+      AUTH_DISCORD_CLIENT_SECRET: "..."
+      AUTH_DISCORD_AUTHORIZE_URL: 'https://discord.com/api/oauth2/authorize'
+      AUTH_DISCORD_ACCESS_URL: 'https://discord.com/api/oauth2/token'
+      AUTH_DISCORD_PROFILE_URL: 'https://discord.com/api/users/@me'
+      AUTH_DISCORD_ALLOW_PUBLIC_REGISTRATION: 'true'
+      AUTH_DISCORD_ICON: 'discord'
+      AUTH_DISCORD_DEFAULT_ROLE_ID: '${STUDENT_ROLE}'
 
       REFRESH_TOKEN_COOKIE_SECURE: 'false'
       REFRESH_TOKEN_COOKIE_SAME_SITE: 'lax'
