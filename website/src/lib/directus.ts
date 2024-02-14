@@ -7,7 +7,7 @@ import {
   readItem,
   createItem,
 } from '@directus/sdk';
-import { CourseDef, TopicSource } from 'kodim-cms/esm/content/topic';
+import { CourseDef, TopicSource } from 'kodim-cms/esm/content/division';
 
 export interface User {
   id: string;
