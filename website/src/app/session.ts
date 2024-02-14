@@ -1,17 +1,17 @@
 import { cache } from 'react';
 import { cookies, headers } from 'next/headers';
-import { ClaimsAgent, PublicAgent } from 'kodim-cms/esm/access-control/claim-agent';
+import { ClaimsAgent, CmsAgent, publicAgent } from 'kodim-cms/esm/access-control/claim-agent';
 import { User, fetchUser } from '../lib/directus';
 import { decryptSessionData } from '../lib/session';
 
 export type Session = {
   user: User | null;
   refreshToken: string;
-  cmsAgent: ClaimsAgent | PublicAgent;
+  cmsAgent: CmsAgent;
 };
 
 export const session = cache(async (noRedirect?: 'no-redirect'): Promise<Session> => {
-  const publicSession = { user: null, cmsAgent: new PublicAgent(), refreshToken: '' };
+  const publicSession = { user: null, cmsAgent: publicAgent, refreshToken: '' };
   const encryptedSession = headers().get('x-session') ?? cookies().get('session')?.value;
   if(encryptedSession === undefined) {
     return publicSession;

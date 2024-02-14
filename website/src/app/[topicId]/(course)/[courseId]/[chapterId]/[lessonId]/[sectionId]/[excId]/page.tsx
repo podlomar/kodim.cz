@@ -11,6 +11,8 @@ import ReactHast from 'app/components/ReactHast';
 import ArticleContent from 'app/components/ArticleContent/intex';
 import ExerciseHead from 'app/components/ExerciseHead';
 import Solution from 'app/components/Solution';
+import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
+import { session } from 'app/session';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,6 +29,7 @@ interface Props {
 
 const getExercise = cache(
   async (
+    cmsAgent: CmsAgent,
     topicId: string,
     courseId: string,
     chapterId: string,
@@ -34,14 +37,15 @@ const getExercise = cache(
     sectionId: string,
     excId: string,
   ): Promise<Exercise | null> => (
-    cms().loadExercise(agnosticAgent, topicId, courseId, chapterId, lessonId, sectionId, excId)
+    cms().loadExercise(cmsAgent, topicId, courseId, chapterId, lessonId, sectionId, excId)
   )
 );
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { topicId, courseId, chapterId, lessonId, sectionId, excId } = params;
+  const { cmsAgent } = await session();
   const exercise = await getExercise(
-    topicId, courseId, chapterId, lessonId, sectionId, excId
+    cmsAgent, topicId, courseId, chapterId, lessonId, sectionId, excId
   );
  
   if (exercise === null) {
@@ -65,10 +69,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId, sectionId, excId } = params;
+  const { cmsAgent } = await session();
   const lesson = await cms().loadLesson(agnosticAgent, topicId, courseId, chapterId, lessonId);
   const section = await cms().loadSection(agnosticAgent, topicId, courseId, chapterId, lessonId, sectionId);
   const exercise = await getExercise(
-    topicId, courseId, chapterId, lessonId, sectionId, excId
+    cmsAgent, topicId, courseId, chapterId, lessonId, sectionId, excId
   );
 
   if (exercise === null || section === null || lesson === null) {

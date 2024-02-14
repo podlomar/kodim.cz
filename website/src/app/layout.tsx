@@ -45,6 +45,8 @@ const RootLayout = ({ children }: Props): JSX.Element => {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,800;1,500&family=Roboto+Mono:wght@400;700&display=swap"
         />
+
+        <script defer data-domain="kodim.cz" src="https://plausible.io/js/script.js"></script>
       </head>
       <body>
         <div className={styles.rootLayout}>  

@@ -1,5 +1,6 @@
 import { KodimCms } from 'kodim-cms/esm/index.js';
 import { fetchTopics } from './directus';
+import { CoursesDivision, CoursesDivisionSource } from 'kodim-cms/esm/content/division';
 
 // const rootSource: RootSource = {
 //   topics: [
@@ -36,7 +37,42 @@ import { fetchTopics } from './directus';
 
 export const initiateCms = async () => {
   const topics = await fetchTopics();
-  return KodimCms.load({ topics });
+  const kodimDivision: CoursesDivisionSource = {
+    type: 'courses',
+    name: 'kurzy',
+    title: 'Kurzy',
+    topics: [],
+  };
+  const czechitasDivision: CoursesDivisionSource = {
+    type: 'courses',
+    name: 'czechitas',
+    title: 'Czechitas',
+    topics: [],
+  };
+
+  for (const topic of topics) {
+    const kodimTopic = {
+      ...topic,
+      courses: topic.courses.filter(course => course.organization === 'kodim'),
+    };
+    
+    const czechitasTopic = {
+      ...topic,
+      courses: topic.courses.filter(course => course.organization === 'czechitas'),
+    };
+
+    if (kodimTopic.courses.length > 0) {
+      kodimDivision.topics.push(kodimTopic);
+    }
+
+    if (czechitasTopic.courses.length > 0) {
+      czechitasDivision.topics.push(czechitasTopic);
+    }
+  }
+  
+  return KodimCms.load({ 
+    divisions: [kodimDivision, czechitasDivision],
+  });
 }
 
 export const cms = () => (global as any).cms as KodimCms;

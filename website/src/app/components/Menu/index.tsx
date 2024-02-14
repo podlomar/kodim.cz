@@ -15,9 +15,10 @@ export interface MenuItem {
 interface Props {
   items: MenuItem[];
   activeKey: string;
+  centered?: boolean;
 }
 
-const Menu = ({ items, activeKey }: Props) => {
+const Menu = ({ items, activeKey, centered = false }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const activeItem = items.find((item) => item.key === activeKey);
 
@@ -34,7 +35,11 @@ const Menu = ({ items, activeKey }: Props) => {
         <Icon name="menu" />
         <div className={styles.selectedItem}>{activeItem?.label}</div>
       </button>
-      <div className={clsx(styles.items, { [styles.hideItems]: !menuOpen })}>
+      <div className={clsx(
+        styles.items,
+        { [styles.centered]: centered },
+        { [styles.hideItems]: !menuOpen })
+      }>
         {
           items.map((item) => (
             <Link

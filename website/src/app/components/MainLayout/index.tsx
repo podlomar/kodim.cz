@@ -46,7 +46,7 @@ const MainLayout = async ({ showBrand = true, children }: Props): Promise<JSX.El
           <div>
             <p><a href="/osobni-udaje">Ochrana osobních údajů</a></p>
             <p><strong>Cookies</strong></p>
-            <p>Tento web používá pouze nezbytné cookies pro správnou funkčnost přihlášení. Používáním webu souhlasíte s jejich využívánímn. Nepoužíváme žádné sledovací ani analytické cookies.</p>
+            <p>Tento web používá pouze nezbytné cookies pro správnou funkčnost přihlášení. Používáním webu souhlasíte s jejich využíváním. Nepoužíváme žádné sledovací ani analytické cookies.</p>
           </div>
           <div>
             <p><strong>Copyright &copy; 2024 Kódím.cz. Všechna práva vyhrazena.</strong></p>
