@@ -36,7 +36,7 @@ export const client = createDirectus('http://directus:8055')
 
 export const userFromApi = (apiUser: Record<string, any>): User => {
   const accessRules = apiUser.groups.reduce((acc: string[], group: any) => {
-    const ruleObjects = group.Groups_id.accessRules;
+    const ruleObjects = group.Groups_id?.accessRules ?? null;
     if (ruleObjects === null) {
       return acc;
     }
@@ -55,10 +55,12 @@ export const userFromApi = (apiUser: Record<string, any>): User => {
       ? null
       : `${process.env.DIRECTUS_URL}/assets/${apiUser.avatar}`,
     accessRules,
-    groups: apiUser.groups.map((group: any) => ({
-      id: group.Groups_id.id,
-      name: group.Groups_id.name,
-    })),
+    groups: apiUser.groups
+      .filter((group: any) => group.Groups_id !== null)
+      .map((group: any) => ({
+        id: group.Groups_id.id,
+        name: group.Groups_id.name,
+      })),
   };
 }
 
@@ -74,6 +76,7 @@ export const fetchUser = async (id: string): Promise<User | null> => {
     );
     return userFromApi(apiUser);
   } catch (error) {
+    console.error('fetchUser error', error);
     return null;
   }
 };

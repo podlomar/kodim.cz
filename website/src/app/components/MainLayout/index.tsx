@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import Brand from 'app/components/Brand';
 import styles from './styles.module.scss';
 import { session } from 'app/session';
-import Icon from 'app/components/Icon';
 
 interface Props {
   showBrand?: boolean;
