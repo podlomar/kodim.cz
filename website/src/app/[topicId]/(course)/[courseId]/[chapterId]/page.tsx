@@ -70,9 +70,9 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
         style={{ backgroundImage: `url(/img/${course.topic}-mask.svg)` }}
       >
         <img
-          className={styles.icon}
-          src={course.image}
+          src={course.image ?? '/img/course.svg'}
           alt="Course icon"
+          className={styles.icon}
         />
         <div className={styles.intro}>
           <h1 className={styles.title}>{course.title}</h1>

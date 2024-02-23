@@ -15,7 +15,11 @@ const CourseCard = ({ course }: Props): JSX.Element => {
         className={styles.banner}
         style={{ backgroundImage: `url(/img/${course.topic}-mask.svg)` }}
       >
-        <img src={course.image} alt="Course icon" className={styles.icon} />        
+        <img
+          src={course.image ?? '/img/course.svg'}
+          alt="Course icon"
+          className={styles.icon}
+        />
         <h2 className={styles.title}>{course.title}</h2>
       </div>
       <div className={styles.body}>

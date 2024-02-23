@@ -9,9 +9,12 @@ export const POST = async (req: Request) => {
   const repoUrl = body.repository.clone_url;
 
   const result = await cms().reindexFromRepo(repoUrl, branch);
+  if (result.status === 'error') {
+    if (result.code === 'not-found' || result.code === 'no-such-repo') {
+      return new NextResponse(result.code, { status: 404 });
+    }
 
-  if (result === 'not-found') {
-    return new NextResponse('Not found', { status: 404 });
+    return new NextResponse(result.error, { status: 500 });
   }
 
   return NextResponse.json(result);
