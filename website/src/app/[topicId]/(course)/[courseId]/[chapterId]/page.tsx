@@ -82,7 +82,7 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
       { course.name === 'zaklady-ts' && (
         <>
           <div className={styles.courseInfo}>
-            <div>
+            <div className={styles.courseInfoItem}>
               <h2>Obsah kurzu</h2>
               <p>Typescript je jeden z nejpoužívanějších jazyků pro vývoj webových aplikací jak na frontendu, tak na backendu. Jde o rozšíření jazyka JavaScript o možnost definovat a kontrolovat datové typy podobně jako v jazycích C# nebo Java.</p>
 
@@ -94,13 +94,14 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
                 <li>nastavení Typescriptového projektu,</li>
                 <li>jak použít Typescript v Reactu.</li>
               </ul>
-
+            </div>
+            <div className={styles.courseInfoItem}>
               <h2>Průběh</h2>
               <p>Kurz probíhá <strong>on-line</strong>. Je rozdělen do 6 lekcí, každá lekce probíhá jednou týdně, vždy od 18:00 do 20:00. V průběhu každé lekce se budeme věnovat jak výkladu tak praktickým cvičením.</p>
 
               <p>Kapacita kurzu je 12 účastníků abychom i v on-line odkázali udržet příjemné prostředí.</p>
             </div>
-            <div className={styles.courseRuns}>
+            <div className={styles.courseInfoItem}>
               <h2>Cena: 3 000 kč</h2>
               
               <p>Cena zahrnuje:</p>
@@ -109,17 +110,18 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
                 <li>přístup k podrobným materiálům na webu,</li>
                 <li>přístup na společný Slack s možností klást dotazy.</li>
               </ul>
-
+            </div>
+            <div className={styles.courseInfoItem}>
               <h2>Přihlášky</h2>
               <p>Aktuální termíny kurzu:</p>
               <ul>
-                <li><strong>vyprodáno</strong>: čtvrtky od 15. února 2024, lektoruje Martin Podloucký</li>
-                <li>úterky od 20. února, lektoruje Eva Machová</li>
+                <li><strong>právě běží</strong>: čtvrtky od 15. února 2024, lektoruje Martin Podloucký</li>
+                <li><strong>právě běží</strong>: úterky od 20. února, lektoruje Eva Machová</li>
               </ul>
 
-              <p>
+              {/* <p>
                 <a href="https://forms.gle/2vDy6sYrrhTioEP89" className={styles.register}>Přihlásit se na kurz</a>
-              </p>
+              </p> */}
             </div>
           </div>
           <div className={styles.lessonsHeading}>
