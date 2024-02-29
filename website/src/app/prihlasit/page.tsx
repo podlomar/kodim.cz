@@ -7,7 +7,13 @@ import css from './styles.module.scss';
 
 export const dynamic = 'force-dynamic';
 
-const LoginPage = async (): Promise<JSX.Element> => {
+interface Props {
+  searchParams: {
+    returnUrl?: string;
+  };
+}
+
+const LoginPage = async ({ searchParams: { returnUrl = '/' }}: Props): Promise<JSX.Element> => {
   const { user } = await session();
 
   if (user !== null) {
@@ -26,7 +32,7 @@ const LoginPage = async (): Promise<JSX.Element> => {
             <div className={css.providerLink}>
               <Icon name="github" size="1.5rem" />
               <a
-                href={`${process.env.DIRECTUS_URL}/auth/login/github?redirect=${process.env.WEBSITE_URL}/prihlasit`}
+                href={`${process.env.DIRECTUS_URL}/auth/login/github?redirect=${process.env.WEBSITE_URL}${returnUrl}`}
               >
                 Přihlásit přes GitHub
               </a>
