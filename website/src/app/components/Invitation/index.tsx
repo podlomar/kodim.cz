@@ -20,7 +20,7 @@ const Invitation = ({ group, user }: Props) => {
   if (user === null) {
     return (
       <p>
-        Pro vstup do skupiny <strong>{group.name}</strong> se nejprve musíte <a href={`/prihlasit?returnUrl=/pozvanky/${group.id}`}>přihlásit</a>.
+        Pro vstup do skupiny <strong>{group.name}</strong> se nejprve musíte <a href={`/prihlasit?returnUrl=${window.location.pathname}`}>přihlásit</a>.
       </p>
     );
   }

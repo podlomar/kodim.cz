@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import pkg from '../../../../package.json';
 import clsx from 'clsx';
 import Brand from 'app/components/Brand';
@@ -11,6 +12,7 @@ interface Props {
 
 const MainLayout = async ({ showBrand = true, children }: Props): Promise<JSX.Element> => {
   const { user } = await session();
+  const pathname = headers().get('x-pathname');
   
   return (
     <>
@@ -19,7 +21,7 @@ const MainLayout = async ({ showBrand = true, children }: Props): Promise<JSX.El
         <div className={styles.user}>
           {user === null ? (
             <div className={styles.login}>
-              <a href="/prihlasit">Přihlásit</a>
+              <a href={`/prihlasit?returnUrl=${pathname ?? '/'}`}>Přihlásit</a>
             </div>
           ) : (
             <div className={styles.profile}>
