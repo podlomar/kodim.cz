@@ -11,6 +11,7 @@ import styles from './styles.module.scss';
 import { session } from 'app/session';
 import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 import ReactHast from 'app/components/ReactHast';
+import Icon from 'app/components/Icon';
 
 export const dynamic = 'force-dynamic';
 
@@ -80,24 +81,26 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
           <p className={styles.lead}>{course.lead}</p>
         </div>
       </div>
-      { course.intro !== null && (
-        <>
-          <div className={styles.courseInfo}>
-            { course.intro.items.map((item) => (
-              <div className={styles.courseInfoItem}>
-                <ReactHast root={item} />
-              </div>
-            ))}
-          </div>
-          {/* <p>
-             <a href="https://forms.gle/2vDy6sYrrhTioEP89" className={styles.register}>Přihlásit se na kurz</a>
-            </p> */}
-          { chapter.name === 'lekce' && course.intro !== null && course.intro.items.length > 0 && (
-            <div className={styles.lessonsHeading}>
-              <h2>Lekce</h2>
+      { course.organization === 'czechitas' && (
+        <div className={styles.czechitasIntro}>
+          <Icon className={styles.czechitasIcon} name="czechitas" size="5rem" />
+          <p>Tento kurz je vytvořen pro neziskovou organizaci <a href="https://www.czechitas.cz">Czechitas</a>, jejíž cílem je otevřít ženám svět informačních technologií. Na kurz je možné se přihlásit na <a href={course.outboundLink ?? "https://www.czechitas.cz"}>webu Czechitas</a>.</p>
+        </div>
+      )}
+      <div className={styles.courseInfo}>
+        { course.intro !== null && (
+          course.intro.items.map((item) => (
+            <div className={styles.courseInfoItem}>
+              <ReactHast root={item} />
             </div>
-          )}
-        </>
+          ))
+          /* <p>
+            <a href="https://forms.gle/2vDy6sYrrhTioEP89" className={styles.register}>Přihlásit se na kurz</a>
+          </p> */
+        )}
+      </div>
+      { chapter.name === 'lekce' && course.intro !== null && course.intro.items.length > 0 && (
+        <h2 className={styles.lessonsHeading}>Lekce</h2>
       )}
       {
         chapter.name === 'lekce'

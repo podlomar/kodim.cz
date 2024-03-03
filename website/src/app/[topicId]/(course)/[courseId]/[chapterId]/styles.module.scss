@@ -49,6 +49,21 @@
   margin: 0;
 }
 
+.czechitasIntro {
+  @include padded;
+  max-width: 40rem;
+  margin: 2rem auto 1rem auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.czechitasIcon {
+  margin-top: 1rem;
+  color: #692D8B;
+  flex-shrink: 0;
+}
+
 .courseInfo {
   @include padded;
   @include breakpoint-md {
