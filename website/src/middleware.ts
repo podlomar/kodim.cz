@@ -89,6 +89,10 @@ export const middleware = async (request: NextRequest): Promise<NextResponse> =>
     const response = NextResponse.next();
 
     // This is a hack to pass the current pathname to pages because fucking Next.js doesn't provide it
+    console.log('DIAGNOSTIC:', request.url);
+    console.log('DIAGNOSTIC:', request.headers.get('x-forwarded-for'));
+    console.log('DIAGNOSTIC:', request.headers.get('x-forwarded-host'));
+
     response.headers.set('x-pathname', new URL(request.url).pathname);
 
     if (session.status === 'invalid') {
