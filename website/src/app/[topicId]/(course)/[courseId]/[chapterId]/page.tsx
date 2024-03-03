@@ -80,7 +80,7 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
           <p className={styles.lead}>{course.lead}</p>
         </div>
       </div>
-      { course.intro && (
+      { course.intro !== null && (
         <>
           <div className={styles.courseInfo}>
             { course.intro.items.map((item) => (
@@ -92,9 +92,11 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
           {/* <p>
              <a href="https://forms.gle/2vDy6sYrrhTioEP89" className={styles.register}>Přihlásit se na kurz</a>
             </p> */}
-          <div className={styles.lessonsHeading}>
-            <h2>Lekce</h2>
-          </div>
+          { chapter.name === 'lekce' && course.intro !== null && course.intro.items.length > 0 && (
+            <div className={styles.lessonsHeading}>
+              <h2>Lekce</h2>
+            </div>
+          )}
         </>
       )}
       {
