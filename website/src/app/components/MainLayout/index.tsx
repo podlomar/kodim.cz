@@ -13,7 +13,6 @@ interface Props {
 const MainLayout = async ({ showBrand = true, children }: Props): Promise<JSX.Element> => {
   const { user } = await session();
   const pathname = headers().get('x-pathname');
-  
   return (
     <>
       <header className={clsx(styles.header, 'container')}>

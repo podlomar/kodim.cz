@@ -41,75 +41,76 @@ interface StaleSession {
 type StoredSession = NoneSession | InvalidSession | ValidSession | StaleSession;
 
 const loadSession = async (request: NextRequest): Promise<StoredSession> => {
-  const sessionCookie = request.cookies.get('session')?.value;
-  const refreshToken = request.cookies.get('directus_refresh_token')?.value;
-  
-  if (refreshToken === undefined) {
-    if (sessionCookie !== undefined) {
-      return invalidSession;
-    }
+  try {
+    const sessionCookie = request.cookies.get('session')?.value;
+    const refreshToken = request.cookies.get('directus_refresh_token')?.value;
+    
+    if (refreshToken === undefined) {
+      if (sessionCookie !== undefined) {
+        return invalidSession;
+      }
 
-    return noneSession;
-  }
-  
-  const sessionData = sessionCookie === undefined ? null : decryptSessionData(sessionCookie);
-  if (sessionData === null || sessionData.refreshToken !== refreshToken) {
-    const authenticationData = await fetchAuthData(refreshToken);  
-    if (authenticationData === null) {
-      return invalidSession;
+      return noneSession;
     }
+    
+    const sessionData = sessionCookie === undefined ? null : decryptSessionData(sessionCookie);
+    if (sessionData === null || sessionData.refreshToken !== refreshToken) {
+      const authenticationData = await fetchAuthData(refreshToken);  
+      if (authenticationData === null) {
+        return invalidSession;
+      }
 
-    if (authenticationData.access_token === null || authenticationData.refresh_token === null) {
-      return invalidSession;
-    }
+      if (authenticationData.access_token === null || authenticationData.refresh_token === null) {
+        return invalidSession;
+      }
 
-    const userId = await fetchCurrentUserId(authenticationData.access_token);  
-    if (userId === null) {
-      return invalidSession;
+      const userId = await fetchCurrentUserId(authenticationData.access_token);  
+      if (userId === null) {
+        return invalidSession;
+      }
+
+      return {
+        status: 'stale',
+        data: {
+          userId,
+          refreshToken: authenticationData.refresh_token,
+        }
+      };
     }
 
     return {
-      status: 'stale',
-      data: {
-        userId,
-        refreshToken: authenticationData.refresh_token,
-      }
+      status: 'valid',
+      data: sessionData,
     };
+  } catch (error: any) {
+    if ('errors' in error) {
+      console.error('SESSION ERROR:', error.errors[0]);
+    } else {
+      console.error('SESSION ERROR:', error);
+    }
+    
+    return invalidSession;
   }
-
-  return {
-    status: 'valid',
-    data: sessionData,
-  };
 };
 
 export const middleware = async (request: NextRequest): Promise<NextResponse> => {
-  try {
-    const session = await loadSession(request);
-    const response = NextResponse.next();
+  const session = await loadSession(request);
+  const response = NextResponse.next();
 
-    // This is a hack to pass the current pathname to pages because fucking Next.js doesn't provide it
-    console.log('DIAGNOSTIC:', request.url);
-    console.log('DIAGNOSTIC:', request.headers.get('x-forwarded-for'));
-    console.log('DIAGNOSTIC:', request.headers.get('x-forwarded-host'));
+  // This is a hack to pass the current pathname to pages because fucking Next.js doesn't provide it
+  response.headers.set('x-pathname', new URL(request.url).pathname);
 
-    response.headers.set('x-pathname', new URL(request.url).pathname);
-
-    if (session.status === 'invalid') {
-      response.cookies.delete('session');
-      response.headers.set('x-session', 'invalid');
-    } else if (session.status === 'stale') {
-      const encryptedSession = encryptSessionData(session.data);
-      response.cookies.set('session', encryptedSession);
-      response.cookies.set('directus_refresh_token', session.data.refreshToken);
-      response.headers.set('x-session', encryptedSession);
-    }
-
-    return response;
-  } catch (error) {
-    console.error(error);
-    return NextResponse.next();
+  if (session.status === 'invalid') {
+    response.cookies.delete('session');
+    response.headers.set('x-session', 'invalid');
+  } else if (session.status === 'stale') {
+    const encryptedSession = encryptSessionData(session.data);
+    response.cookies.set('session', encryptedSession);
+    response.cookies.set('directus_refresh_token', session.data.refreshToken);
+    response.headers.set('x-session', encryptedSession);
   }
+
+  return response;
 };
 
 export const config = {
