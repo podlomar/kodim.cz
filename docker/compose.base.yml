@@ -45,13 +45,13 @@ services:
       ADMIN_PASSWORD: '${ADMIN_PASSWORD}'
       PUBLIC_URL: '${DIRECTUS_URL}'
 
-      EMAIL_FROM: 'noreply@kodim.cz'
-      EMAIL_TRANSPORT: 'smtp'
-      EMAIL_SMTP_HOST: 'smtp.forpsi.com'
-      EMAIL_SMTP_PORT: 587
-      EMAIL_SMTP_USER: '${ADMIN_EMAIL}'
-      EMAIL_SMTP_PASSWORD: '${ADMIN_SMTP_PASSWORD}}'
-      EMAIL_SMTP_SECURE: 'false'
+      # EMAIL_FROM: 'noreply@kodim.cz'
+      # EMAIL_TRANSPORT: 'smtp'
+      # EMAIL_SMTP_HOST: 'smtp.forpsi.com'
+      # EMAIL_SMTP_PORT: 587
+      # EMAIL_SMTP_USER: '${ADMIN_EMAIL}'
+      # EMAIL_SMTP_PASSWORD: '${ADMIN_SMTP_PASSWORD}}'
+      # EMAIL_SMTP_SECURE: 'false'
 
       AUTH_PROVIDERS: 'github,discord'
       
