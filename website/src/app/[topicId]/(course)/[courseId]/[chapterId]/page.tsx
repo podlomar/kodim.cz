@@ -94,9 +94,16 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
               <ReactHast root={item} />
             </div>
           ))
-          /* <p>
-            <a href="https://forms.gle/2vDy6sYrrhTioEP89" className={styles.register}>Přihlásit se na kurz</a>
-          </p> */
+        )}
+        { course.organization === 'kodim' && (
+          <div className={styles.courseInfoItem}>
+            <a 
+              href={`/odber?topic=${course.title}`}
+              className={styles.bigBtn}
+            >
+              Mám zájem o tento kurz
+            </a>
+          </div>
         )}
       </div>
       { chapter.name === 'lekce' && course.intro !== null && course.intro.items.length > 0 && (
