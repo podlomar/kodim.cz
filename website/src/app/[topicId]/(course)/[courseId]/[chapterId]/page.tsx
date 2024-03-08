@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 import { session } from 'app/session';
 import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 import ReactHast from 'app/components/ReactHast';
-import Icon from 'app/components/Icon';
+import CzechitasIntro from 'app/components/CzechitasIntro';
 
 export const dynamic = 'force-dynamic';
 
@@ -81,11 +81,8 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
           <p className={styles.lead}>{course.lead}</p>
         </div>
       </div>
-      { course.organization === 'czechitas' && (
-        <div className={styles.czechitasIntro}>
-          <Icon className={styles.czechitasIcon} name="czechitas" size="5rem" />
-          <p>Tento kurz je vytvořen pro neziskovou organizaci <a href="https://www.czechitas.cz">Czechitas</a>, jejíž cílem je otevřít ženám svět informačních technologií. Na kurz je možné se přihlásit na <a href={course.outboundLink ?? "https://www.czechitas.cz"}>webu Czechitas</a>.</p>
-        </div>
+      {course.organization === 'czechitas' && (
+        <CzechitasIntro course outboundLink={course.outboundLink} />
       )}
       <div className={styles.courseInfo}>
         { course.intro !== null && (
@@ -99,7 +96,7 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
           <div className={styles.courseInfoItem}>
             <a 
               href={`/odber?topic=${course.title}`}
-              className={styles.bigBtn}
+              className="btnBig"
             >
               Mám zájem o tento kurz
             </a>
@@ -132,7 +129,7 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
             </>
           )
       }
-    </div>      
+    </div>
   );
 };
 

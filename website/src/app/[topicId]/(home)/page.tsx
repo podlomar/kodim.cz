@@ -7,6 +7,7 @@ import Menu from 'app/components/Menu';
 import MainLayout from 'app/components/MainLayout';
 import styles from './styles.module.scss';
 import { session } from  'app/session';
+import CzechitasIntro from 'app/components/CzechitasIntro';
 
 export const dynamic = 'force-dynamic';
 
@@ -51,11 +52,19 @@ const HomePage = async ({ params }: Props): Promise<JSX.Element> => {
           activeKey={division.name}
           centered
         />
-        <div className={styles.divisionIntro} />
-        
+        {division.name === 'czechitas'
+          ? <CzechitasIntro /> 
+          : <div className={styles.divisionIntro} />
+        }
         {division.topics.map((topic) => (
           <TopicView key={topic.name} topic={topic} />
         ))}
+        <div className={styles.newsletter}>
+          <p>
+            Přihlaste se k odběru novinek a nezmeškejte žádný nový kurz, článek nebo akci.
+          </p>
+          <a href="/odber" className="btnBig">Přihlásit k odběru</a>
+        </div>
       </div>
     </MainLayout>
   );

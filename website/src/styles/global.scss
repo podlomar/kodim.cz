@@ -99,3 +99,21 @@ input[type="checkbox"] {
     cursor: not-allowed;
   }
 }
+
+.btnBig {
+  display: block;
+  margin-top: 1rem;
+  background-color: $palette-1;
+  color: white;
+  text-align: center;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 300ms;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: 300ms;
+  }
+}
