@@ -6,6 +6,7 @@ import {
   readItems,
   readItem,
   createItem,
+  updateItem,
 } from '@directus/sdk';
 import { CourseDef, TopicSource } from 'kodim-cms/esm/content/division';
 
@@ -144,5 +145,32 @@ export const addToGroup = async (userId: string, groupId: string): Promise<void>
   client.request(createItem('Groups_directus_users', {
     Groups_id: groupId,
     directus_users_id: userId,
+  }));
+}
+
+export const addSubscription = async (email: string, topic: string | null): Promise<void> => {
+  let result: Record<string, any> | null = null;
+  try {
+    result = await client.request(
+      readItem('Subscriptions', email),
+    );
+  } catch {
+    result = null;
+  }
+  
+  if (result === null) {
+    await client.request(createItem('Subscriptions', {
+      email,
+      topics: topic,
+    }));
+    return;
+  }
+
+  const newTopics = result.topics === null
+    ? topic
+    : result.topics + (topic === null ? '' : `| ${topic}`);
+
+  await client.request(updateItem('Subscriptions', email, {
+    topics: newTopics,
   }));
 }

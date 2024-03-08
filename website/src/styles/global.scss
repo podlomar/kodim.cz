@@ -52,7 +52,7 @@ textarea {
   line-height: 1.5;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
-  border: 1px solid $palette-1;
+  border: 2px solid $palette-5;
   background-color: white;
   color: $color-text;
   transition: border-color 0.2s ease-in-out;
@@ -63,6 +63,16 @@ input[type="checkbox"] {
   margin-right: 0.5rem;
 }
 
+.formFields {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.formFooter {
+  text-align: right;
+}
 
 .btn {
   font-size: 1rem;
