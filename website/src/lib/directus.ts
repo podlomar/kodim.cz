@@ -7,6 +7,7 @@ import {
   readItem,
   createItem,
   updateItem,
+  deleteItem,
 } from '@directus/sdk';
 import { CourseDef, TopicSource } from 'kodim-cms/esm/content/division';
 
@@ -168,9 +169,13 @@ export const addSubscription = async (email: string, topic: string | null): Prom
 
   const newTopics = result.topics === null
     ? topic
-    : result.topics + (topic === null ? '' : `| ${topic}`);
+    : result.topics + (topic === null ? '' : ` | ${topic}`);
 
   await client.request(updateItem('Subscriptions', email, {
     topics: newTopics,
   }));
 }
+
+export const deleteSubscription = async (email: string): Promise<void> => {
+  client.request(deleteItem('Subscriptions', email));
+};
