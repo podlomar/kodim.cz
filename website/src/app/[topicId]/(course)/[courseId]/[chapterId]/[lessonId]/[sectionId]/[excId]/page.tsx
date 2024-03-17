@@ -8,11 +8,11 @@ import { MenuItem } from 'app/components/Menu';
 import Breadcrumbs from 'app/components/Breadcrumbs';
 import LessonBanner from 'app/components/LessonBanner';
 import ReactHast from 'app/components/ReactHast';
-import ArticleContent from 'app/components/ArticleContent/intex';
 import ExerciseHead from 'app/components/ExerciseHead';
 import Solution from 'app/components/Solution';
 import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 import { session } from 'app/session';
+import ArticleView from 'app/components/ArticleView/intex';
 
 export const dynamic = 'force-dynamic';
 
@@ -90,7 +90,7 @@ const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
     <div className="container">
       <Breadcrumbs crumbs={exercise.crumbs} />
       <LessonBanner lesson={lesson} />
-      <ArticleContent 
+      <ArticleView
         navItems={navItems}
         activeNavKey={sectionId}
         head={<ExerciseHead exercise={exercise} link={false} />}
@@ -99,7 +99,7 @@ const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
       >
         <ReactHast root={exercise.assign} />
         {exercise.solution !== 'none' && <Solution root={exercise.solution} />}
-      </ArticleContent>
+      </ArticleView>
     </div>
   );
 };
