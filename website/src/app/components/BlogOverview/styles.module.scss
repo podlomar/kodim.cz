@@ -1,0 +1,21 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.articles {
+  @include padded;
+  
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 2rem;
+
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+
+  @include breakpoint-md {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include breakpoint-lg {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

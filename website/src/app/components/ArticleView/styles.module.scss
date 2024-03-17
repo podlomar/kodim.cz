@@ -1,0 +1,20 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.articleView {
+  display: grid;
+  // NOTE: minmax(0, 1fr) is a bit hacky to prevent pre tags from overflowing
+  // SEE: https://css-tricks.com/preventing-a-grid-blowout/
+  
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  grid-gap: 1rem;
+  align-items: stretch;
+
+  padding-top: 0.5rem;
+
+  @include breakpoint-lg {
+    grid-template-columns: 20rem minmax(0, 1fr);
+    grid-template-rows: auto;
+  }
+}

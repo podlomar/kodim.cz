@@ -70,8 +70,10 @@ export const initiateCms = async () => {
     }
   }
   
-  return KodimCms.load({ 
-    divisions: [kodimDivision, czechitasDivision],
+  return KodimCms.load({
+    kodimCourses: kodimDivision,
+    czechitasCourses: czechitasDivision,
+    blog: '/content/blog',
   });
 }
 

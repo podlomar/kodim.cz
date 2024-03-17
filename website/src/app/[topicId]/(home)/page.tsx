@@ -1,13 +1,14 @@
 import { cms } from 'lib/cms';
 import { notFound } from 'next/navigation';
 import heroImg from './img/hero.svg';
-import TopicView from 'app/components/TopicView';
 import Brand from 'app/components/Brand';
-import Menu from 'app/components/Menu';
+import Menu, { MenuItem } from 'app/components/Menu';
 import MainLayout from 'app/components/MainLayout';
 import styles from './styles.module.scss';
 import { session } from  'app/session';
-import CzechitasIntro from 'app/components/CzechitasIntro';
+import CoursesOverview from 'app/components/CoursesOverview';
+import BlogOverview from 'app/components/BlogOverview';
+import InfoBox from 'app/components/InfoBox';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,6 +31,12 @@ const HomePage = async ({ params }: Props): Promise<JSX.Element> => {
     notFound();
   }
 
+  const menuItems: MenuItem[] = [
+    { key: 'kurzy', label: 'Kurzy', href: '/kurzy' },
+    { key: 'czechitas', label: 'Czechitas', href: '/czechitas' },
+    { key: 'blog', label: 'Blog', href: '/blog' },
+  ];
+
   return (
     <MainLayout showBrand={false}>
       <div className="container">
@@ -44,27 +51,20 @@ const HomePage = async ({ params }: Props): Promise<JSX.Element> => {
         </div>
 
         <Menu
-          items={root.divisions.map((division) => ({
-            key: division.name,
-            label: division.title,
-            href: division.path,
-          }))}
+          items={menuItems}
           activeKey={division.name}
           centered
         />
-        {division.name === 'czechitas'
-          ? <CzechitasIntro /> 
-          : <div className={styles.divisionIntro} />
-        }
-        {division.topics.map((topic) => (
-          <TopicView key={topic.name} topic={topic} />
-        ))}
-        <div className={styles.newsletter}>
+        
+        { division.type === 'courses' && <CoursesOverview division={division} /> }
+        { division.type === 'blog' && <BlogOverview division={division} /> }
+        
+        <InfoBox icon="newsletter">
           <p>
             Přihlaste se k odběru novinek a nezmeškejte žádný nový kurz, článek nebo akci.
           </p>
           <a href="/odber" className="btnBig">Přihlásit k odběru</a>
-        </div>
+        </InfoBox>
       </div>
     </MainLayout>
   );

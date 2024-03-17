@@ -6,11 +6,11 @@ import { agnosticAgent, cms } from 'lib/cms';
 import { Lesson } from 'kodim-cms/esm/content/lesson';
 import LessonBanner from 'app/components/LessonBanner';
 import SectionContent from 'app/components/SectionContent';
-import ArticleContent from 'app/components/ArticleContent/intex';
 import { MenuItem } from 'app/components/Menu';
 import Breadcrumbs from 'app/components/Breadcrumbs';
 import { session } from 'app/session';
 import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
+import ArticleView from 'app/components/ArticleView/intex';
 
 export const dynamic = 'force-dynamic';
 
@@ -85,14 +85,14 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
     <div className="container">
       <Breadcrumbs crumbs={section.crumbs.slice(0, -1)} />
       <LessonBanner lesson={lesson} />
-      <ArticleContent
+      <ArticleView
         navItems={navItems}
         activeNavKey={section.name}
         next={section.next?.path ?? null}
         prev={section.prev?.path ?? null}
       >
         <SectionContent section={section} />
-      </ArticleContent>
+      </ArticleView>
     </div>
   );
 };

@@ -1,0 +1,82 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.box {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  &Head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  &Title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding-bottom: 0.25rem;
+  }
+  
+  &Icon {
+    flex: 0 0 auto;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 0.5rem;
+  }
+  
+  &Body {
+    background-color: #ddd;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.warningType {
+  background-color: #F75314;
+  color: white;
+}
+
+.warningIcon {
+  background-image: url(./img/warn.svg);
+}
+
+.questionType {
+  background-color: $palette-1;
+  color: white;
+}
+
+.questionIcon {
+  background-image: url(./img/question.svg);
+}
+
+.tipType {
+  background-color: $palette-1;
+  color: white;
+}
+
+.tipIcon {
+  background-image: url(./img/tip.svg);
+}
+
+.noteType {
+  background-color: $palette-1;
+  color: white;
+}
+
+.noteIcon {
+  background-image: url(./img/note.svg);
+}
+
+.rememberType {
+  background-color: $palette-1;
+  color: white;
+}
+
+.rememberIcon {
+  background-image: url(./img/remember.svg);
+}
+

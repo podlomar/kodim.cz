@@ -7,41 +7,8 @@
    viewBox="0 0 1024 1024"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   sodipodi:docname="icon-template.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview7"
-     pagecolor="#505050"
-     bordercolor="#ffffff"
-     borderopacity="1"
-     inkscape:pageshadow="0"
-     inkscape:pageopacity="0"
-     inkscape:pagecheckerboard="false"
-     inkscape:document-units="px"
-     showgrid="true"
-     units="px"
-     width="1024px"
-     inkscape:snap-nodes="false"
-     inkscape:snap-bbox="true"
-     inkscape:bbox-nodes="true"
-     inkscape:zoom="0.22627417"
-     inkscape:cx="293.89126"
-     inkscape:cy="700.47766"
-     inkscape:window-width="1280"
-     inkscape:window-height="656"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1">
-    <inkscape:grid
-       type="xygrid"
-       id="grid824"
-       empspacing="4" />
-  </sodipodi:namedview>
   <defs
      id="defs2">
     <clipPath
@@ -56,8 +23,6 @@
     </clipPath>
   </defs>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
      id="layer1">
     <rect
        style="fill:#fffdfc;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
@@ -79,12 +44,10 @@
     <path
        style="fill:none;stroke:#2c3e66;stroke-width:60;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 446,862 H 862"
-       id="path45368"
-       sodipodi:nodetypes="cc" />
+       id="path45368" />
     <path
        style="fill:none;stroke:#2c3e66;stroke-width:60;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 702,702 H 862"
-       id="path46090"
-       sodipodi:nodetypes="cc" />
+       id="path46090" />
   </g>
 </svg>

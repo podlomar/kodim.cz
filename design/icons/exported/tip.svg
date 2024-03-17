@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1024"
+   height="1024"
+   viewBox="0 0 1024 1024"
+   version="1.1"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath19332">
+      <circle
+         style="fill:#190d4d;fill-opacity:1;stroke-width:4.36364;stroke-linecap:round;stroke-linejoin:round"
+         id="circle19334"
+         cx="544"
+         cy="384"
+         r="144" />
+    </clipPath>
+  </defs>
+  <g
+     id="layer1">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#e5e5e5;stroke-width:4;stroke-linecap:round;stroke-linejoin:round"
+       id="rect39934"
+       width="1024"
+       height="1024"
+       x="2"
+       y="2"
+       rx="9.2433998e-05"
+       ry="0.000124069" />
+    <path
+       id="path40124"
+       style="fill:#2c3e66;fill-opacity:1;stroke-width:90;stroke-linecap:round;stroke-linejoin:round"
+       d="m 514,130 c -159.058,0 -288,96.942 -288,256 0,160 96,160 160,256 H 642 C 706,546 802,546 802,386 802,226.942 673.058,130 514,130 Z M 386,706 v 64 h 256 v -64 z m 0,128 v 64 h 256 v -64 z" />
+  </g>
+</svg>

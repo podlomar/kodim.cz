@@ -2,14 +2,14 @@ import { ReactNode, createElement, Fragment } from 'react';
 import { Root, ElementContent } from 'hast';
 import Figure from './components/Figure';
 import Term from './components/Term';
-import Warning from './components/Warning';
+import Box from './components/Box';
 
 type ComponentMap = { [TagName: string]: React.FunctionComponent<any> };
 
 const componentMap: ComponentMap = {
   'fig': Figure,
   'term': Term,
-  'warn': Warning,
+  'box': Box,
 };
 
 const processElementContent = (elementContent: ElementContent): ReactNode => {

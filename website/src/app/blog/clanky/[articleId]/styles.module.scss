@@ -1,0 +1,30 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.article {
+  max-width: 48rem;
+  margin: 1rem auto;
+}
+
+.articleLead {
+  font-style: italic;
+}
+
+.articleInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.articleAuthor {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.authorAvatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}

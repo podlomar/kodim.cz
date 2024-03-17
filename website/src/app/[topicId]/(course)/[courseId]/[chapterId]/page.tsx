@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 import { session } from 'app/session';
 import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 import ReactHast from 'app/components/ReactHast';
-import CzechitasIntro from 'app/components/CzechitasIntro';
+import CzechitasInfo from 'app/components/CzechitasInfo';
 
 export const dynamic = 'force-dynamic';
 
@@ -82,7 +82,7 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
         </div>
       </div>
       {course.organization === 'czechitas' && (
-        <CzechitasIntro course outboundLink={course.outboundLink} />
+        <CzechitasInfo course outboundLink={course.outboundLink} />
       )}
       <div className={styles.courseInfo}>
         { course.intro !== null && (

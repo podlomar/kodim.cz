@@ -1,0 +1,36 @@
+@import "styles/variables.scss";
+
+.title {
+  margin: 0 0 1rem 0;
+  line-height: 1.25;
+  font-size: 1.2rem;
+  color: $color-title;
+}
+
+a.titleLink {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+  color: #666;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.authorAvatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
