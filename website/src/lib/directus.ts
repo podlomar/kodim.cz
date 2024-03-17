@@ -9,7 +9,7 @@ import {
   updateItem,
   deleteItem,
 } from '@directus/sdk';
-import { CourseDef, TopicSource } from 'kodim-cms/esm/content/division';
+import { CourseDef, TopicSource } from 'kodim-cms/esm/content/courses-division';
 
 export interface User {
   id: string;

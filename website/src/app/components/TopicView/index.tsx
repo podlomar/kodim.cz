@@ -1,14 +1,14 @@
 import React from "react"
 import styles from "./styles.module.scss";
 import CourseCard from "app/components/CourseCard";
-import { Topic } from "kodim-cms/esm/content/division";
+import { Topic } from "kodim-cms/esm/content/courses-division";
 
 interface Props {
   topic: Topic,
 }
 
 const TopicView = ({ topic }: Props): JSX.Element => {
-  const { name, title, lead, courses } = topic;
+  const { name, title, lead } = topic;
   
   return (
     <div>

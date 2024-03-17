@@ -1,6 +1,6 @@
 import { KodimCms } from 'kodim-cms/esm/index.js';
 import { fetchTopics } from './directus';
-import { CoursesDivision, CoursesDivisionSource } from 'kodim-cms/esm/content/division';
+import { CoursesDivisionSource } from 'kodim-cms/esm/content/courses-division';
 
 // const rootSource: RootSource = {
 //   topics: [
@@ -38,13 +38,11 @@ import { CoursesDivision, CoursesDivisionSource } from 'kodim-cms/esm/content/di
 export const initiateCms = async () => {
   const topics = await fetchTopics();
   const kodimDivision: CoursesDivisionSource = {
-    type: 'courses',
     name: 'kurzy',
     title: 'Kurzy',
     topics: [],
   };
   const czechitasDivision: CoursesDivisionSource = {
-    type: 'courses',
     name: 'czechitas',
     title: 'Czechitas',
     topics: [],
