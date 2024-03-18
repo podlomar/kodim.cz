@@ -26,10 +26,7 @@ const BlogArticleCard = ({ article }: Props): JSX.Element => {
               src={article.author.avatar ?? '/img/avatar.svg'}
               alt={article.author.name}
             />
-            {article.author.link === undefined
-              ? <span>{article.author.name}</span>
-              : <a href={article.author.link}>{article.author.name}</a>
-            }
+            <span>{article.author.name}</span>
           </div>
           <span>{articleDate}</span>
         </div>

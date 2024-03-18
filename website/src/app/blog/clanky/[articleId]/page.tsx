@@ -14,6 +14,7 @@ import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 import ReactHast from 'app/components/ReactHast';
 import MainLayout from 'app/components/MainLayout';
 import styles from './styles.module.scss';
+import InfoBox from 'app/components/InfoBox';
 
 export const dynamic = 'force-dynamic';
 
@@ -90,6 +91,12 @@ const BlogArticlePage = async ({ params }: Props): Promise<JSX.Element> => {
             <ReactHast root={article.content} />
           </ArticleContent>
         </div>
+        <InfoBox icon="newsletter">
+          <p>
+            Přihlaste se k odběru novinek a nezmeškejte žádný nový kurz, článek nebo akci.
+          </p>
+          <a href="/odber" className="btnBig">Přihlásit k odběru</a>
+        </InfoBox>
       </div>
     </MainLayout>
   );

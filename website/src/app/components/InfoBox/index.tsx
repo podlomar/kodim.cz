@@ -10,7 +10,7 @@ interface Props {
 const InfoBox = ({ icon, children}: Props): JSX.Element => {
   return (
     <div className={styles.infoBox}>
-      <Icon className={styles.infoIcon} name={icon} size="5rem" />
+      <Icon className={styles.infoIcon} name={icon} size="4rem" />
       <div>
         {children}
       </div>

@@ -34,8 +34,16 @@
        rx="9.2433998e-05"
        ry="0.000124069" />
     <path
-       id="path40124"
-       style="fill:#2c3e66;fill-opacity:1;stroke-width:90;stroke-linecap:round;stroke-linejoin:round"
-       d="m 514,130 c -159.058,0 -288,96.942 -288,256 0,160 96,160 160,256 H 642 C 706,546 802,546 802,386 802,226.942 673.058,130 514,130 Z M 386,706 v 64 h 256 v -64 z m 0,128 v 64 h 256 v -64 z" />
+       style="fill:none;stroke:#2c3e66;stroke-width:80;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 354,866 H 674"
+       id="path28976" />
+    <path
+       style="fill:#2c3e66;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 546,258 386,450 h 96 V 642 L 642,450 h -96 z"
+       id="path29743" />
+    <path
+       id="path26861"
+       style="fill:none;stroke:#2c3e66;stroke-width:80;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 674,738 C 674,652.91227 797.6258,547.45031 797.6258,419.81871 797.6258,292.18712 693.1321,166.3742 514,166.3742 334.8679,166.3742 230.3742,292.18712 230.3742,419.81871 230.3742,547.45031 354,652.91227 354,738 Z" />
   </g>
 </svg>
