@@ -12,6 +12,7 @@ import { session } from 'app/session';
 import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 import ReactHast from 'app/components/ReactHast';
 import CzechitasInfo from 'app/components/CzechitasInfo';
+import CourseRun from 'app/components/CourseRun';
 
 export const dynamic = 'force-dynamic';
 
@@ -94,7 +95,19 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
         )}
         { course.organization === 'kodim' && (
           <div className={styles.courseInfoItem}>
-            <a 
+            { course.name === 'zaklady-ts' && (
+              <>
+                <h2>Termíny</h2>
+                <CourseRun
+                  lecturerName="Martin Podloucký"
+                  lecturerAvatar="https://avatars.githubusercontent.com/u/4608335"
+                  lecturerLink="https://www.linkedin.com/in/martin-podlouck%C3%BD-5b415268"
+                  registerUrl="https://forms.gle/PTbDBc9EzyUp7S4GA"
+                />
+                <p>Nehodí se vám žádny termín? Dejte nám vědět, že máte o kurz zájem, a my se vám ozveme, jakmile budou nové termíny.</p>
+              </>
+            )}
+            <a
               href={`/odber?topic=${course.title}`}
               className="btnBig"
             >
