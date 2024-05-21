@@ -94,10 +94,11 @@ export const fetchTopics = async (): Promise<TopicSource[]> => {
           'lead',
           'courses.id',
           'courses.organization',
+          'courses.draft',
           'courses.contentFolder',
           'courses.repoUrl',
           'courses.repoFolder',
-          'courses.topic.id'
+          'courses.topic.id',
         ],
         sort: 'order',
       },
@@ -119,6 +120,7 @@ export const fetchTopics = async (): Promise<TopicSource[]> => {
           ? `/content${course.contentFolder}`
           : `/content${course.repoFolder}`,
       },
+      draft: course.draft,
     })),
   }));
 };
