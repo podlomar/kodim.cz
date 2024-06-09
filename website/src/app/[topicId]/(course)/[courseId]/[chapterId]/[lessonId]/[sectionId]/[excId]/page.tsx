@@ -13,6 +13,7 @@ import Solution from 'app/components/Solution';
 import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 import { session } from 'app/session';
 import ArticleView from 'app/components/ArticleView/intex';
+import Styles from 'app/components/Styles';
 
 export const dynamic = 'force-dynamic';
 
@@ -97,6 +98,7 @@ const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
         prev={section.prev?.path ?? null}
         next={section.next?.path ?? null}
       >
+        <Styles css={exercise.styles} />
         <ReactHast root={exercise.assign} />
         {exercise.solution !== 'none' && <Solution root={exercise.solution} />}
       </ArticleView>

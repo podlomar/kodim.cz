@@ -15,6 +15,7 @@ import ReactHast from 'app/components/ReactHast';
 import MainLayout from 'app/components/MainLayout';
 import styles from './styles.module.scss';
 import InfoBox from 'app/components/InfoBox';
+import Styles from 'app/components/Styles';
 
 export const dynamic = 'force-dynamic';
 
@@ -88,6 +89,7 @@ const BlogArticlePage = async ({ params }: Props): Promise<JSX.Element> => {
             </div>
             <h1>{article.title}</h1>
             <div className={styles.articleLead}>{article.lead}</div>
+            <Styles css={article.styles} />
             <ReactHast root={article.content} />
           </ArticleContent>
         </div>
