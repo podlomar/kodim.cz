@@ -1,7 +1,10 @@
+.figure {
+  margin: 1.5rem 0;
+}
+
 .preview {
   text-align: center;
   cursor: zoom-in;
-  margin: 2rem 0;
   padding: 0;
   width: 100%;
   border: none;
@@ -41,4 +44,15 @@
   max-width: 100%;
   height: auto;
   max-height: 100%;
+}
+
+.caption {
+  font-size: 0.875rem;
+  text-align: right;
+  color: #666;
+  margin-top: 0.25rem;
+
+  a {
+    color: #666;
+  }
 }

@@ -40,11 +40,13 @@ export const initiateCms = async () => {
   const kodimDivision: CoursesDivisionSource = {
     name: 'kurzy',
     title: 'Kurzy',
+    interest: 'Kurzy od Kodim.cz',
     topics: [],
   };
   const czechitasDivision: CoursesDivisionSource = {
     name: 'czechitas',
     title: 'Czechitas',
+    interest: 'Kurzy od Czechitas',
     topics: [],
   };
 

@@ -5,12 +5,13 @@ import clsx from 'clsx';
 import styles from './styles.module.scss';
 
 interface Props {
-  src: string
-  alt: string
-  size?: number
+  src: string,
+  alt: string,
+  size?: number,
+  children: React.ReactNode,
 }
 
-const Figure = ({ src, alt, size }: Props) => {
+const Figure = ({ src, alt, size, children }: Props) => {
   const previewRef = useRef<HTMLImageElement>(null);
   const fullscreenRef = useRef<HTMLImageElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -80,7 +81,7 @@ const Figure = ({ src, alt, size }: Props) => {
   }, []);
 
   return (
-    <div className={clsx(isOpen && styles.open)}>
+    <div className={clsx(styles.figure, isOpen && styles.open)}>
       <button
         type="button"
         className={styles.preview}
@@ -95,6 +96,9 @@ const Figure = ({ src, alt, size }: Props) => {
           ref={previewRef}
         />
       </button>
+      <div className={styles.caption}>
+        {children}
+      </div>
       <button
         type="button"
         className={styles.fullscreen}

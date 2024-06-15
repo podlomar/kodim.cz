@@ -63,7 +63,7 @@ const HomePage = async ({ params }: Props): Promise<JSX.Element> => {
           <p>
             Přihlaste se k odběru novinek a nezmeškejte žádný nový kurz, článek nebo akci.
           </p>
-          <a href="/odber" className="btnBig">Přihlásit k odběru</a>
+          <a href={`/odber?topic=${division.interest}`} className="btnBig">Přihlásit k odběru</a>
         </InfoBox>
       </div>
     </MainLayout>
