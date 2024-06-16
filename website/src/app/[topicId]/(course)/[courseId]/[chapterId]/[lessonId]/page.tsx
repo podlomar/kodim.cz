@@ -26,6 +26,10 @@ const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
     notFound();
   }
 
+  if (lesson.sections.length === 0) {
+    notFound();
+  }
+
   redirect(`${lessonId}/${lesson.sections[0].name}`);
 };
 

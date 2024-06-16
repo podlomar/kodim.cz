@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...openGraph,
       type: 'article',
       title: lesson.title,
-      description: lesson.lead,
+      description: lesson.lead ?? undefined,
       url: lesson.path,
     },
   }
