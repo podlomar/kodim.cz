@@ -1,16 +1,16 @@
 import React from "react";
-import styles from "./styles.module.scss";
-import { BlogDivision } from "kodim-cms/esm/content/blog-division";
 import BlogArticleCard from "../BlogArticleCard";
+import { BlogSite } from "kodim-cms/esm/content/site";
+import styles from "./styles.module.scss";
 
 interface Props {
-  division: BlogDivision;
+  site: BlogSite;
 }
 
-const BlogOverview = ({ division }: Props): JSX.Element => {
+const BlogOverview = ({ site }: Props): JSX.Element => {
   return (
     <div className={styles.articles}>
-      {division.articles.map((article) => (
+      {site.articles.map((article) => (
         article.draft ? null : <BlogArticleCard key={article.name} article={article} />
       ))}
     </div>

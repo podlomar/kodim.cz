@@ -21,7 +21,7 @@
     "highlight.js": "^11.8.0",
     "isemail": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
-    "kodim-cms": "^1.2.2",
+    "kodim-cms": "file:../../kodim-cms",
     "next": "^14.1.0",
     "normalize.css": "^8.0.1",
     "property-information": "^6.5.0",

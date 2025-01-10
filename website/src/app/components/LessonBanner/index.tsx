@@ -17,46 +17,6 @@ const LessonBanner = ({ lesson }: Props): JSX.Element => {
           <p className={styles.lessonLead}>{lesson.lead}</p>
         </div>
       </div>
-      <div className={styles.bannerLinks}>
-        <StepLink 
-          direction="prev-responsive"
-          content={lesson.prev === null
-            ? {
-              status: 'disabled',
-              text: <div>Nemá předchozí <br /> lekci</div>,
-            }
-            : lesson.prev.locked
-              ? {
-                status: 'locked',
-                label: lesson.prev.title,
-              }
-              : {
-                status: 'enabled',
-                href: lesson.prev.path,
-                label: lesson.prev.title,
-              }
-          }
-        />
-        <StepLink 
-          direction="next"
-          content={lesson.next === null
-            ? {
-              status: 'disabled',
-              text: <div>Nemá následující <br /> lekci</div>,
-            }
-            : lesson.next.locked
-              ? {
-                status: 'locked',
-                label: lesson.next.title,
-              }
-              : {
-                status: 'enabled',
-                href: lesson.next.path,
-                label: lesson.next.title,
-              }
-          }
-        />
-      </div>
     </div>
   );
 };

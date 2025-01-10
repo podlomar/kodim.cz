@@ -2,11 +2,11 @@ import React from "react"
 import dayjs from "dayjs"
 import 'dayjs/locale/cs';
 import Link from "next/link";
-import { ArticleNavItem } from "kodim-cms/esm/content/article";
+import { ArticleLink } from "kodim-cms/esm/content/article";
 import styles from "./styles.module.scss";
 
 interface Props {
-  article: ArticleNavItem;
+  article: ArticleLink;
 }
 
 const BlogArticleCard = ({ article }: Props): JSX.Element => {

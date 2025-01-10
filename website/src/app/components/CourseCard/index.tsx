@@ -1,22 +1,22 @@
 import React from "react"
 import Link from "next/link";
-import { CourseNavItem } from "kodim-cms/esm/content/course";
-import styles from "./styles.module.scss";
+import { CourseLink } from "kodim-cms/esm/content/course.js";
 import Icon from "app/components/Icon";
+import styles from "./styles.module.scss";
 
 interface Props {
-  course: CourseNavItem,
+  course: CourseLink
 }
 
 const CourseCard = ({ course }: Props): JSX.Element => {
   return (
     <Link href={course.path} className={styles.courseCard}>
-      <div 
-        className={styles.banner}
-        style={{ backgroundImage: `url(/img/${course.topic}-mask.svg)` }}
-      >
+      <div className={styles.banner}>
         <img
-          src={course.image ?? '/img/course.svg'}
+          src={course.imagePath === null 
+            ? '/img/course.svg'
+            : `/cms/assets${course.imagePath}`
+          }
           alt="Course icon"
           className={styles.icon}
         />
@@ -26,7 +26,7 @@ const CourseCard = ({ course }: Props): JSX.Element => {
         <div>
           {course.lead}
         </div>
-        { course.organization === 'czechitas' && (
+        { course.topic === 'czechitas' && (
           <div className={styles.company}>
             <Icon name="czechitas" size="1.5rem" />
             <span>Czechitas kurz</span>

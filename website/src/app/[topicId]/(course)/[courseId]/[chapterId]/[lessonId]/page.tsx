@@ -16,15 +16,15 @@ interface Props {
 const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId, lessonId } = params;
   const { cmsAgent } = await session();
-  const lesson = await cms().loadLesson(cmsAgent, topicId, courseId, chapterId, lessonId);
+  const lesson = await cms().loadLesson(`/${topicId}/${courseId}/${chapterId}/${lessonId}`);
 
-  if (lesson === null) {
+  if (lesson === 'not-found') {
     notFound();
   }
   
-  if (lesson.locked) {
-    notFound();
-  }
+  // if (lesson.locked) {
+  //   notFound();
+  // }
 
   if (lesson.sections.length === 0) {
     notFound();

@@ -1,5 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
-import { agnosticAgent, cms } from 'lib/cms';
+import { cms } from 'lib/cms';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,9 +12,9 @@ interface Props {
 
 const CoursePage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId } = params;
-  const course = await cms().loadCourse(agnosticAgent, topicId, courseId);
+  const course = await cms().loadCourse(`/${topicId}/${courseId}`);
 
-  if (course === null) {
+  if (course === 'not-found') {
     notFound();
   }
   

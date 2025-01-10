@@ -9,7 +9,8 @@ interface Params {
 
 export const GET = async (req: Request, { params }: Params) => {
   const { path } = params;
-  const asset = await cms().loadAsset(agnosticAgent, path);
+  const asset = await cms().loadAsset('/' + path.join('/'));
+  console.log('asset', asset);
   if (asset === null) {
     return new NextResponse(null, {
       status: 404,

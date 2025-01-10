@@ -9,9 +9,9 @@ import Menu from 'app/components/Menu';
 import { Course } from 'kodim-cms/esm/content/course';
 import styles from './styles.module.scss';
 import { session } from 'app/session';
-import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 import ReactHast from 'app/components/ReactHast';
 import CzechitasInfo from 'app/components/CzechitasInfo';
+import MainLayout from 'app/components/MainLayout';
 // import CourseRun from 'app/components/CourseRun';
 
 export const dynamic = 'force-dynamic';
@@ -25,17 +25,17 @@ interface Props {
 }
 
 const getCourse = cache(
-  async (agent: CmsAgent, topicId: string, courseId: string): Promise<Course | null> => (
-    cms().loadCourse(agent, topicId, courseId)
+  async (topicId: string, courseId: string): Promise<Course | 'not-found'> => (
+    cms().loadCourse(`/${topicId}/${courseId}`)
   )
 );
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { topicId, courseId } = params;
   const { cmsAgent } = await session();
-  const course = await getCourse(cmsAgent, topicId, courseId);
+  const course = await getCourse(topicId, courseId);
  
-  if (course === null) {
+  if (course === 'not-found') {
     notFound();
   }
 
@@ -55,25 +55,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
   const { topicId, courseId, chapterId } = params;
   const { cmsAgent } = await session();
-  const course = await getCourse(cmsAgent, topicId, courseId);
-  if (course === null) {
+  const course = await getCourse(topicId, courseId);
+  if (course === 'not-found') {
     notFound();
   }
 
-  const chapter = await cms().loadChapter(cmsAgent, topicId, courseId, chapterId);
-  if (chapter === null) {
+  const intro = await cms().loadCourseIntro(`/${topicId}/${courseId}/intro`);
+  const chapter = await cms().loadChapter(`/${topicId}/${courseId}/${chapterId}`);
+  if (chapter === 'not-found') {
     notFound();
   }
 
   return (
-    <div className="container">
+    <MainLayout showBrand>
       <Breadcrumbs crumbs={course.crumbs} />
       <div 
         className={styles.courseBanner}
         style={{ backgroundImage: `url(/img/${course.topic}-mask.svg)` }}
       >
         <img
-          src={course.image ?? '/img/course.svg'}
+          src={
+            course.imagePath === null
+              ? '/img/course.svg'
+              : `/cms/assets${course.imagePath}`
+          }
           alt="Course icon"
           className={styles.icon}
         />
@@ -82,18 +87,16 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
           <p className={styles.lead}>{course.lead}</p>
         </div>
       </div>
-      {course.organization === 'czechitas' && (
-        <CzechitasInfo course outboundLink={course.outboundLink} />
-      )}
+      {course.czechitas && (<CzechitasInfo course />)}
       <div className={styles.courseInfo}>
-        { course.intro !== null && (
-          course.intro.items.map((item) => (
+        { intro !== 'not-found' && (
+          intro.items.map((item) => (
             <div className={styles.courseInfoItem}>
               <ReactHast root={item} />
             </div>
           ))
         )}
-        { course.organization === 'kodim' && (
+        { !course.czechitas && (
           <div className={styles.courseInfoItem}>
             { course.name === 'zaklady-ts' && (
               <>
@@ -117,7 +120,7 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
           </div>
         )}
       </div>
-      { chapter.name === 'lekce' && course.intro !== null && course.intro.items.length > 0 && (
+      { chapter.name === 'lekce' && intro !== 'not-found' && intro.items.length > 0 && (
         <h2 className={styles.lessonsHeading}>Lekce</h2>
       )}
       {
@@ -143,7 +146,7 @@ const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
             </>
           )
       }
-    </div>
+    </MainLayout>
   );
 };
 

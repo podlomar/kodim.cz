@@ -1,6 +1,13 @@
 @import "styles/variables.scss";
 @import "styles/mixins.scss";
 
+.layout {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
 .header {
   @include padded;
 
@@ -46,6 +53,7 @@
 }
 
 .footer {
+  grid-column: span 3;
   background-color: $palette-1;
   margin-top: 4rem;
   padding-top: 2rem;

@@ -1,20 +1,32 @@
 import React from "react"
-import styles from "./styles.module.scss";
 import CourseCard from "app/components/CourseCard";
-import { Topic } from "kodim-cms/esm/content/courses-division";
+import { CourseLink } from "kodim-cms/esm/content/course";
+import { getTopic } from "./topics";
+import styles from "./styles.module.scss";
 
 interface Props {
-  topic: Topic,
+  topicName: string;
+  courses: CourseLink[];
 }
 
-const TopicView = ({ topic }: Props): JSX.Element => {
-  const { name, title, lead } = topic;
-  
+const TopicView = ({ topicName, courses }: Props): JSX.Element | null => {
+  const topic = getTopic(topicName);
+  if (topic === null) {
+    return null;
+  }
+
+  const { title, lead, image } = topic;
+  const topicCourses = courses.filter((course) => course.topic === topicName);
+
+  if (topicCourses.length === 0) {
+    return null;
+  }
+
   return (
     <div>
       <div className={styles.topicBanner}>
         <img
-          src={name === 'devops' ? '/img/devops.png' : `/img/${name}.svg`}
+          src={image}
           className={styles.image}
         />
         <div>
@@ -23,7 +35,7 @@ const TopicView = ({ topic }: Props): JSX.Element => {
         </div>
       </div>
       <div className={styles.courses}>
-        { topic.courses.map((course) => (
+        {topicCourses.map((course) => (
           <CourseCard
             key={course.name}
             course={course}

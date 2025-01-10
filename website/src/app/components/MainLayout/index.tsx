@@ -7,16 +7,26 @@ import { session } from 'app/session';
 
 interface Props {
   showBrand?: boolean;
+  left?: React.ReactNode;
+  header?: React.ReactNode;
+  right?: React.ReactNode;
   children: React.ReactNode;
 }
 
-const MainLayout = async ({ showBrand = true, children }: Props): Promise<JSX.Element> => {
+const MainLayout = async (
+  { showBrand = true, left, right, header, children }: Props
+): Promise<JSX.Element> => {
   const { user } = await session();
   const pathname = headers().get('x-pathname');
   return (
-    <>
-      <header className={clsx(styles.header, 'container')}>
-        { showBrand ? <Brand size="small" /> : <div />}
+    <div className={styles.layout}>
+      <div>
+        { showBrand ? <Brand size="small" /> : <div />}  
+      </div>
+      <header>
+        { header }
+      </header>
+      <div>
         <div className={styles.user}>
           {user === null ? (
             <div className={styles.login}>
@@ -33,10 +43,16 @@ const MainLayout = async ({ showBrand = true, children }: Props): Promise<JSX.El
             </div>
           )}
         </div>
-      </header>
+      </div>
+      <aside>
+        { left }
+      </aside>
       <main>
         {children}
       </main>
+      <aside>
+        { right }
+      </aside>
       <footer className={styles.footer}>
         <div className={clsx('container', styles.footerContent)}>
           <div>
@@ -55,7 +71,7 @@ const MainLayout = async ({ showBrand = true, children }: Props): Promise<JSX.El
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 };
 
