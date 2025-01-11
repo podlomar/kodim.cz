@@ -1,8 +1,5 @@
 export default {
   output: 'standalone',
-  experimental: {
-    instrumentationHook: true,
-  },
   async redirects() {
     return [
       {

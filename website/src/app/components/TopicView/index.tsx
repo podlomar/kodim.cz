@@ -1,7 +1,7 @@
-import React from "react"
-import styles from "./styles.module.scss";
+import type { JSX } from "react";
 import CourseCard from "app/components/CourseCard";
 import { Topic } from "kodim-cms/esm/content/courses-division";
+import styles from "./styles.module.scss";
 
 interface Props {
   topic: Topic,

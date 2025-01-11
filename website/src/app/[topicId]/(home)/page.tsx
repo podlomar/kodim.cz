@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { cms } from 'lib/cms';
 import { notFound } from 'next/navigation';
 import heroImg from './img/hero.svg';
@@ -13,19 +14,20 @@ import InfoBox from 'app/components/InfoBox';
 export const dynamic = 'force-dynamic';
 
 interface Props {
-  params: {
+  params: Promise<{
     topicId?: string;
-  }
+  }>
 }
 
-const HomePage = async ({ params }: Props): Promise<JSX.Element> => {
+const HomePage = async (props: Props): Promise<JSX.Element> => {
+  const params = await props.params;
   const { cmsAgent } = await session();
   const topicId = params.topicId ?? 'kurzy';
   const root = await cms().loadRoot(cmsAgent);
   if (root === null) {
     notFound();
   }
-  
+
   const division = await cms().loadDivision(cmsAgent, topicId);
   if (division === null) {
     notFound();

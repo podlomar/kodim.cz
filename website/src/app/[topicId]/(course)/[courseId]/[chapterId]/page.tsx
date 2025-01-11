@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { cache, type JSX } from 'react';
 import { notFound } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next'
 import { openGraph } from 'app/open-graph';
@@ -17,11 +17,11 @@ import CzechitasInfo from 'app/components/CzechitasInfo';
 export const dynamic = 'force-dynamic';
 
 interface Props {
-  params: {
+  params: Promise<{
     topicId: string;
     courseId: string;
     chapterId: string;
-  }
+  }>
 }
 
 const getCourse = cache(
@@ -30,11 +30,12 @@ const getCourse = cache(
   )
 );
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { topicId, courseId } = params;
   const { cmsAgent } = await session();
   const course = await getCourse(cmsAgent, topicId, courseId);
- 
+
   if (course === null) {
     notFound();
   }
@@ -52,7 +53,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const ChapterPage = async ({ params }: Props): Promise<JSX.Element> => {
+const ChapterPage = async (props: Props): Promise<JSX.Element> => {
+  const params = await props.params;
   const { topicId, courseId, chapterId } = params;
   const { cmsAgent } = await session();
   const course = await getCourse(cmsAgent, topicId, courseId);

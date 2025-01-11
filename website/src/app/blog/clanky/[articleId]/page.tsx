@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/cs';
 import { cache } from 'react';
@@ -20,9 +20,9 @@ import Styles from 'app/components/Styles';
 export const dynamic = 'force-dynamic';
 
 interface Props {
-  params: {
+  params: Promise<{
     articleId: string;
-  }
+  }>
 }
 
 const getArticle = cache(
@@ -34,11 +34,12 @@ const getArticle = cache(
   )
 );
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { articleId } = params;
   const { cmsAgent } = await session();
   const article = await getArticle(cmsAgent, articleId);
- 
+
   if (article === null) {
     notFound();
   }
@@ -56,7 +57,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const BlogArticlePage = async ({ params }: Props): Promise<JSX.Element> => {
+const BlogArticlePage = async (props: Props): Promise<JSX.Element> => {
+  const params = await props.params;
   const { articleId } = params;
   const { cmsAgent } = await session();
   const article = await getArticle(cmsAgent, articleId);

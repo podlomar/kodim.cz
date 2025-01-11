@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type JSX } from "react";
 import LessonCard from "app/components/LessonCard";
 import { LessonNavItem } from "kodim-cms/esm/content/lesson";
 import styles from "./styles.module.scss";

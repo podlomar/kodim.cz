@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import MainLayout from 'app/components/MainLayout';
 import Panel from 'app/components/Panel';
 

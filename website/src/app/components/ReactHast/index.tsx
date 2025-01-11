@@ -1,4 +1,4 @@
-import { ReactNode, createElement, Fragment } from 'react';
+import { ReactNode, createElement, Fragment, type JSX } from 'react';
 import { Root, ElementContent } from 'hast';
 import Figure from './components/Figure';
 import Term from './components/Term';

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, type JSX } from "react";
 import { MenuItem } from "app/components/Menu";
 import ArticleNavigation from "app/components/ArticleNavigation";
 import styles from "./styles.module.scss";

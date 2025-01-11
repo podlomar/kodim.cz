@@ -1,4 +1,4 @@
-import { J } from '@directus/sdk/dist/types-ZBNrmR-A';
+import type { JSX } from "react";
 import MainLayout from 'app/components/MainLayout';
 import Panel from 'app/components/Panel';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
@@ -6,9 +6,9 @@ import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 export const dynamic = 'force-dynamic';
 
 interface Props {
-  params: {
+  params: Promise<{
     token: string;
-  };
+  }>;
 }
 
 interface OkPayload {
@@ -62,9 +62,15 @@ const verifyToken = (token: string): Payload => {
   }  
 }
 
-const VerifyPage = async ({ params: { token }}: Props): Promise<JSX.Element> => {
+const VerifyPage = async (props: Props): Promise<JSX.Element> => {
+  const params = await props.params;
+
+  const {
+    token
+  } = params;
+
   const payload = verifyToken(token);
-  
+
   return (
     <MainLayout>
       <div className="container">

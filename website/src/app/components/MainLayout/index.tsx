@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { headers } from 'next/headers';
 import pkg from '../../../../package.json';
 import clsx from 'clsx';
@@ -12,7 +13,7 @@ interface Props {
 
 const MainLayout = async ({ showBrand = true, children }: Props): Promise<JSX.Element> => {
   const { user } = await session();
-  const pathname = headers().get('x-pathname');
+  const pathname = (await headers()).get('x-pathname');
   return (
     <>
       <header className={clsx(styles.header, 'container')}>

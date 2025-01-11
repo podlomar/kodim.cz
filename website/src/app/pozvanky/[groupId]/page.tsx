@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import MainLayout from 'app/components/MainLayout';
 import { fetchGroup } from '../../../lib/directus';
 import { notFound } from 'next/navigation';
@@ -8,12 +9,13 @@ import Invitation from 'app/components/Invitation';
 export const dynamic = 'force-dynamic';
 
 interface Props {
-  params: {
+  params: Promise<{
     groupId: string;
-  }
+  }>
 }
 
-const InvitePage = async ({ params }: Props): Promise<JSX.Element> => {
+const InvitePage = async (props: Props): Promise<JSX.Element> => {
+  const params = await props.params;
   const group = await fetchGroup(params.groupId);
   if (group === null) {
     notFound();

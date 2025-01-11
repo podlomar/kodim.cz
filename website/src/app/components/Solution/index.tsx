@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from "react"
+import React, { useState, type JSX } from "react";
 import { Root } from 'hast';
 import ReactHast from "app/components/ReactHast";
 import styles from "./styles.module.scss";

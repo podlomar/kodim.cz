@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type JSX } from "react";
 import styles from "./styles.module.scss";
 import { BlogDivision } from "kodim-cms/esm/content/blog-division";
 import BlogArticleCard from "../BlogArticleCard";

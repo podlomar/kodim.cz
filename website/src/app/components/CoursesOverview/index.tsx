@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type JSX } from "react";
 import { CoursesDivision } from "kodim-cms/esm/content/courses-division";
 import CzechitasInfo from "../CzechitasInfo";
 import TopicView from "../TopicView";

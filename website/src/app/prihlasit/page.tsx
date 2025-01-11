@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { redirect } from 'next/navigation';
 import { session } from 'app/session';
 import MainLayout from 'app/components/MainLayout';
@@ -8,12 +9,18 @@ import css from './styles.module.scss';
 export const dynamic = 'force-dynamic';
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     returnUrl?: string;
-  };
+  }>;
 }
 
-const LoginPage = async ({ searchParams: { returnUrl = '/' }}: Props): Promise<JSX.Element> => {
+const LoginPage = async (props: Props): Promise<JSX.Element> => {
+  const searchParams = await props.searchParams;
+
+  const {
+    returnUrl = '/'
+  } = searchParams;
+
   const { user } = await session();
 
   if (user !== null) {

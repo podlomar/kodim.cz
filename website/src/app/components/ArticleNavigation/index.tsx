@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useState, type JSX } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { MenuItem } from "app/components/Menu";

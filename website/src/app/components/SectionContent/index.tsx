@@ -1,4 +1,4 @@
-import React from "react"
+import React, { type JSX } from "react";
 import { Section } from "kodim-cms/esm/content/section";
 import ReactHast from 'app/components/ReactHast';
 import Styles from 'app/components/Styles';

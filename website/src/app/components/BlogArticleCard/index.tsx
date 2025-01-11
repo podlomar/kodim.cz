@@ -1,4 +1,4 @@
-import React from "react"
+import React, { type JSX } from "react";
 import dayjs from "dayjs"
 import 'dayjs/locale/cs';
 import Link from "next/link";

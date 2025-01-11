@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { cache, type JSX } from 'react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next'
 import { openGraph } from 'app/open-graph';
@@ -15,13 +15,13 @@ import ArticleView from 'app/components/ArticleView/intex';
 export const dynamic = 'force-dynamic';
 
 interface Props {
-  params: {
+  params: Promise<{
     topicId: string;
     courseId: string;
     chapterId: string;
     lessonId: string;
     sectionId: string;
-  }
+  }>
 }
 
 const getLesson = cache(
@@ -36,11 +36,12 @@ const getLesson = cache(
   )
 );
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { topicId, courseId, chapterId, lessonId } = params;
   const { cmsAgent } = await session();
   const lesson = await getLesson(cmsAgent, topicId, courseId, chapterId, lessonId);
- 
+
   if (lesson === null) {
     notFound();
   }
@@ -62,7 +63,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const LessonPage = async ({ params }: Props): Promise<JSX.Element> => {
+const LessonPage = async (props: Props): Promise<JSX.Element> => {
+  const params = await props.params;
   const { topicId, courseId, chapterId, lessonId, sectionId } = params;
   const { cmsAgent } = await session();
   const lesson = await getLesson(cmsAgent, topicId, courseId, chapterId, lessonId);

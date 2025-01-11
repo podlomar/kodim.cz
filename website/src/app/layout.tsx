@@ -1,4 +1,5 @@
 import 'styles/global.scss';
+import type { JSX } from "react";
 import { Metadata } from 'next';
 import { openGraph } from './open-graph';
 import styles from './styles.module.scss';

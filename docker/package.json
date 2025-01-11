@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev:up": "docker-compose --env-file .env.development -f compose.base.yml -f compose.frontend-dev.yml up --build",
+    "dev:up": "docker compose --env-file .env.development -f compose.base.yml -f compose.frontend-dev.yml up --build",
+    "dev:down": "docker compose --env-file .env.development -f compose.base.yml -f compose.frontend-dev.yml down",
     "docker:deploy": "docker build ../website -f ./dockerfile --tag ghcr.io/kodim-cz/kodim-frontoffice:$TAG && docker push ghcr.io/kodim-cz/kodim-frontoffice:$TAG"
   }
 }

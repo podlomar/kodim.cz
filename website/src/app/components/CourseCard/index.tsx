@@ -1,4 +1,4 @@
-import React from "react"
+import React, { type JSX } from "react";
 import Link from "next/link";
 import { CourseNavItem } from "kodim-cms/esm/content/course";
 import styles from "./styles.module.scss";

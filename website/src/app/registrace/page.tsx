@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { redirect } from 'next/navigation';
 import { session } from 'app/session';
 import MainLayout from 'app/components/MainLayout';

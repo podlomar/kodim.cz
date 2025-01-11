@@ -1,9 +1,9 @@
+import type { JSX } from "react";
 import { session } from 'app/session';
 import MainLayout from 'app/components/MainLayout';
 import Panel from 'app/components/Panel';
 import { notFound } from 'next/navigation';
 import styles from './styles.module.scss';
-import { p } from '@directus/sdk/dist/index-Szt1hiPf';
 
 export const dynamic = 'force-dynamic';
 

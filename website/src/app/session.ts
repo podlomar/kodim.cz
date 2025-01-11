@@ -12,7 +12,7 @@ export type Session = {
 
 export const session = cache(async (noRedirect?: 'no-redirect'): Promise<Session> => {
   const publicSession = { user: null, cmsAgent: publicAgent, refreshToken: '' };
-  const encryptedSession = headers().get('x-session') ?? cookies().get('session')?.value;
+  const encryptedSession = (await headers()).get('x-session') ?? (await cookies()).get('session')?.value;
   if(encryptedSession === undefined) {
     return publicSession;
   }

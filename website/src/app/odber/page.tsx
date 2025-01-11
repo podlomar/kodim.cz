@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import MainLayout from 'app/components/MainLayout';
 import Panel from 'app/components/Panel';
 import { redirect } from 'next/navigation';
@@ -6,10 +7,10 @@ import isemail from 'isemail';
 import styles from './styles.module.scss';
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     topic?: string;
     status?: string;
-  }
+  }>
 }
 
 const action = async (topic: string | null, formData: FormData) => {
@@ -24,7 +25,14 @@ const action = async (topic: string | null, formData: FormData) => {
   redirect('/odber?status=success');
 };
 
-const SubscribePage = ({ searchParams: { topic, status }}: Props): JSX.Element => {
+const SubscribePage = async (props: Props): Promise<JSX.Element> => {
+  const searchParams = await props.searchParams;
+
+  const {
+    topic,
+    status
+  } = searchParams;
+
   const formAction = action.bind(null, topic ?? null);
   return (
     <MainLayout>

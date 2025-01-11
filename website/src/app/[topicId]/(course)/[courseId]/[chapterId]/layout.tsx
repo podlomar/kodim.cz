@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import MainLayout from 'app/components/MainLayout';
 
 export const dynamic = 'force-dynamic';

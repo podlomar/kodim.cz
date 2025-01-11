@@ -1,4 +1,4 @@
-import React from "react"
+import React, { type JSX } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { ExerciseNavItem } from "kodim-cms/esm/content/exercise";

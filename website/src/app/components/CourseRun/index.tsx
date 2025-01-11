@@ -1,4 +1,4 @@
-import React from "react"
+import React, { type JSX } from "react";
 import 'dayjs/locale/cs';
 import styles from "./styles.module.scss";
 

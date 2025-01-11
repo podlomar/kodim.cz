@@ -1,4 +1,4 @@
-import React from "react"
+import React, { type JSX } from "react";
 import { Lesson } from "kodim-cms/esm/content/lesson";
 import styles from "./styles.module.scss";
 import StepLink from "app/components/StepLink";

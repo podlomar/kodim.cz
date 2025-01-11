@@ -1,4 +1,4 @@
-import React from "react"
+import React, { type JSX } from "react";
 import { ExerciseNavItem } from "kodim-cms/esm/content/exercise";
 import ExerciseHead from "app/components/ExerciseHead";
 import styles from "./styles.module.scss";

@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { cache, type JSX } from 'react';
 import { notFound } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next'
 import { openGraph } from 'app/open-graph';
@@ -18,14 +18,14 @@ import Styles from 'app/components/Styles';
 export const dynamic = 'force-dynamic';
 
 interface Props {
-  params: {
+  params: Promise<{
     topicId: string;
     courseId: string;
     chapterId: string;
     lessonId: string;
     sectionId: string;
     excId: string;
-  }
+  }>
 }
 
 const getExercise = cache(
@@ -42,13 +42,14 @@ const getExercise = cache(
   )
 );
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { topicId, courseId, chapterId, lessonId, sectionId, excId } = params;
   const { cmsAgent } = await session();
   const exercise = await getExercise(
     cmsAgent, topicId, courseId, chapterId, lessonId, sectionId, excId
   );
- 
+
   if (exercise === null) {
     notFound();
   }
@@ -68,7 +69,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const ExercisePage = async ({ params }: Props): Promise<JSX.Element> => {
+const ExercisePage = async (props: Props): Promise<JSX.Element> => {
+  const params = await props.params;
   const { topicId, courseId, chapterId, lessonId, sectionId, excId } = params;
   const { cmsAgent } = await session();
   const lesson = await cms().loadLesson(agnosticAgent, topicId, courseId, chapterId, lessonId);
