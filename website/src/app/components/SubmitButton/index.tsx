@@ -1,6 +1,7 @@
 'use client';
 
 import { useFormStatus } from 'react-dom';
+import Button from '../Button';
 
 interface Props {
   label: string;
@@ -9,7 +10,7 @@ interface Props {
 const SubmitButton = ({ label }: Props) => {
   const { pending } = useFormStatus();
   return (
-    <button className="btn" disabled={pending}>{label}</button>
+    <Button disabled={pending}>{label}</Button>
   );
 };
 

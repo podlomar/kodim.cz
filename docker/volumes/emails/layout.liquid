@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title></title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+    }
+    
+    .container {
+      display: block;
+      margin: 0 auto !important;
+      max-width: 660px;
+      padding: 16px;
+    }
+
+    h1, h2 {
+      font-weight: normal;
+    }
+
+    h2 {
+      margin-top: 32px;
+      margin-bottom: 16px;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    td {
+      line-height: 1.5;
+    }
+    
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+    }
+
+    .footer-row td {
+      padding-top: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+
+</html>

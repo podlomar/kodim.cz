@@ -1,0 +1,54 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.btn {
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  outline: none;
+  border-radius: 0.25rem;
+  background-color: $palette-1;
+  border: 2px solid $palette-1;
+
+  color: white;
+  cursor: pointer;
+  transition: 300ms;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.05);
+    transition: 300ms;
+  }
+
+  &:disabled {
+    color: $palette-5;
+    border: 2px solid #ddd;
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+}
+
+.secondary {
+  color: $color-text;
+  border: 2px solid $palette-1;
+  background-color: white;
+}
+
+.large {
+  display: block;
+  margin-top: 1rem;
+  background-color: $palette-1;
+  color: white;
+  text-align: center;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 300ms;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: 300ms;
+  }
+}

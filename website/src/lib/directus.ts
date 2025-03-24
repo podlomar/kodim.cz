@@ -3,12 +3,21 @@ import {
   staticToken,
   rest,
   readUser,
+  readMe,
+  updateUser,
   readItems,
   readItem,
   createItem,
   updateItem,
   deleteItem,
+  withToken,
+  registerUser,
+  registerUserVerify,
+  passwordRequest,
+  passwordReset,
+  readUsers,
 } from '@directus/sdk';
+import cookie from 'cookie';
 import { CourseDef, TopicSource } from 'kodim-cms/esm/content/courses-division';
 
 export interface User {
@@ -36,8 +45,170 @@ export const client = createDirectus('http://directus:8055')
   .with(staticToken(process.env.DIRECTUS_API_TOKEN ?? ''))
   .with(rest());
 
+export const refreshSession = async (sessionToken: string): Promise<string | null> => {
+  const response = await fetch(`http://directus:8055/auth/refresh`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Cookie': `session_token=${sessionToken}`,
+    },
+    body: JSON.stringify({ mode: 'session' }),
+  });
+
+  if (!response.ok) {
+    return null;
+  }
+
+  return response.headers.get('set-cookie');
+}
+
+export interface SessionCookie {
+  name: string;
+  value: string;
+  maxAge: number;
+  path: string;
+  sameSite: boolean | 'lax' | 'strict' | 'none';
+}
+
+export const login = async (email: string, password: string): Promise<SessionCookie | null> => {
+  const response = await fetch(`http://directus:8055/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password, mode: 'session' }),
+  });
+
+  if (!response.ok) {
+    return null;
+  }
+
+  const cookieHeader = response.headers.get('set-cookie');
+  if (cookieHeader === null) {
+    return null;
+  }
+
+  const parsed = cookie.parse(cookieHeader);
+  return {
+    name: 'session_token',
+    value: parsed.session_token!,
+    maxAge: Number(parsed['Max-Age']),
+    path: parsed.Path!,
+    sameSite: parsed.SameSite === 'None' ? 'none' : parsed.SameSite === 'Lax',
+  }
+}
+
+export const getCurrentUser = async (sessionToken: string): Promise<User | null> => {
+  const client = createDirectus('http://directus:8055').with(rest())
+  const apiUser = await client.request(
+    withToken(
+      sessionToken,
+      readMe({
+        fields: [
+          'id',
+          'email',
+          'first_name',
+          'external_identifier',
+          'fullName',
+          'avatar',
+          'groups.*.*'
+        ],
+      }),
+    ));
+  
+  return userFromApi(apiUser)
+}
+
+export type RegistrationResult = 'success' | 'user-exists' | 'error';
+
+export const registerNewUser = async (
+  email: string, password: string, sendNewsletter: boolean,
+): Promise<RegistrationResult> => {
+  try {
+    const apiUsers = await client.request(
+      readUsers(
+        {
+          filter: {
+            email: {
+              _eq: email,
+            }
+          }
+        }
+      ),
+    );
+    
+    if (apiUsers.length > 0) {
+      return 'user-exists';
+    }
+
+    await client.request(
+      registerUser(email, password),
+    );
+
+    const newApiUser = await client.request(
+      readUsers(
+        {
+          filter: {
+            email: {
+              _eq: email,
+            }
+          }
+        }
+      ),
+    );
+
+    if (newApiUser.length === 0) {
+      return 'error';
+    }
+
+    await client.request(updateUser(newApiUser[0].id, {
+      // @ts-expect-error
+      sendNewsletter,
+    }));
+
+    return 'success';
+  } catch (e) {
+    console.error('registerNewUser error', e);
+    return 'error';
+  }
+}
+
+export const verifyUserEmail = async (token: string): Promise<boolean> => {
+  try {
+    await client.request(registerUserVerify(token));
+
+    return true;
+  } catch (e) {
+    console.error('verifyUserEmail error', e);
+    return false;
+  }
+}
+
+export const requestResetPassword = async (email: string): Promise<boolean> => {
+  try {
+    await client.request(passwordRequest(email));
+
+    return true;
+  } catch (e) {
+    console.error('reqeustResetPassword error', e);
+    return false;
+  }
+}
+
+export const resetPassword = async (token: string, newPassword: string): Promise<boolean> => {
+  try {
+    await client.request(passwordReset(token, newPassword));
+
+    return true;
+  } catch (e) {
+    console.error('resetPassword error', e);
+    return false;
+  }
+}
+
 export const userFromApi = (apiUser: Record<string, any>): User => {
-  const accessRules = apiUser.groups.reduce((acc: string[], group: any) => {
+  const userGroups = apiUser.groups ?? [];
+  const accessRules = userGroups.reduce((acc: string[], group: any) => {
     const ruleObjects = group.Groups_id?.accessRules ?? null;
     if (ruleObjects === null) {
       return acc;
@@ -52,12 +223,16 @@ export const userFromApi = (apiUser: Record<string, any>): User => {
   return {
     id: apiUser.id,
     email: apiUser.email,
-    name: apiUser.first_name,
+    name: apiUser.fullName
+      ?? apiUser.first_name
+      ?? apiUser.external_identifier
+      ?? apiUser.email.slice(0, apiUser.email.indexOf('@'))
+      ?? 'Neznámý uživatel',
     avatarUrl: apiUser.avatar === null
       ? null
-      : `${process.env.DIRECTUS_URL}/assets/${apiUser.avatar}`,
+      : `/assets/${apiUser.avatar}`,
     accessRules,
-    groups: apiUser.groups
+    groups: userGroups
       .filter((group: any) => group.Groups_id !== null)
       .map((group: any) => ({
         id: group.Groups_id.id,

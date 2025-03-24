@@ -1,0 +1,25 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.alert {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.icon {
+  flex: 0 0 auto;
+}
+
+.warning {
+  background-color: $palette-6;
+  color: white;
+}
+
+.title {
+  font-weight: bold;
+  padding-bottom: 0.25rem;
+}
+
+

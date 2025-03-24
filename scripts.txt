@@ -6,4 +6,5 @@ docker exec -i kodimcz_database_1 /bin/bash -c "PGPASSWORD=directus psql -U dire
 
 docker build ../website -f ./dockerfile
 docker tag d00e86b63076 ghcr.io/kodim-cz/kodim-frontoffice:0.0.4
+docker login --username podlomar ghcr.io
 docker push ghcr.io/kodim-cz/kodim-frontoffice:0.0.4

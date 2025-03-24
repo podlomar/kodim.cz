@@ -1,10 +1,11 @@
-import type { JSX } from "react";
+import { type JSX } from "react";
 import { redirect } from 'next/navigation';
 import { session } from 'app/session';
 import MainLayout from 'app/components/MainLayout';
 import Panel from 'app/components/Panel';
 import Icon from 'app/components/Icon';
 import css from './styles.module.scss';
+import LoginForm from "app/components/LoginForm";
 
 export const dynamic = 'force-dynamic';
 
@@ -30,11 +31,8 @@ const LoginPage = async (props: Props): Promise<JSX.Element> => {
   return (
     <MainLayout>
       <div className="container">
-        <Panel title="Přihlášení">
-          <p>
-            V tuhle chvíli je možné se přihlásit pouze přes účet na GitHubu. Další možnosti
-            přihlášení jsou ve vývoji.
-          </p>
+        <Panel title="Přihlášení" icon="login">
+          <LoginForm />
           <div className={css.providers}>
             <div className={css.providerLink}>
               <Icon name="github" size="1.5rem" />
@@ -44,6 +42,11 @@ const LoginPage = async (props: Props): Promise<JSX.Element> => {
                 Přihlásit přes GitHub
               </a>
             </div>
+          </div>
+
+          <div className={css.info}>
+            <p>Nemáte ještě účet? <a href="/registrace">Zaregistrujte se</a>.</p>
+            <p>Zapomněli jste heslo? <a href="/obnova-hesla">Požádejte o obnovu hesla</a>.</p>
           </div>
         </Panel>
       </div>

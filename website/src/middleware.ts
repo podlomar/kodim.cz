@@ -1,113 +1,30 @@
-import { AuthenticationData, createDirectus, rest, refresh, readMe, staticToken } from '@directus/sdk';
-import { SessionData, decryptSessionData, encryptSessionData } from 'lib/session';
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-
-export const client = createDirectus('http://directus:8055')
-  .with(rest());
-
-const fetchAuthData = async (refreshToken: string): Promise<AuthenticationData | null> => {
-  return client.request(refresh('json', refreshToken));
-};
-
-const fetchCurrentUserId = async (accessToken: string): Promise<string | null> => {
-  const authClient = client.with(staticToken(accessToken));
-  const user = await authClient.request(readMe({ fields: ['id'] }));
-  return user.id;
-};
-
-const noneSession = {
-  status: 'none',
-} as const;
-
-const invalidSession = {
-  status: 'invalid',
-} as const;
-
-type NoneSession = typeof noneSession;
-
-type InvalidSession = typeof invalidSession;
-
-interface ValidSession {
-  status: 'valid';
-  data: SessionData;
-}
-
-interface StaleSession {
-  status: 'stale';
-  data: SessionData;
-}
-
-type StoredSession = NoneSession | InvalidSession | ValidSession | StaleSession;
-
-const loadSession = async (request: NextRequest): Promise<StoredSession> => {
-  try {
-    const sessionCookie = request.cookies.get('session')?.value;
-    const refreshToken = request.cookies.get('directus_refresh_token')?.value;
-    
-    if (refreshToken === undefined) {
-      if (sessionCookie !== undefined) {
-        return invalidSession;
-      }
-
-      return noneSession;
-    }
-    
-    const sessionData = sessionCookie === undefined ? null : decryptSessionData(sessionCookie);
-    if (sessionData === null || sessionData.refreshToken !== refreshToken) {
-      const authenticationData = await fetchAuthData(refreshToken);  
-      if (authenticationData === null) {
-        return invalidSession;
-      }
-
-      if (authenticationData.access_token === null || authenticationData.refresh_token === null) {
-        return invalidSession;
-      }
-
-      const userId = await fetchCurrentUserId(authenticationData.access_token);  
-      if (userId === null) {
-        return invalidSession;
-      }
-
-      return {
-        status: 'stale',
-        data: {
-          userId,
-          refreshToken: authenticationData.refresh_token,
-        }
-      };
-    }
-
-    return {
-      status: 'valid',
-      data: sessionData,
-    };
-  } catch (error: any) {
-    if ('errors' in error) {
-      console.error('SESSION ERROR:', error.errors[0]);
-    } else {
-      console.error('SESSION ERROR:', error);
-    }
-    
-    return invalidSession;
-  }
-};
+import jwt from 'jwt-simple';
+import { type NextRequest, NextResponse } from 'next/server'
+import { refreshSession } from 'lib/directus';
 
 export const middleware = async (request: NextRequest): Promise<NextResponse> => {
-  const session = await loadSession(request);
+  const sessionToken = request.cookies.get('session_token')?.value;
   const response = NextResponse.next();
+  if (sessionToken === undefined || sessionToken === '') {
+    return response;
+  }
+  
+  console.log('Checking session token', sessionToken);
 
-  // This is a hack to pass the current pathname to pages because fucking Next.js doesn't provide it
-  response.headers.set('x-pathname', new URL(request.url).pathname);
+  const decoded = jwt.decode(sessionToken, '', true);
+  const exp = decoded.exp as number;
+  const iat = decoded.iat as number;
+  const now = Math.floor(Date.now() / 1000);
+  const validPeriod = exp - iat;
+  const remains = exp - now;
+  
+  if (remains < validPeriod / 2) {
+    const newSessionCookie = await refreshSession(sessionToken);
+    if (newSessionCookie === null) {
+      return response;
+    }
 
-  if (session.status === 'invalid') {
-    response.cookies.delete('session');
-    response.headers.set('x-session', 'invalid');
-  } else if (session.status === 'stale') {
-    const encryptedSession = encryptSessionData(session.data);
-    response.cookies.set('session', encryptedSession);
-    response.cookies.set('directus_refresh_token', session.data.refreshToken);
-    response.headers.set('x-session', encryptedSession);
+    response.headers.append('Set-Cookie', newSessionCookie);
   }
 
   return response;

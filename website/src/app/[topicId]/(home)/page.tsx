@@ -1,7 +1,6 @@
 import type { JSX } from "react";
 import { cms } from 'lib/cms';
 import { notFound } from 'next/navigation';
-import heroImg from './img/hero.svg';
 import Brand from 'app/components/Brand';
 import Menu, { MenuItem } from 'app/components/Menu';
 import MainLayout from 'app/components/MainLayout';
@@ -35,8 +34,8 @@ const HomePage = async (props: Props): Promise<JSX.Element> => {
 
   const menuItems: MenuItem[] = [
     { key: 'kurzy', label: 'Kurzy', href: '/kurzy' },
-    { key: 'czechitas', label: 'Czechitas', href: '/czechitas' },
     { key: 'blog', label: 'Blog', href: '/blog' },
+    { key: 'czechitas', label: 'Czechitas', href: '/czechitas' },
   ];
 
   return (
@@ -46,10 +45,10 @@ const HomePage = async (props: Props): Promise<JSX.Element> => {
           <div className={styles.heroIntro}>
             <Brand size="large" />
             <p className={styles.heroLead}>
-              Programování hravě i vážně pro nováčky i pokročilé.
+              Programování hravě i&nbsp;vážně pro nováčky i&nbsp;pokročilé.
             </p>
           </div>
-          <img src={heroImg.src} alt="Hero image" className={styles.heroImage} />
+          <img src="/img/hero.svg" alt="Hero image" className={styles.heroImage} />
         </div>
 
         <Menu

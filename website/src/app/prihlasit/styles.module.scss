@@ -1,10 +1,20 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
 .providers {
-  margin-bottom: 1rem;
+  margin: 1rem 0 2rem 0;
 }
 
 .providerLink {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: 2px solid $palette-1;
+}
+
+.info p {
+  margin: 0.25rem 0;
 }

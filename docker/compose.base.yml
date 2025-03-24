@@ -3,32 +3,43 @@ services:
     container_name: database
     image: postgis/postgis:13-master
     volumes:
-      - ./data/database:/var/lib/postgresql/data
-      - ./data/backups:/backups
+      - ./volumes/database:/var/lib/postgresql/data
+      - ./volumes/backups:/backups
     networks:
       - directus
     environment:
       POSTGRES_USER: 'directus'
       POSTGRES_PASSWORD: 'directus'
       POSTGRES_DB: 'directus'
+    healthcheck:
+      test: ["CMD", "pg_isready", "--host=localhost", "--username=directus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_interval: 5s
+      start_period: 30s
 
   directus:
     container_name: directus
-    image: directus/directus:10.8.3
+    image: directus/directus:11.5.1
     ports:
       - 8055:8055
     volumes:
-      - ./data/uploads:/directus/uploads
-      - ./data/extensions:/directus/extensions
+      - ./volumes/uploads:/directus/uploads
+      - ./volumes/extensions:/directus/extensions
+      - ./volumes/emails:/directus/emails
     networks:
       - directus
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "wget http://0.0.0.0:8055/server/ping -q -O /dev/null || exit 1"]
-      interval: 5s
+      test: ["CMD", "wget", "--spider", "-q", "http://directus:8055/server/health"]
+      interval: 10s
       timeout: 5s
-      retries: 6
+      retries: 5
+      start_interval: 5s
+      start_period: 30s
     environment:
       KEY: '${DIRECTUS_KEY}'
       SECRET: '${DIRECTUS_SECRET}'
@@ -40,20 +51,29 @@ services:
       DB_USER: 'directus'
       DB_PASSWORD: 'directus'
 
+      EXTENSIONS_AUTO_RELOAD: true
+
       ADMIN_EMAIL: '${ADMIN_EMAIL}'
       ADMIN_PASSWORD: '${ADMIN_PASSWORD}'
       PUBLIC_URL: '${DIRECTUS_URL}'
+      PROJECT_URL: '${PROJECT_URL}'
 
-      # EMAIL_FROM: 'noreply@kodim.cz'
-      # EMAIL_TRANSPORT: 'smtp'
-      # EMAIL_SMTP_HOST: 'smtp.forpsi.com'
-      # EMAIL_SMTP_PORT: 587
-      # EMAIL_SMTP_USER: '${ADMIN_EMAIL}'
-      # EMAIL_SMTP_PASSWORD: '${ADMIN_SMTP_PASSWORD}}'
-      # EMAIL_SMTP_SECURE: 'false'
+      SESSION_COOKIE_NAME: 'session_token'
+      SESSION_COOKIE_TTL: '14d'
+      SESSION_REFRESH_GRACE_PERIOD: '2m'
+
+      EMAIL_FROM: 'noreply@kodim.cz'
+      EMAIL_TEMPLATES_PATH: '/directus/emails'
+      EMAIL_TRANSPORT: 'smtp'
+      EMAIL_SMTP_HOST: 'smtp.forpsi.com'
+      EMAIL_SMTP_PORT: 587
+      EMAIL_SMTP_USER: '${ADMIN_EMAIL}'
+      EMAIL_SMTP_PASSWORD: '${ADMIN_SMTP_PASSWORD}'
+      EMAIL_SMTP_SECURE: 'false'
 
       AUTH_PROVIDERS: 'github,discord'
       
+      AUTH_GITHUB_MODE: 'session'
       AUTH_GITHUB_DRIVER: 'oauth2'
       AUTH_GITHUB_CLIENT_ID: '${GITHUB_CLIENT_ID}'
       AUTH_GITHUB_CLIENT_SECRET: '${GITHUB_CLIENT_SECRET}'
@@ -77,8 +97,12 @@ services:
       AUTH_DISCORD_ICON: 'discord'
       AUTH_DISCORD_DEFAULT_ROLE_ID: '${STUDENT_ROLE}'
 
-      REFRESH_TOKEN_COOKIE_SECURE: 'false'
-      REFRESH_TOKEN_COOKIE_SAME_SITE: 'lax'
+      SESSION_COOKIE_SECURE: 'false'
+      SESSION_COOKIE_SAME_SITE: 'lax'
+
+      # Custom settings
+      DIRECTUS_API_TOKEN: '${DIRECTUS_API_TOKEN}'
+      AVATARS_FOLDER_ID: '${AVATARS_FOLDER_ID}'
 
 networks:
   directus:

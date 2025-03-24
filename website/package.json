@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -14,14 +14,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@directus/sdk": "^14.0.0",
+    "@directus/sdk": "^19.0.1",
     "clsx": "^2.0.0",
+    "cookie": "^1.0.2",
     "dayjs": "^1.11.10",
     "hast": "^1.0.0",
     "highlight.js": "^11.8.0",
     "isemail": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
-    "kodim-cms": "^1.2.2",
+    "jwt-simple": "^0.5.6",
+    "kodim-cms": "^1.2.3",
     "next": "15.1.4",
     "normalize.css": "^8.0.1",
     "property-information": "^6.5.0",
@@ -30,6 +32,7 @@
     "title-case": "^3.0.3"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@types/hast": "^2.3.5",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.4.2",

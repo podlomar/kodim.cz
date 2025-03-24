@@ -1,0 +1,26 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
+  align-items: baseline;
+  margin-bottom: 1rem;
+
+  @include breakpoint-md {
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+  }
+
+  input[type="checkbox"] {
+    justify-self: end;
+  }
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 1rem;
+}

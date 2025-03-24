@@ -1,32 +1,26 @@
 import { cache } from 'react';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { ClaimsAgent, CmsAgent, publicAgent } from 'kodim-cms/esm/access-control/claim-agent';
-import { User, fetchUser } from '../lib/directus';
-import { decryptSessionData } from '../lib/session';
+import { User, getCurrentUser } from '../lib/directus';
 
 export type Session = {
   user: User | null;
-  refreshToken: string;
   cmsAgent: CmsAgent;
 };
 
-export const session = cache(async (noRedirect?: 'no-redirect'): Promise<Session> => {
-  const publicSession = { user: null, cmsAgent: publicAgent, refreshToken: '' };
-  const encryptedSession = (await headers()).get('x-session') ?? (await cookies()).get('session')?.value;
-  if(encryptedSession === undefined) {
+export const session = cache(async (): Promise<Session> => {
+  const publicSession = { user: null, cmsAgent: publicAgent };
+  const cookiesStore = await cookies();
+  const sessionToken = cookiesStore.get('session_token')?.value;
+  if (sessionToken === undefined) {
     return publicSession;
   }
 
-  const sessionData = decryptSessionData(encryptedSession);
-  if (sessionData === null) {
-    return publicSession;
-  }
-
-  const user = await fetchUser(sessionData.userId);
+  const user = await getCurrentUser(sessionToken);
   if (user === null) {
     return publicSession;
   }
-  
+
   const cmsAgent = new ClaimsAgent(user.accessRules);
-  return { user, cmsAgent, refreshToken: sessionData.refreshToken };
+  return { user, cmsAgent };
 });
