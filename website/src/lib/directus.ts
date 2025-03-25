@@ -17,7 +17,7 @@ import {
   passwordReset,
   readUsers,
 } from '@directus/sdk';
-import cookie from 'cookie';
+import { parse as parseCookie } from 'cookie';
 import { CourseDef, TopicSource } from 'kodim-cms/esm/content/courses-division';
 
 export interface User {
@@ -88,7 +88,7 @@ export const login = async (email: string, password: string): Promise<SessionCoo
     return null;
   }
 
-  const parsed = cookie.parse(cookieHeader);
+  const parsed = parseCookie(cookieHeader);
   return {
     name: 'session_token',
     value: parsed.session_token!,
@@ -219,6 +219,11 @@ export const userFromApi = (apiUser: Record<string, any>): User => {
       ...ruleObjects.map((ruleObject: any) => ruleObject.rule),
     ];
   }, []);
+
+  if (typeof apiUser.email !== 'string') {
+    console.warn('USER WITHOUT EMAIL', apiUser);
+    apiUser.email = '';
+  }
 
   return {
     id: apiUser.id,

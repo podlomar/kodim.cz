@@ -9,8 +9,6 @@ export const middleware = async (request: NextRequest): Promise<NextResponse> =>
     return response;
   }
   
-  console.log('Checking session token', sessionToken);
-
   const decoded = jwt.decode(sessionToken, '', true);
   const exp = decoded.exp as number;
   const iat = decoded.iat as number;
