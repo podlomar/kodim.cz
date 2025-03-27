@@ -45,7 +45,7 @@ export const client = createDirectus('http://directus:8055')
   .with(staticToken(process.env.DIRECTUS_API_TOKEN ?? ''))
   .with(rest());
 
-export const refreshSession = async (sessionToken: string): Promise<string | null> => {
+export const refreshSession = async (sessionToken: string): Promise<SessionCookie | null> => {
   const response = await fetch(`http://directus:8055/auth/refresh`, {
     method: 'POST',
     headers: {
@@ -59,11 +59,25 @@ export const refreshSession = async (sessionToken: string): Promise<string | nul
     return null;
   }
 
-  return response.headers.get('set-cookie');
+  const cookieHeader = response.headers.get('set-cookie');
+  if (cookieHeader === null) {
+    return null;
+  }
+
+  const parsed = parseCookie(cookieHeader);
+  return {
+    name: 'session_token',
+    domain: '.kodim.cz',
+    value: parsed.session_token!,
+    maxAge: Number(parsed['Max-Age']),
+    path: parsed.Path!,
+    sameSite: parsed.SameSite === 'None' ? 'none' : parsed.SameSite === 'Lax',
+  }
 }
 
 export interface SessionCookie {
   name: string;
+  domain: string;
   value: string;
   maxAge: number;
   path: string;
@@ -91,6 +105,7 @@ export const login = async (email: string, password: string): Promise<SessionCoo
   const parsed = parseCookie(cookieHeader);
   return {
     name: 'session_token',
+    domain: '.kodim.cz',
     value: parsed.session_token!,
     maxAge: Number(parsed['Max-Age']),
     path: parsed.Path!,
@@ -99,24 +114,30 @@ export const login = async (email: string, password: string): Promise<SessionCoo
 }
 
 export const getCurrentUser = async (sessionToken: string): Promise<User | null> => {
-  const client = createDirectus('http://directus:8055').with(rest())
-  const apiUser = await client.request(
-    withToken(
-      sessionToken,
-      readMe({
-        fields: [
-          'id',
-          'email',
-          'first_name',
-          'external_identifier',
-          'fullName',
-          'avatar',
-          'groups.*.*'
-        ],
-      }),
-    ));
-  
-  return userFromApi(apiUser)
+  try {
+    const client = createDirectus('http://directus:8055').with(rest())
+    const apiUser = await client.request(
+      withToken(
+        sessionToken,
+        readMe({
+          fields: [
+            'id',
+            'email',
+            'first_name',
+            'external_identifier',
+            'fullName',
+            'avatar',
+            'groups.*.*'
+          ],
+        }),
+      ));
+
+    return userFromApi(apiUser)
+  } catch (e) {
+    console.error('getCurrentUser error', e);
+    console.log('sessionToken', sessionToken);
+    return null;
+  }
 }
 
 export type RegistrationResult = 'success' | 'user-exists' | 'error';

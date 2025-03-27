@@ -22,7 +22,7 @@ export const middleware = async (request: NextRequest): Promise<NextResponse> =>
       return response;
     }
 
-    response.headers.append('Set-Cookie', newSessionCookie);
+    response.cookies.set(newSessionCookie);
   }
 
   return response;
