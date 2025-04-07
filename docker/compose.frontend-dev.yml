@@ -5,12 +5,13 @@ services:
       context: ../website
       dockerfile: ../docker/dockerfile.dev
     ports:
-      - 3000:3000
+      - 8080:3000
     volumes:
       - ../website:/app
       - '${CONTENT_DIR}:/content'
-      - /home/podlomar/work/kodim/kodim-cms:/home/podlomar/work/kodim/kodim-cms
-      - /home/podlomar/work/projects/filefish:/home/podlomar/work/projects/filefish
+      - ../.env.development:/app/.env.development
+      - /home/podlomar/Work/kodim/kodim-cms:/home/podlomar/work/kodim/kodim-cms
+      - /home/podlomar/Projects/filefish:/home/podlomar/work/projects/filefish
     networks:
       - directus
     depends_on:

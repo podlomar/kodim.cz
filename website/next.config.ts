@@ -1,6 +1,11 @@
+// import { config } from 'dotenv';
 import type { NextConfig } from 'next'
 
-const config: NextConfig = {
+// console.log('NODE ENV', process.env.NODE_ENV);
+
+// config({ path: `../.env.${process.env.NODE_ENV}` });
+
+const nextConfig: NextConfig = {
   output: 'standalone',
   // images: {
   //   disableStaticImages: true,
@@ -63,4 +68,4 @@ const config: NextConfig = {
   },
 };
 
-export default config;
+export default nextConfig;

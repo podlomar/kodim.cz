@@ -37,7 +37,7 @@ const LoginPage = async (props: Props): Promise<JSX.Element> => {
             <div className={css.providerLink}>
               <Icon name="github" size="1.5rem" />
               <a
-                href={`${process.env.DIRECTUS_URL}/auth/login/github?redirect=${process.env.WEBSITE_URL}${returnUrl}`}
+                href={`${process.env.DIRECTUS_URL}/auth/login/github?redirect=${process.env.PROJECT_URL}${returnUrl}`}
               >
                 Přihlásit přes GitHub
               </a>

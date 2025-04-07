@@ -13,5 +13,5 @@ export const GET = async (req: Request) => {
     return new NextResponse(`No such course at ${topicId}/${courseId}`, { status: 404 });
   }
 
-  return NextResponse.redirect(`${process.env.WEBSITE_URL}/${topicId}/${courseId}`);
+  return NextResponse.redirect(`${process.env.PROJECT_URL}/${topicId}/${courseId}`);
 }

@@ -51,6 +51,9 @@ services:
       DB_USER: 'directus'
       DB_PASSWORD: 'directus'
 
+      HOST: "0.0.0.0"
+      PORT: 8055
+
       EXTENSIONS_AUTO_RELOAD: true
 
       ADMIN_EMAIL: '${ADMIN_EMAIL}'
@@ -106,3 +109,7 @@ services:
 
 networks:
   directus:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.0.0/24

@@ -41,6 +41,8 @@ export interface Group {
   accessRules: string[];
 };
 
+console.log('Directus static token', process.env.DIRECTUS_API_TOKEN);
+
 export const client = createDirectus('http://directus:8055')
   .with(staticToken(process.env.DIRECTUS_API_TOKEN ?? ''))
   .with(rest());

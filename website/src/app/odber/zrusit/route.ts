@@ -6,9 +6,9 @@ export const GET = async (req: NextRequest) => {
   const email = searchParams.get('email');
 
   if (email === null) {
-    return NextResponse.redirect(`${process.env.WEBSITE_URL!}/odber`);
+    return NextResponse.redirect(`${process.env.PROJECT_URL!}/odber`);
   }
 
   await deleteSubscription(email);
-  return NextResponse.redirect(`${process.env.WEBSITE_URL!}/odber?status=canceled`);
+  return NextResponse.redirect(`${process.env.PROJECT_URL!}/odber?status=canceled`);
 };
