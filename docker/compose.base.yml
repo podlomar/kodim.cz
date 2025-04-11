@@ -16,7 +16,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-      start_interval: 5s
+      #start_interval: 5s
       start_period: 30s
 
   directus:
@@ -38,7 +38,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-      start_interval: 5s
+      #start_interval: 5s
       start_period: 30s
     environment:
       KEY: '${DIRECTUS_KEY}'
@@ -50,9 +50,6 @@ services:
       DB_DATABASE: 'directus'
       DB_USER: 'directus'
       DB_PASSWORD: 'directus'
-
-      HOST: "0.0.0.0"
-      PORT: 8055
 
       EXTENSIONS_AUTO_RELOAD: true
 
@@ -75,7 +72,6 @@ services:
       EMAIL_SMTP_SECURE: 'false'
 
       AUTH_PROVIDERS: 'github,discord'
-      
       AUTH_GITHUB_MODE: 'session'
       AUTH_GITHUB_DRIVER: 'oauth2'
       AUTH_GITHUB_CLIENT_ID: '${GITHUB_CLIENT_ID}'
@@ -111,7 +107,3 @@ services:
 
 networks:
   directus:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.0.0/24
