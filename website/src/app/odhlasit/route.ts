@@ -5,8 +5,8 @@ export const GET = async (req: NextRequest) => {
   const response = NextResponse.redirect(`${process.env.PROJECT_URL}${returnTo}`);
   response.cookies.set('session_token', '', {
     path: '/',
-    domain: '.kodim.cz', // Explicitly match the original domain
-    expires: new Date(0), // Expire the cookie immediately
+    domain: process.env.SESSION_COOKIE_DOMAIN,
+    expires: new Date(0),
   });
   return response;
 }

@@ -69,7 +69,7 @@ export const refreshSession = async (sessionToken: string): Promise<SessionCooki
   const parsed = parseCookie(cookieHeader);
   return {
     name: 'session_token',
-    domain: '.kodim.cz',
+    domain: process.env.SESSION_COOKIE_DOMAIN!,
     value: parsed.session_token!,
     maxAge: Number(parsed['Max-Age']),
     path: parsed.Path!,
@@ -107,7 +107,7 @@ export const login = async (email: string, password: string): Promise<SessionCoo
   const parsed = parseCookie(cookieHeader);
   return {
     name: 'session_token',
-    domain: '.kodim.cz',
+    domain: process.env.SESSION_COOKIE_DOMAIN!,
     value: parsed.session_token!,
     maxAge: Number(parsed['Max-Age']),
     path: parsed.Path!,
@@ -261,7 +261,7 @@ export const userFromApi = (apiUser: Record<string, any>): User => {
       : `/assets/${apiUser.avatar}`,
     accessRules,
     groups: userGroups
-      .filter((group: any) => group.Groups_id !== null)
+      .filter((group: any) => group.Groups_id !== null && group.Groups_id !== undefined)
       .map((group: any) => ({
         id: group.Groups_id.id,
         name: group.Groups_id.name,
