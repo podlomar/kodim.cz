@@ -4,13 +4,14 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY website/package.json website/package-lock.json ./
 RUN npm ci
 
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY website ./
+COPY .env.production ./.env.production
 RUN npm run build
 
 FROM base AS runner
@@ -33,7 +34,7 @@ RUN git config --global --add safe.directory '*'
 
 EXPOSE 3000
 
-ENV PORT 3000
-ENV HOSTNAME 0.0.0.0
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 
 CMD ["node", "server.js"]
