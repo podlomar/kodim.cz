@@ -13,6 +13,7 @@ import { session } from 'app/session';
 import { CmsAgent } from 'kodim-cms/esm/access-control/claim-agent';
 import ReactHast from 'app/components/ReactHast';
 import MainLayout from 'app/components/MainLayout';
+import ArticleSeriesIndex from 'app/components/ArticleSeriesIndex/intex';
 import styles from './styles.module.scss';
 import InfoBox from 'app/components/InfoBox';
 import Styles from 'app/components/Styles';
@@ -73,7 +74,13 @@ const BlogArticlePage = async (props: Props): Promise<JSX.Element> => {
       <div className="container">
         <Breadcrumbs crumbs={article.crumbs.slice(0, -1)} />
         <div className={styles.article}>
-          <ArticleContent>
+          <ArticleContent
+            foot={
+              article.seriesIndex !== null && (
+                <ArticleSeriesIndex currentLink={article.name} seriesIndex={article.seriesIndex} />
+              )
+            }
+          >
             <div className={styles.articleInfo}>
               <div className={styles.articleAuthor}>
                 <img
@@ -91,6 +98,16 @@ const BlogArticlePage = async (props: Props): Promise<JSX.Element> => {
             <h1>{article.title}</h1>
             <div className={styles.articleLead}>{article.lead}</div>
             <Styles css={article.styles} />
+            {article.summary !== null && (
+              <div className={styles.articleSummary}>
+                <div className={styles.summaryContent}>
+                  <ReactHast root={article.summary} />
+                </div>
+              </div>
+            )}
+            {article.seriesIndex !== null && (
+              <ArticleSeriesIndex currentLink={article.name} seriesIndex={article.seriesIndex} />
+            )}
             <ReactHast root={article.content} />
           </ArticleContent>
         </div>

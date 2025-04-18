@@ -2,7 +2,6 @@
 @import "styles/mixins.scss";
 
 .articleContent {
-  padding-bottom: 2rem;
   background-color: white;
   border-radius: 5px;
 }
@@ -11,7 +10,7 @@
   padding-top: 1rem;
   padding-bottom: 2rem;
 
-  & > * {
+  &>* {
     @include article-element;
   }
 
@@ -26,7 +25,8 @@
     padding-left: 0;
   }
 
-  & > ul, & > ol {
+  &>ul,
+  &>ol {
     @include article-element;
   }
 
@@ -134,5 +134,11 @@
     tr:nth-child(odd) {
       background-color: #fff;
     }
+  }
+}
+
+.articleFoot {
+  &>* {
+    @include article-element;
   }
 }
