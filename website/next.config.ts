@@ -1,9 +1,5 @@
-// import { config } from 'dotenv';
 import type { NextConfig } from 'next'
-
-// console.log('NODE ENV', process.env.NODE_ENV);
-
-// config({ path: `../.env.${process.env.NODE_ENV}` });
+import path from 'path';
 
 const nextConfig: NextConfig = {
   output: 'standalone',
@@ -66,6 +62,9 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // For correctly resolving symlinked packages
+  // SEE: https://github.com/vercel/next.js/issues/64472#issuecomment-2077483493
+  outputFileTracingRoot: path.join(__dirname, '../'),
 };
 
 export default nextConfig;

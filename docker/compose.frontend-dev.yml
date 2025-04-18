@@ -10,8 +10,8 @@ services:
       - ../website:/app
       - '${CONTENT_DIR}:/content'
       - ../.env.development:/app/.env.development
-      - /home/podlomar/Work/kodim/kodim-cms:/home/podlomar/work/kodim/kodim-cms
-      - /home/podlomar/Projects/filefish:/home/podlomar/work/projects/filefish
+      - /home/podlomar/Work/kodim/kodim-cms:/home/podlomar/Work/kodim/kodim-cms
+      - /home/podlomar/Projects/filefish:/home/podlomar/Projects/filefish
     networks:
       - directus
     depends_on:
