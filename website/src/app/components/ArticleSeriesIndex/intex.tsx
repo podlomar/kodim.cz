@@ -28,9 +28,9 @@ const ArticleSeriesIndex = ({ currentLink, seriesIndex }: Props): JSX.Element =>
               {index + 1}
             </div>
             {item.link === currentLink ? (
-              <div className={styles.itemTitleCurrent}>{item.title}</div>
+              <div className={styles.itemTitleCurrent}><i>{item.title}</i>: {item.lead}</div>
             ) : (
-              <div><i>{item.title}</i>: {item.lead}</div>
+              <div><a href={item.link}>{item.title}</a>: {item.lead}</div>
             )}
           </div>
         ))}
