@@ -1,12 +1,11 @@
 services:
   frontend:
     container_name: frontend
-    build:
-      context: ../
-      dockerfile: ../docker/dockerfile
+    image: ghcr.io/kodim-cz/kodim-frontoffice:2.5.5
     ports:
-      - 3000:3000
+      - 8002:3000
     volumes:
+      - '.env.production:/app/.env.production'
       - '${CONTENT_DIR}:/content'
     networks:
       - directus

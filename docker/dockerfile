@@ -4,25 +4,22 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY website/package.json website/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm ci
 
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY website ./
-COPY .env.production ./.env.production
+COPY . .
 RUN npm run build
 
 FROM base AS runner
 RUN apk add --no-cache git
 WORKDIR /app
 ENV NODE_ENV=production
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.env.production ./.env.production
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
