@@ -1,14 +1,8 @@
 'use server';
 
-import { revalidatePath } from "next/cache";
-import { addToGroup, login, registerNewUser } from "../lib/directus";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-
-export const addToGroupAction = async (userId: string, groupId: string) => {
-  addToGroup(userId, groupId);
-  revalidatePath(`/pozvanky/${groupId}`);
-};
+import { login } from "lib/directus";
 
 export type LoginState = {
   alert: 'none' | 'success' | 'no-email' | 'no-password' | 'invalid-credentials' | 'error'
@@ -34,7 +28,7 @@ export const loginAction = async (
       email,
     }
   }
-  
+
   const sessionCookie = await login(email, password);
   if (sessionCookie === null) {
     return {
@@ -46,7 +40,7 @@ export const loginAction = async (
   const cookiesStore = await cookies();
   cookiesStore.set(sessionCookie);
   redirect('/');
-  
+
   return {
     alert: 'none',
     email: '',

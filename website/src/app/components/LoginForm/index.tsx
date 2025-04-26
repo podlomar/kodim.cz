@@ -1,7 +1,7 @@
 'use client';
 
 import { type JSX, useActionState } from 'react';
-import { loginAction, LoginState } from 'app/actions';
+import { loginAction, LoginState } from './action';
 import Form from '../Form';
 import Button from '../Button';
 import Alert from '../Alert';
@@ -26,14 +26,14 @@ const LoginForm = (): JSX.Element => {
   const [loginState, formAction, pending] = useActionState<LoginState, FormData>(
     loginAction, { alert: 'none', email: '' },
   );
-  
+
   const alertMessage = buildAlertMessage(loginState);
 
   return (
     <Form action={formAction}>
       <Form.Fields>
         <label htmlFor="email">E-mail:</label>
-        <input name="email" type="email" id="email" defaultValue={loginState.email}/>
+        <input name="email" type="email" id="email" defaultValue={loginState.email} />
         <label htmlFor="password">Heslo:</label>
         <input name="password" type="password" id="password" />
       </Form.Fields>

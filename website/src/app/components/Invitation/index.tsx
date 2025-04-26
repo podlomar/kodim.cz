@@ -1,9 +1,11 @@
 'use client';
 
-import { Group, User, addToGroup } from 'lib/directus';
-import { addToGroupAction } from 'app/actions';
-import styles from './styles.module.scss';
-import SubmitButton from '../SubmitButton';
+import { Group, User } from 'lib/directus';
+import { addToGroupAction, InviteState } from './action';
+import Alert from '../Alert';
+import { useActionState } from 'react';
+import Button from '../Button';
+import Form from '../Form';
 
 interface Props {
   group: Group,
@@ -29,20 +31,39 @@ const Invitation = ({ group, user }: Props) => {
   if (isInGroup) {
     return (
       <>
-        <p>Jste členem skupiny <strong>{group.name}</strong>.</p>
+        <p>Již jste členem skupiny <strong>{group.name}</strong>.</p>
         <p><a href="/profil">Přejít na profil</a></p>
       </>
     );
   }
-  
+
   const addAction = addToGroupAction.bind(null, user.id, group.id);
-      
+  const [inviteState, formAction, pending] = useActionState<InviteState, FormData>(
+    addAction, 'ready',
+  );
+
+  if (inviteState === 'success') {
+    return (
+      <p>Byli jste úspěšně přidáni do skupiny <strong>{group.name}</strong>.</p>
+    );
+  }
+
+  if (inviteState === 'error') {
+    return (
+      <Alert type="warning" title="Neznámá chyba při přidávání do skupiny" />
+    );
+  }
+
   return (
     <>
       <p>Jste zváni do skupiny <strong>{group.name}</strong></p>
-      <form action={addAction} className={styles.form}>
-        <SubmitButton label="Přijmout pozvánku" />
-      </form>
+      <Form action={formAction}>
+        <Form.Controls>
+          <Button type="submit" disabled={pending}>
+            Přijmout pozvánku
+          </Button>
+        </Form.Controls>
+      </Form>
     </>
   );
 };
