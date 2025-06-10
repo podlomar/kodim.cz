@@ -39,18 +39,16 @@ const RootLayout = ({ children }: Props): JSX.Element => {
         <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
         <link rel="icon" href="/icon-512.png" type="image/png" sizes="512x512" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link 
+        <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,800;1,500&family=Roboto+Mono:wght@400;700&display=swap"
         />
-
-        <script defer data-domain="kodim.cz" src="https://plausible.io/js/script.js"></script>
       </head>
       <body>
-        <div className={styles.rootLayout}>  
+        <div className={styles.rootLayout}>
           {children}
         </div>
       </body>
