@@ -17,6 +17,7 @@ import ArticleSeriesIndex from 'app/components/ArticleSeriesIndex/intex';
 import styles from './styles.module.scss';
 import InfoBox from 'app/components/InfoBox';
 import Styles from 'app/components/Styles';
+import "highlight.js/scss/gml.scss";
 
 export const dynamic = 'force-dynamic';
 
